@@ -1,0 +1,100 @@
+1、angular发送一个CORS请求
+$http({
+  // url: "http://203.195.194.216:80/v4/meta", // done !
+  // url: "http://203.195.194.216/v4/meta", // done !
+  url: "http://api.diaox2.com/v4/meta",
+  timeout: 20000,
+  method:'POST',
+  headers:{
+    "Content-Type":'application/json'
+  },
+  data:JSON.stringify({
+    'is_grey':false,
+    'request_methods':['feed_order_data']
+  })  
+}).then(function(result){
+    console.log(result.data);
+     $scope.name = result.data.state;
+},function(e){
+    console.log(e);
+})
+
+2、angular发送一个POST请求
+
+$http({
+  url: "data.json",
+  method:'GET',
+  // method:'POST',
+  timeout: 20000,
+  headers:{
+    "Content-Type":'application/json'
+  },
+  data:JSON.stringify({
+    'is_grey':false,
+    'request_methods':['feed_order_data']
+  })  
+}).then(function(result){
+  console.log('then success...');
+  console.log(result);
+  console.log(result.data);
+  $scope.name = result.data[0].name;
+  $scope.skills = result.data[0].skill;
+},function(e){
+  console.log(e);
+})
+
+3、angular发送一个GET请求
+
+ $http({
+    url:"data.json",
+    method:"GET"
+ }).success(function(data,status,headers,config){
+    console.log('success ...');
+    $scope.name = data[0].name;
+ }).error(function(data,status,headers,config){
+    console.log('error');
+ })
+
+4、augular的jsonp设计的略坑。。
+  发送给服务器端的callback参数值竟然是经过angular计算过的。。。
+  那么在服务器端里写死的json文件，例如 cb( json )，就不能用了，在jquery下是可以的。。
+
+
+2.
+ ng-bind ==> html(val) 单向绑定
+ng-value ==> val(val) 单向绑定
+ng-model ==> val(val) 双向数据绑定
+
+
+
+{
+  "name": "sku",
+  "version": "0.0.0",
+  "dependencies": {
+    "angular": "^1.4.0",
+    // "bootstrap": "^3.3.6",
+    // "angular-animate": "^1.4.0",
+    // "angular-aria": "^1.4.0",
+    // "angular-cookies": "^1.4.0",
+    // "angular-messages": "^1.4.0",
+    // "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    // "angular-sanitize": "^1.4.0",
+    "angular-ui-router": "^0.2.18"
+    // ,"jquery": "^2.2.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.4.0"
+  },
+  "appPath": "app",
+  "moduleName": "skuApp",
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>angular指令学习</title>
+</head>
+<body ng-app="myApp">
+
+   <hello></hello>
+   <div hello></div>
+   <div class="hello"></div>
+   <!-- directive:hello -->
+   <div></div>
+
+   <!-- 指令模板缓存 -->
+   <superme></superme>
+    
+   <div world>
+       <h1>我不想这行内容消失</h1>
+   </div>
+   <!-- <hero name="superman">我不想让这行消失</hero> -->
+
+   <!-- controll与directive之间的交互 -->
+   <div ng-controller="LoaderCtrl">
+        <!-- 自定义属性，绑定此controller内的方法 -->
+        <loader HowToLoad="loadData()">滑动加载</loader>
+   </div>   
+   <!-- controll与directive之间的交互 -->
+   <div ng-controller="LoaderCtrl2">
+        <!-- 自定义属性，绑定此controller内的方法 -->
+        <loader HowToLoad="loadData2()">滑动加载</loader>
+   </div>  
+
+
+   <!-- 指令间的交互 -->
+   <superman strength>动感超人---力量</superman>
+   <superman strength speed>动感超人---力量+敏捷</superman>
+   <superman strength speed light>动感超人---力量+敏捷+发光</superman>
+
+    <!-- 再页面上写了ng-controller，必须在js种有对应的代码，否则报错 -->
+   <!-- <div ng-controller="test"></div> -->
+
+
+   <!-- 不是独立作用域，每个directice之间相互影响 -->
+   <notalone></notalone>
+   <notalone></notalone>
+   <notalone></notalone>
+   <notalone></notalone>
+   <!-- 独立作用域，相互之间不影响 -->
+   <alone></alone>
+   <alone></alone>
+   <alone></alone>
+   <alone></alone>
+
+   <h2>@绑定</h2>
+
+   <div ng-controller="AtCtrl">
+    <dirnk flavor="{{ctrlFlavor}}"></dirnk>
+   </div>
+    <h2>=绑定</h2>
+   <div ng-controller="AtCtrl2">
+    <input type="text" ng-model="ctrlFlavor">
+    <dirnk2 flavor="ctrlFlavor"></dirnk2>
+   </div>
+   <h2>&绑定</h2>
+   <div ng-controller="AndCtrl">
+       <greeting greet="sayHello(name)"></greeting>
+       <greeting greet="sayHello(name)"></greeting>
+       <greeting greet="sayHello(name)"></greeting>
+   </div>
+
+<script src="../../bower_components/angular/angular.js"></script>   
+<script src="scripts/directive.js"></script>   
+</body>
+</html>

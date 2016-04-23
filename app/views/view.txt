@@ -1,0 +1,1 @@
+此文件夹用来放置HTML片段，可以使用angular的路由把url绑定到每个html文件上

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试异步更改model</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="FirstCtrl">
+    <input type="text" ng-model="FirstName">
+    <br>Input is : <strong>{{FirstName}}</strong><!-- Successfully updates here -->
+</div>
+<script src="../../bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp', []);
+myApp.controller('FirstCtrl', function ($scope,$timeout) {
+    $scope.FirstName = '你好';
+    $scope.$watch('FirstName', function (newValue, oldValue) {
+        console.log('changed');
+    });
+    $timeout(function(){
+        $scope.FirstName = '你好asda a';
+    },1000);
+    setTimeout(function(){
+        $scope.FirstName = "你好 setTimeout";
+    },2000)
+    setTimeout(function(){
+        console.log($scope.FirstName);
+    },3000)
+
+    setTimeout(function(){
+        $scope.$apply(function(){
+             $scope.FirstName = "你好 setTimeout a a ";
+        })
+    },4000)
+
+
+});
+</script>
+</body>
+</html>

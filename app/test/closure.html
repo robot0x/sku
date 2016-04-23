@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>闭包研究</title>
+</head>
+<body>
+<script>
+    // var name = "window's name";
+    // var obj = {
+    //     name : "obj's name",
+    //     getNameFunc:function(){
+    //         return function(){
+    //             return this.name;
+    //         }
+    //     }
+    // };
+    // var obj2 = {
+    //     name : "obj's name",
+    //     getNameFunc:function(){
+    //         var that = this;
+    //         return function(){
+    //            return that.name;
+    //         }
+    //     }
+    // };
+    // console.log(obj.getNameFunc()());
+    // console.log(obj2.getNameFunc()());
+    // var n = 1;
+    // function f1(){
+    //     test = 10;
+    //     var n = 999;
+    //     nAdd = function(){
+    //         n+=1;
+    //     }
+    //     function f2(){
+    //         console.log(n);
+    //     }
+    //     return f2;
+    // }
+    // var f2 = f1();
+    // f2(); // 1  999
+    // nAdd(); 
+    // f2(); //2  1000
+    // var f3 = f1();
+    // f3();//2  999
+
+
+    // function outer(a,b){
+    //     var c = 999;
+    //     function inner(){
+    //         console.log(a,b,c);
+    //     }
+    //     inner();
+    //     // return inner;
+    // }
+    // var inner = outer(1,2);
+
+    // inner(1,2,4);
+
+ //   function outer(a,b){
+ //    var c = 999;
+    
+ //    // 这种情况下，inner没有引用外部outer的变量
+ //    function inner(str){
+ //       console.log(eval(str));
+ //    }
+    
+ //    return inner; 
+    
+ // }
+ // var inner = outer(1,2);
+ // inner("a"); // 1
+ // inner("b"); // 2
+ // inner("c"); // 999
+
+// function test(a,b){
+//     var c = 999;
+//     return {
+//         say:function(){
+//             console.log(a,b,c);
+//         }
+//     }
+// }
+// var obj = test(1,2);
+// obj.say();
+"use strict";
+
+(function(){
+    console.log(this)
+    function t(){
+        console.log(this);
+    }
+    t();
+})()
+
+
+</script>
+</body>
+</html>

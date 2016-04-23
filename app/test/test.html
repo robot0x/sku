@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<style>
+    html,body{
+        height: 100%;
+    }
+    .clearfix:after{content: "";display: table;clear: both;} 
+    .container{
+        min-height: 100%;
+        overflow: hidden;
+    }
+    .left,.right{
+        float: left;
+        width: 50%;
+        height: 100%;
+        padding-bottom: 9999px;
+        margin-bottom: -9999px;
+        background-color: red;
+    }
+    .right{
+        float: right;
+        background-color: green;
+    }
+</style>
+</head>
+<body>
+
+<!-- <div class="container clearfix">
+    <div class="left">nihao</div>
+    <div class="right">nihao </div>
+</div> -->
+
+<form action="">
+    <input type="checkbox" name="skills" value="java">
+    <input type="checkbox" name="skills" value="javascript">
+    <input type="checkbox" name="skills" value="css">
+    <input type="checkbox" name="name[]" value="li">
+     <input type="file" id="input" multiple>  
+    <input type="submit" value="提交">
+</form>
+
+<!-- <img src="http://a.diaox2.com/cms/sites/default/files/20160315/goodthing/fmfm.jpg" alt="" width="800"> -->
+<script>
+
+    // function noop(){}
+    // var name = "window's name"
+    // var fn = noop.sayName = noop.prototype.sayName = function(){
+    //     return this.name;
+    // }
+    // console.log(noop.sayName());
+    // console.log(fn());
+    // var n = new noop();
+    // n.name = "noop object's name";
+    // console.log(n.sayName());
+
+    // function Person(){
+
+    // }
+    // Person.prototype.setName = function(name){
+    //     this.name = name;
+    // }
+    // Person.prototype.getName = function(){
+    //     return this.name;
+    // }
+
+    // var p = new Person();
+
+    // p.setName("李彦峰");
+    // console.log(p.getName());
+
+    // var sn = new p.setName("李彦峰哈哈");
+
+    // p.setName.prototype.getName = function(){
+    //     return this.name;
+    // }
+
+
+    // console.log(p.getName());
+    // console.dir(sn);
+
+    // console.log(sn.getName());
+
+
+
+
+
+
+
+    // "use strict";
+    // class Animail{
+    //     constructor(name){
+    //         this.name = name;
+    //     }
+    //     sayName(){
+    //         console.log(this.name);
+    //     }        
+    // }
+
+    // var ani = new Animail("狗");
+    // ani.sayName();
+    /*
+    
+     let
+     const
+     lambad
+
+     class
+     extends
+     constructor
+     super
+     
+     promise
+     字符串模板
+
+     结构
+     默认参数
+     不定参数
+     for of遍历
+    
+    */
+
+</script>
+<div>你好</div>
+<iframe src="dom.html" frameborder="0"></iframe>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    
+    // $(function(){
+        
+    //     console.log($.isPlainObject(window));
+    //     console.log($.isPlainObject({}));
+    //     console.log($.isPlainObject(window.location));
+    //     console.log(window.location.constructor);
+    //     console.log({}.hasOwnProperty.call( window.location.constructor.prototype, "isPrototypeOf"));
+
+    //     function Person(){
+
+    //     }
+
+    //     var p = new Person();
+
+    //     console.log(p.__proto__ === Person.prototype);
+    //     console.log(p.constructor.prototype === Person.prototype);
+    //     console.log(p.constructor.prototype === p.__proto__);
+    //     console.log(p.constructor === Person);
+    //     console.log(p.constructor.prototype.isPrototypeOf(p));
+    //     console.log($.type(window.location));
+
+    //     $("input[value='java']").one('click',function(){
+    //         console.log(1);
+    //     })
+        
+    // })
+
+    // function Person(){
+
+    //     var _private = 2;
+
+    //     // 这样其实就形成了一个闭包
+    //     this.setPrivate = function(private){
+    //         _private = private;
+    //     }
+
+    //     this.getPrivate = function(){
+    //         return _private;
+    //     }
+    // }
+
+    // var p = new Person();
+    // p.setPrivate(10000);
+    // console.log(p.getPrivate());
+    
+    // var p2 = new Person();
+    // console.log(p.getPrivate());
+
+
+    // var Module = (function(){
+    //     var private = 1;
+    //     return {
+    //         setPrivate:function(p){
+    //             private = p;
+    //         },
+    //         getPrivate:function(){
+    //             return p;
+    //         }
+    //     }
+    // })()
+
+
+  /*  var Person = function(){
+        // alert(1);
+        this.name = "liyanfeng";
+        this.age = 26;
+    }
+   
+
+    Person.fn = Person.prototype = {
+        constructor:Person,
+        sayName:function(){
+            console.log(this.constructor);
+            console.log(this.constructor());
+        }
+    }
+    var p = new Person();
+     p.sayName();
+
+    Person.extends = Person.fn.extends = function(){
+
+        var length = arguments.length,target;
+
+        if(length === 1){
+            target = this;
+        }
+
+        var options = arguments[0];
+
+        for(var name in options){
+
+            target[name] = options[name];
+
+        }
+
+
+    }
+
+    Person.extends({
+        version:1.1,
+        author:"by liyanfeng"
+    })
+
+    console.log(Person.version);
+    console.log(Person.author);
+
+
+    Person.fn.extends({
+        sayAge:function(){
+            alert(this.age);
+        }
+    })
+
+    p.sayAge();*/
+
+ 
+    function Person(){
+        this.name = "liyanfeng";
+    }
+    
+    Person.prototype = {
+        constructor:Person,
+        version:2.1
+    }
+    var p = new Person();
+    for(var attr in p){
+        console.log(attr,":",p[attr]);
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>SKU管理系统</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="styles/common.css">
+<link rel="stylesheet" href="styles/main.css">
+<base target="_blank">
+</head>
+<body ng-app="skuApp">
+<div class="wrapper clearfix">
+    <div class="search-area pull-left">
+        <div class="search-btn">
+            <button class="btn btn-default">搜索文章</button>
+            <button class="btn btn-default">搜索SKU</button>
+        </div>
+        <div class="form-group search-input">
+          <div class="input-group">
+            <span class="input-group-addon">走你</span>
+            <input type="text" class="form-control" placeholder="搜索文章标题 or ID" required="">
+          </div>
+       </div>
+       <div class="annotation-link">
+           <a class="btn btn-link text-right">未标注（100）</a>
+           <a class="btn btn-link text-right">已标注（1001）</a>
+       </div>
+       <div class="article-list-area">
+            <ul class="article-list">
+                <li ng-repeat="article in cachedArticles | filter:query">
+                    <div class="article-title-and-pic clearfix">
+                        <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="100" height="100" class="pull-left">
+                        <h3 class="pull-left">
+                            <a href="#">一个文章的标题</a>
+                        </h3>
+                    </div>
+                    <ul class="sku-list" ng-controller="noCtrl" lazy-load>
+                        <li ng-repeat="sku in article.skuList">
+                            <div class="sku">
+                                <div class="source-and-price clearfix">
+                                <h4 class="pull-left"><a href="{{sku.sales[0].link}}" ng-bind="sku.template"></a></h4>
+                                    <span class="pull-left" ng-bind="sku.price_str"></span> 
+                                </div>  
+                                <p ng-bind="sku.title"></p>
+                                <button class="btn btn-default" ng-click="eventHandler.generateSKU()">生成SKU</button>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="new-buylink text-center">
+                        <button class="btn btn-success" ng-click="eventHandler.newBuylink()">新建购买链接</button>
+                    </div>
+                    <p class="annotationed-tips">已关联的SKU：</p>
+                    <ul class="annotationed-sku-list">
+                        <li>
+                            <a href="">这是SKU的标题这是SKU的标题这是SKU的标题</a>
+                            <button class="btn btn-info btn-thin">修改</button>
+                            <button class="btn btn-danger btn-thin">删除</button>
+                        </li>
+                        <li>
+                            <a href="">这是SKU的标题这是SKU的标题这是SKU的标题</a>
+                            <button class="btn btn-info btn-thin">修改</button>
+                            <button class="btn btn-danger btn-thin">删除</button>
+                        </li>
+                        <li>
+                            <a href="">这是SKU的标题这是SKU的标题这是SKU的标题</a>
+                            <button class="btn btn-info btn-thin">修改</button>
+                            <button class="btn btn-danger btn-thin">删除</button>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+       </div>
+    </div><!-- 左侧搜索区 -->
+
+    <div class="operate-area pull-left">
+        <div class="search-btn pull-right">
+            <button class="btn btn-success">保存</button>
+            <button class="btn btn-warning">清除</button>
+        </div>
+
+        <table class="grid-table">
+            <tbody>
+                <!-- 关联文章 -->
+                <tr>
+                    <td>
+                        关联文章：
+                    </td>
+                    <td>
+                        <a href="#">一个文章的标题一个文章的标题</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-thin">取消关联</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a href="#">一个文章的标题一个文章的标题</a>
+                    </td>  
+                    <td>
+                        <button class="btn btn-default btn-thin">取消关联</button>
+                    </td> 
+                </tr>
+
+                <tr class="bg-padding">
+                    <td></td>
+                    <td>
+                         <input type="text" class="form-control form-control-sm" placeholder="搜索文章标题 or ID" required="">
+                    </td>  
+                    <td>
+                        <button class="btn btn-primary btn-thin">添加关联</button>
+                    </td> 
+                </tr>
+
+                <tr>
+                    <td>
+                        链接：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="京东、亚马逊链接" required="">
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-thin">生成SKU</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        商品名：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="取到的商品名" required="">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        价格：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="bg-padding">
+                    <td>
+                        分类：
+                    </td>
+                    <td>
+                        <label>一级</label>
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="">
+                    </td>
+                    <td>
+                        <label>二级</label>
+                       <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="">
+                    </td>
+                </tr>
+
+                <tr class="bg-padding">
+                    <td>
+                        品牌：
+                    </td>
+                    <td>
+                        <label>中文</label>
+                        <small>任选其一填写或全填</small>
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="">
+                    </td>
+                    <td>
+                        <label>英文</label>
+                       <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="">
+                    </td>
+                </tr>
+
+                <tr class="bg-padding">
+                    <td>
+                        商品图片：
+                    </td>
+                    <td class="colsapn" colspan="2">
+                        <div class="oa-article-img-container pull-left">
+                             <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+                             <div class="oa-article-img-oper">
+                                 <p class="left"><a>左</a></p>
+                                 <p class="center"><a>删</a></p>
+                                 <p class="right"><a>右</a></p>
+                             </div>
+                        </div>
+                        <div class="oa-article-img-container pull-left">
+                             <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+                             <div class="oa-article-img-oper">
+                                 <p class="left"><a>左</a></p>
+                                 <p class="center"><a>删</a></p>
+                                 <p class="right"><a>右</a></p>
+                             </div>
+                        </div>
+                        <div class="oa-article-img-container pull-left">
+                             <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+                             <div class="oa-article-img-oper">
+                                 <p class="left"><a>左</a></p>
+                                 <p class="center"><a>删</a></p>
+                                 <p class="right"><a>右</a></p>
+                             </div>
+                        </div>
+                        <div class="oa-article-img-container pull-left">
+                             <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+<div class="oa-article-img-oper">
+                                 <p class="left"><a>左</a></p>
+                                 <p class="center"><a>删</a></p>
+                                 <p class="right"><a>右</a></p>
+                             </div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr class="bg-padding">
+                    <td style="padding-top: 20px;"></td>
+                    <td class="colsapn" colspan="2">
+                        <input type="file" class="pull-left">
+                        <button class="btn btn-default btn-thin">生成SKU</button>
+                    </td>
+                </tr>
+
+                <tr class="bg-padding">
+                    <td>购买链接：</td>
+                    <td>
+                    <!-- TODO:跟园宁确认一下设计图，然后进行布局 -->
+                        <div class="oa-article-info-container">
+                            
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-thin">上移</button>
+                        <button class="btn btn-default btn-thin">删除</button>
+                        <button class="btn btn-default btn-thin">下移</button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div><!-- 右侧搜索区 -->
+</div>
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- ng应用入口文件，相当于java中的main函数 -->
+<script src="scripts/app.js"></script>
+<!-- ng应用的控制器1 -->
+<script src="scripts/controllers/main.js"></script>
+<!-- ng应用的控制器2 -->
+<script src="scripts/controllers/about.js"></script>
+<!-- ng应用的控制器3 -->
+<script src="scripts/controllers/form.js"></script>
+<!-- ng应用的服务 -->
+<script src="scripts/services/services.js"></script>
+<!-- ng应用的指令 -->
+<script src="scripts/directives/directives.js"></script>
+<!-- ng应用的filter -->
+<script src="scripts/filters/filters.js"></script>
+<!-- endbuild -->
+</body>
+</html>

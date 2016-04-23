@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IE6、7提示</title>
+<style>
+*{
+    padding:0;
+    margin:0;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+}
+
+body{
+    background-color:rgba(36,72,115,.8);
+    color:#59cbf6;
+    font-size: 20px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+
+<!--[if lte IE 7]>
+<style type="text/css">
+#dd-ie6-mask {
+background: #F7F7F7;
+width: 100%;
+height: 1001px;
+position: absolute;
+bottom: auto;
+_top: expression(eval('document.documentElement.scrollTop'));
+left: 0;
+z-index: 9999;
+text-align: center;
+}
+#dd-ie6-mask a {
+min-width: 160px;
+display: inline-block;
+*display: inline;
+*zoom: 1;
+padding:0 30px;
+vertical-align: middle;
+border-right: 1px solid #d1d1d1;
+}
+#dd-ie6-mask .oops {
+margin: 48px auto 34px auto;
+}
+#dd-ie6-mask .warning {
+font-size: 18px;
+font-weight: bolder;
+color: #222;
+margin-bottom: 66px;
+}
+#dd-ie6-mask a.last {
+border-right: none;
+}
+</style>
+<div id="dd-ie6-mask">
+<div class="oops"><img src="http://img4.duitang.com/uploads/item/201508/31/20150831010959_sFS5M.thumb.700_0.jpeg" alt="oops" width=100 height=100></div>
+<p class="warning">您正在使用的浏览器版本过低，将不能正常浏览和使用调调。<br>如果您在使用双核浏览器，请切换到高速 / 极速 / 神速核心。</p>
+<div class="browser">
+<a href="http://windows.microsoft.com/zh-CN/internet-explorer/downloads/ie"><img src="http://t.diaox2.com/view/test/lyf/dd/images/icon_ie.png" alt="oops"><br> 升级至新版本的 IE 浏览器</a>
+<a href="http://www.google.com/chrome/"><img src="http://t.diaox2.com/view/test/lyf/dd/images/icon_chrome.png" alt="chrome"><br> 使用 Google Chrome 浏览器</a>
+<a class="last" href="#">直接进入调调 »</a>
+</div>
+</div>
+<![endif]-->
+你好
+</body>
+</html>

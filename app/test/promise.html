@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>primise用法</title>
+</head>
+<body>
+
+<p>100%正品</p>
+
+<script type="text/javascript">
+   
+   var url1 = "http://pic.to8to.com/attch/day_160218/20160218_d968438a2434b62ba59dH7q5KEzTS6OH.png";
+   var url2 = "http://pic.to8to.com/attch/day_160218/20160218_6410eaeeba9bc1b3e944xD5gKKhPEuEv.png";
+   var url3 = "http://www.popoho.com/d/file/wmmm/20160221/16_132419_8.jpg";
+   // function loadImg(url,cb){
+   //      var image = new Image();
+   //      image.onload = function(){
+   //          cb && cb();
+   //      }
+   //      image.src = url;
+   // }
+   // loadImg(url1,function(){
+   //    loadImg(url2,function(){
+   //      loadImg(url3,function(){
+   //          alert('all done...');
+   //      })    
+   //    })
+   //  })
+
+
+   /**********************************promise化************************************/
+   function loadImg(url){
+        return new Promise(function(resolve,reject){
+            try{
+                var image = new Image();
+                image.onload = function(){
+                    resolve(url);
+                }
+                image.src = url;
+            }catch(e){
+                reject(e);
+            }
+        })
+   }
+
+   loadImg(url1).then(loadImg(url2)).then(loadImg(url3)).then(function(url){
+        console.log(url);
+        console.log('all done...');
+   }).catch(function(e){
+        console.log(e);
+   });
+
+   // var promiseArray = [
+   //  loadImg(url1),
+   //  loadImg(url2),
+   //  loadImg(url3)
+   // ]
+
+   // Promise.all(promiseArray).then(function(url){
+   //      console.log(url);
+   //      console.log('all done...');
+   // }).catch(function(e){
+   //      console.log(e);
+   // })
+
+
+ 
+
+ // function test(){
+ //    return new Promise(function(resolve,reject){
+ //        try{
+ //            // alert(test2);
+ //            console.log('done...');
+ //            resolve(1);     
+ //        }catch(e){
+ //            reject(e);
+ //        }
+ //    })
+ // }
+
+ // function test(){
+ //    console.log('test');
+ // }
+ // var promiseArray = [];
+ // for(var i = 0;i<10;i++){
+ //    promiseArray.push(test());
+ // }
+
+ // Promise.all(promiseArray).then(function(val){
+ //    alert(val)
+ // }).catch(function(e){
+ //    console.log(e);
+ // })
+
+
+
+
+
+
+
+ // function sayHello(){
+ //    return new Promise(function(resolve,reject){
+ //        setTimeout(function(){
+ //            var val = 'hello promise';
+ //            alert(val);
+ //            resolve(val)
+ //        },5000)
+ //    })
+ // }
+ // sayHello().then(function(val){
+ //     console.log(val);
+ // })
+
+ // var promise = new Promise(function(resolve){
+ //    resolve(42);
+ // })
+ // promise.then(function(value){
+ //    console.log(value);
+ // }).catch(function(error){
+ //    console.error(error);
+ // })
+
+ // sayHello().then(function(val){
+ //    console.log(val);
+ // })
+    // function helloWorld(ready){
+    //     return new Promise(function(resolve,reject){
+    //         if(ready){
+    //             resolve('hello world!!');
+    //         }else{
+    //             reject('good bye!');
+    //         }
+    //     })
+    // }
+    // helloWorld(true).then(function(message){
+    //     alert(message);
+    // },function(error){
+    //     alert('error');
+    // })
+    
+// function printHello (ready) {
+//     return new Promise(function (resolve, reject) {
+//         if (ready) {
+//             resolve("Hello");
+//         } else {
+//             reject("Good bye!");
+//         }
+//     });
+// }
+
+// function printWorld () {
+//     alert("World");
+// }
+
+// function printExclamation () {
+//     alert("!");
+// }
+
+// printHello(true).then(function(message){
+//         alert(message);
+//     }).then(printWorld)
+//       .then(printExclamation);
+
+</script>    
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试appendChild能否删除元素</title>
+<style>
+    #d{
+        width:200px;
+        height: 200px;
+        background-color: red;
+    }
+    #d2{
+        width:50px;
+        height: 50px;
+        background-color:green;
+    }
+</style>
+</head>
+<body>
+<div id="d"></div>
+<div id="d2">I am d2</div>
+<div id="d3">I am d3 up</div>
+<div id="d3">I am d3 down</div>
+
+<form id="myForm" name="myForm">
+  <div>
+    <label for="username">Enter name:</label>
+    <input type="text" id="username" name="username">
+  </div>
+  <div>
+    <label for="useracc">Enter account number:</label>
+    <input type="text" id="useracc" name="useracc">
+  </div>
+  <div>
+    <label for="userfile">Upload file:</label>
+    <input type="file" id="userfile" name="userfile">
+  </div>
+<input type="submit" value="Submit!">
+</form>
+<script type="text/javascript">
+    
+    // var myForm = document.querySelector('form');
+    
+
+    // myForm.onsubmit = function(){
+    //     alert(2);
+    //     var formData = new FormData(myForm);
+    //     formData.append("username","李彦峰");
+    //     formData.append("useracc","455322185");
+    //     // return false;
+    // }
+
+// "use strict";
+// (function(){
+//     console.log("IIFE inner",this);
+//     function test(){
+//         console.log("this inner",this)
+//     }
+//     test();
+// })()
+
+// function test(a,b,c){
+//     console.log(test.length);
+//     console.log(test.arguments.length);
+//     console.log(test.arguments);
+//     var d;
+//     var d = 1000; // 第二个会忽略掉
+//     console.log(d);
+// }
+// test(997,998,999);
+
+// function outer(a,b,c){
+//     console.log(outer.arguments);
+//     function inner(){
+//         console.log(arguments.callee.caller.arguments);
+//     }
+//     inner();
+// }
+// outer(1,2,3);
+
+
+// "use strict";
+function outer(a,b,c){
+    // console.log(outer.arguments); // [1,2,3,4]
+    // console.log(outer.caller); // null
+    console.log(outer.length); // 3
+    console.log(outer.name); // outer
+    console.dir(arguments);
+    // console.dir(outer.arguments);
+    // console.log(arguments.callee);
+    function inner(){
+        // console.log(inner.arguments);
+        // console.log(inner.caller); //
+        console.log(inner.length); // 0
+        console.log(inner.name); // inner
+        // console.log(inner.caller.name); //
+        // console.log(arguments.callee.caller.arguments); // [1,2,3]
+    }
+    inner();
+}
+outer(1,2,3,4);
+
+
+// function Person(){
+//     var a = 2;
+//     this.a = a;
+//     return new Number(2);
+//     // return {
+//     //     name:"李彦峰",
+//     //     age:26
+//     // };
+// }
+// function Person(){
+//     var a = 2;
+//     this.hah = "hah";
+//     return {
+//        name:"李彦峰",
+//        a : a
+//     }
+// }
+// var p =  new Person();
+// console.dir(p);
+// console.log(p.name);
+
+
+// function Person(){
+//     this.name = "李彦峰";
+//     this.age = 26;
+// }
+// var p = new Person();
+// console.dir(p)
+
+"use strict";
+function test(a,b,c){
+    console.log(arguments);
+    a = 8;
+    console.log(arguments);
+    arguments[1] = 909;
+    console.log(b);
+    console.log(arguments);
+}
+test(1,2,4);
+
+
+function test2(){
+    var ret = "没有经过处理";
+    setTimeout(function(){
+        ret = "经过了处理";
+    })
+    return ret;
+}
+
+console.log(test2());
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试angular中的filter</title>
+</head>
+<body ng-app="myApp">
+<ul ng-controller="listCtrl">
+    <li ng-repeat="item in items" ng-click="delete($index,item)" ng-hide="hidden.value === $index">
+        <span ng-bind="item.title"></span>
+        <span ng-bind="item.price"></span>
+    </li>
+</ul>
+<script src="../../bower_components/angular/angular.js"></script>   
+<script type="text/javascript">
+    var myApp = angular.module('myApp',[]);
+    myApp.controller('listCtrl',function($scope){
+        var items = [{title:"title1",price:120},{title:"title2",price:23},{title:"title3",price:32234}]
+        $scope.items = items;
+        $scope.hidden = {value:null};
+        $scope.delete = function($index){
+            $scope.hidden.value = $index;
+        }
+    })
+</script>   
+</body>
+</html>

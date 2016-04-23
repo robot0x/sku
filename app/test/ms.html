@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="renderer" content="webkit" />
+<title>头部固定的表格</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css" />
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" ></script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js" ></script>
+<style>
+    body {
+        padding-top: 100px;
+    }
+    .textTable{
+        position: relative;
+    }
+    #goodsList {
+        padding: 0;
+        height: 400px;
+        overflow-y: scroll;
+    }
+    .fixTable thead {
+        background-color: #fff; 
+        /*position: absolute;*/
+        /*left: 0;*/
+        /*top: 0;*/
+    }
+</style>
+</head>
+<body>
+<div id="goodsList" class="col-xs-offset-3 col-xs-6">
+    <table id="textTable" class="table table-bordered scrollTable">
+        <thead>
+
+        <tr>
+            <th width="35%">姓名</th>
+            <th width="25%">年龄</th>
+            <th width="20%">性别</th>
+            <th width="10%">身高</th>
+            <th width="10%">体重</th>
+        </tr>
+        
+        </thead>
+
+        <tbody id="testTbody"></tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+
+        var html = '',
+            $ele = $('#testTbody');
+        for(var i = 0; i < 20; i++) {
+            html += "<tr><td>123456</td><td>12345</td><td>1234</td><td>123</td><td>12</td></tr>";
+        }
+        $ele.empty().append(html);
+        var id = '#goodsList';
+        var thead = $(id+" table thead");
+        var originTheadLeft = thead.offset.top;
+        var originTheadTop = thead.offset.left;
+        var table = $("#goodsList");
+        var rtbody = /<\s*tbody.*<\/\s*tbody\s*>/ig;
+        var theadhtml = table.html().replace(rtbody,'');
+        var newThead = $(theadhtml); 
+        console.log(theadhtml);
+        $(id).scroll(function(){
+            newThead.appendTo(document.body);
+        })
+           
+
+
+        // $(id).scroll(function() {
+            // var id = '#' + this.id;
+            // var scrollTop = $(id).scrollTop() || $(id).get(0).scrollTop,
+            //     style = {
+            //         'position': 'absolute',
+            //         'left': '0',
+            //         'right': '0',
+            //         'top': scrollTop + 'px'
+            //     };
+            // var th_width = [];
+            // $(id + ' .scrollTable th').each(function() {
+            //     th_width.push(this.offsetWidth);
+            // });
+            // if ($(id + ' .fixTable') && $(id + ' .fixTable').length) {
+            //     (scrollTop === 0) ? $(id + ' .fixTable').addClass('hidden') : $(id + ' .fixTable').removeClass('hidden');
+            //     $(id + ' .fixTable').find('th').each(function(i) {
+            //         // $(this).css('width', th_width[i] + 'px');  //注释掉这行在火狐下就不会抖动了
+            //     });
+            //     $(id + ' .fixTable').css(style);
+            // } else {
+            //     var html = $(id + ' .scrollTable thead').get(0).innerHTML;
+            //     var table = $('<table class="table table-bordered fixTable"><thead>' + html + '</thead></table>');
+            //     table.find('th').each(function(i) {
+            //         // $(this).css('width', th_width[i] + 'px');  //注释掉这行在火狐下就不会抖动了
+            //     });
+            //     table.css(style);
+            //     $(id).append(table);
+            // }
+        // }); 
+    })
+</script>
+</body>
+</html>

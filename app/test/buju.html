@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>研究布局</title>
+<style>
+*{
+  margin:0;
+  padding:0;
+}
+
+/*html{height:100%;}*/
+/*body{min-height:100%;position:relative;}*/
+/*.mask{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: red;
+}*/
+.confirm{
+  position: fixed;
+  z-index: 999;
+  height: 100px;
+  width: 100px;
+  background-color: green;
+  left: 50%;
+  top: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
+.footer-area{
+  position: fixed;
+  height: 200px;
+  width: 200px;
+  background-color: red;
+  right: 0;
+  top:0;
+}
+pre{
+  /*height: 10000px;*/
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+    <pre>
+      屈 原（七首）
+      万代千秋一圣贤，汨罗江水诉沉冤。
+      离骚天问兴三楚，魂起中华壮轩辕。
+      湖 畔
+    </pre>
+  <div class="footer-area">
+    <div class="confirm"></div>
+
+  </div>
+</div>
+  <!-- <div class="mask"> -->
+  <!-- </div> -->
+
+<script>
+</script>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+
+ for(var i = 0 ;i<100000;i++){
+    (function(i){
+      setTimeout(function(){
+          console.log(i);
+      },100)
+    })(i)
+ }
+
+
+  $(function(){
+    $.ajax({
+      url: "http://120.27.45.36:3000/v1/getalllist",
+      timeout: 20000,
+      method:'GET',
+      contentType:'application/json'
+    }).done(function(result){
+        console.log(result);
+    }).error(function(e){
+        console.log(e);
+    })
+  })
+</script>
+</body>
+</html>

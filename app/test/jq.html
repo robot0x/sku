@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jquery</title>
+<style type="text/css">
+    .d{
+        height:100px;
+        width: 100px;
+        background-color: red;
+        display: none;
+    }
+</style>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+</head>
+<body>
+<div class="d"></div>
+<button>切换状态</button>
+<script type="text/javascript">
+    $(function(){
+
+        var d = $('.d');
+        var button = $('button');
+        button.click(function(e){
+            console.log(e.clientX);
+            console.log(this.innerHTML);
+            d.show();
+        }).hover(function(){
+            $(this).css('backgroundColor','red');
+        },function(){
+            $(this).css('backgroundColor','green');
+        }).css('color','#fff');
+
+        button.on('click',function(e){
+            console.log(e.clientY);
+            console.log(this.innerHTML);
+        })
+
+    })
+</script>
+</body>
+</html>

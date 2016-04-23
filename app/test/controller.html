@@ -1,0 +1,116 @@
+<!-- <!DOCTYPE html>
+<html ng-app = 'test'>
+<head></head>
+<body ng-controller = 'testCtrl'>   
+<div ng-repeat="qq in obj.qqs">
+  <input class="qq" ng-model="obj.qqs[$index]" placeholder="请输入">;
+</div>
+<script src="../../bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+    angular.module('test',[])
+        .controller('testCtrl', ['$scope', function($scope){
+            $scope.obj = {
+                qqs: ["12345","23456"]
+            };
+        }]);
+</script>
+</body>
+</html>
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试异步更改model，是否更新到了view上</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="asyncCtrl">
+<input type="text" ng-model="name">
+<span ng-bind="name"></span>
+<ul>
+    <li ng-repeat="skill in skills">
+        <!-- <span ng-bind="skills[$index]"></span> -->
+        <span ng-bind="skill"></span>
+    </li>
+</ul>
+
+<div ng-controller="viewCtrl">
+    <input type="text" ng-model="test">
+</div>
+
+</div>
+<script src="../../bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+myApp.controller('viewCtrl',function($scope,$timeout){
+    $timeout(function(){
+        console.log($scope.test);
+    },5000)
+})
+myApp.controller('asyncCtrl',function($scope,$http,$timeout){
+    $scope.name = "hello";
+    // 在angular中的异步要使用根正苗红的 $timeout 服务
+    // $timeout(function(){
+    //     $scope.name = "world";
+    // },2000);
+
+    // 成功执行！
+    // $http({
+    //     url:"data.json",
+    //     method:"GET"
+    // }).success(function(data,status,headers,config){
+    //     console.log('success ...');
+    //     $scope.name = data[0].name;
+    // }).error(function(data,status,headers,config){
+    //     console.log('error');
+    // })
+
+    // 执行成功
+    // $http({
+    //   url: "data.json",
+    //   method:'GET',
+    //   // method:'POST',
+    //   timeout: 20000,
+    //   headers:{
+    //     "Content-Type":'application/json'
+    //   },
+    //   data:JSON.stringify({
+    //     'is_grey':false,
+    //     'request_methods':['feed_order_data']
+    //   })  
+    // }).then(function(result){
+    //     console.log('then success...');
+    //     console.log(result);
+    //     console.log(result.data);
+    //     $scope.name = result.data[0].name;
+    //     $scope.skills = result.data[0].skill;
+    // },function(e){
+    //     console.log(e);
+    // })
+    // $http({
+    //   url: "http://api.diaox2.com/v4/meta",
+    //   timeout: 20000,
+    //   method:'POST',
+    //   headers:{
+    //     "Content-Type":'application/json'
+    //   },
+    //   data:JSON.stringify({
+    //     'is_grey':false,
+    //     'request_methods':['feed_order_data']
+    //   })  
+    // }).then(function(result){
+    //     console.log(result.data);
+    //      $scope.name = result.data.state;
+    // },function(e){
+    //     console.log(e);
+    // })
+
+     $http.jsonp("http://c.diaox2.com/cms/diaodiao/pcsite/goodthing_feed_list.json?callback=cb").success(function(data){
+            console.log(data);
+     })
+
+})
+</script>
+</body>
+</html>

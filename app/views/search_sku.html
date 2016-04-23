@@ -1,0 +1,21 @@
+<div ng-controller="searchSKUCtrl">
+  <div class="form-group search-input">
+    <div class="input-group">
+      <span class="input-group-addon" ng-click="eventHandler.search()">走你</span>
+      <input type="text" class="form-control" placeholder="搜索SKU的名字 or 编号" required ng-model="query" ng-keyup="eventHandler.knockEnterKey($event)"></div>
+      <!-- <button class="yesterday" ng-click="eventHandler.yesterday()">昨天</button> -->
+      <!-- <button class="today" ng-click="eventHandler.today()">今天</button> -->
+      <!-- <button class="tomorrow" ng-click="eventHandler.tomorrow()">明天</button> -->
+  </div>
+  <div class="article-list-area">
+    <ul class="article-list" lazy-load>
+      <li ng-repeat="sku in cachedSkuList | filter:query" class="sku-item">
+        <p class="sku-item-title" >
+          <a href="{{sku.sid | sidToUrl}}" ng-bind="sku.title" target="_blank"></a>
+        </p>
+        <span ng-bind="sku.sid"></span>
+        <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku)">查看</button>
+      </li>
+    </ul>
+  </div>
+</div>

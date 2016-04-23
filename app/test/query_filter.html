@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body ng-app="MyApp">
+  <div ng-controller="MyCtrl">
+    <form class="form-inline">
+      <input ng-model="query" type="text"
+        placeholder="Filter by" autofocus>
+    </form>
+    <ul ng-repeat="friend in friends | filter:query | orderBy: 'name' ">
+      <li>{{friend.name}}</li>
+    </ul>
+  </div>
+<script src="../../bower_components/jquery/dist/jquery.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<script src="../../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="../../bower_components/angular-animate/angular-animate.js"></script>
+<script src="../../bower_components/angular-aria/angular-aria.js"></script>
+<script src="../../bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="../../bower_components/angular-messages/angular-messages.js"></script>
+<script src="../../bower_components/angular-resource/angular-resource.js"></script>
+<script src="../../bower_components/angular-route/angular-route.js"></script>
+<script src="../../bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="../../bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script type="text/javascript">
+var app = angular.module('MyApp',[])
+    app.controller("MyCtrl", function($scope) {
+      $scope.friends = [
+        { name: "Peter",   age: 20 },
+        { name: "Pablo",   age: 55 },
+        { name: "Linda",   age: 20 },
+        { name: "Marta",   age: 37 },
+        { name: "Othello", age: 20 },
+        { name: "Markus",  age: 32 }
+      ];
+    });
+</script>
+</body>
+</html>

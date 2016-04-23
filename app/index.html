@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>SKU管理系统</title>
+<meta name="description" content="调调SKU管理系统">
+<meta name="viewport" content="width=device-width">
+<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<!-- build:css(.) styles/vendor.css -->
+<!-- bower:css -->
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+<!-- endbower -->
+<!-- endbuild -->
+<!-- build:css(.tmp) styles/main.css -->
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="styles/lightbox.css">
+<base target="_blank">
+<!-- endbuild -->
+</head>
+<body ng-app="skuApp" style="height: 2000px;">
+
+<div class="wrapper clearfix" ng-controller="wrapperCtrl">
+   <div class="search-area pull-left">
+        <div class="search-btn">
+            <a class="btn btn-default" role="button" target="_self" ng-click="resetOperaAreaData()" href="#/search_article" ng-class="{'btn-primary':isActive('/search_article')}">搜索文章</a>
+            <a class="btn btn-default" role="button" target="_self" ng-click="resetOperaAreaData()" href="#/search_sku" ng-class="{'btn-primary':isActive('/search_sku')}">搜索SKU</a>
+
+        </div><!-- 搜索类型菜单 -->
+        <div ng-view></div>
+    </div><!-- 左侧搜索区 -->
+
+    <div class="operate-area pull-left" ng-controller="operaAreaCtrl">
+        <div class="search-btn pull-left">
+            <table class="opera-area-header">
+              <tr>
+                <td>
+                   <input type="text" class="form-control form-control-sm" placeholder="填写电商链接" ng-model="operaArea.dataFetch.link">
+                </td>
+                <td>
+                  <button class="btn btn-primary" ng-click="operaArea.eventHandler.generateSKU(operaArea.dataFetch.link)">生成SKU</button>
+                </td>
+                <td>
+                   <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
+                </td>
+              </tr>
+            </table>
+        </div>
+        <div class="search-btn pull-right">
+            <!-- <button class="btn btn-info" ng-click="operaArea.eventHandler.create()">新建</button> -->
+            <button class="btn btn-success" ng-click="operaArea.eventHandler.save()">保存</button>
+
+            <form id="cdnForm" action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+                <input type="hidden" name="refresh" ng-bind="operaArea.dataFetch.toRefreshCDN" id="cdn">
+                <button class="btn btn-warning" ng-click="operaArea.eventHandler.refreshCDN($event)">
+                <span class="glyphicon glyphicon-refresh"></span>
+                刷新CDN
+                </button>
+          </form>
+
+            
+
+            <!-- <button class="btn btn-warning" ng-click="operaArea.eventHandler.clear()">清除</button> -->
+        </div>
+        <p class="revarticles">关联文章：</p>
+        <table class="grid-table">
+            <tbody>
+                <!-- 关联文章 -->
+                <tr>
+                <!-- <tr ng-hide="operaArea.dataFetch.sid == null"> -->
+                    <td>SID：</td><td ng-bind="operaArea.dataFetch.sid"></td><td>
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" ng-model="operaArea.dataFetch.isOnline" ng-checked=" operaArea.dataFetch.status == 1 "> 是否上线
+                        </label>
+                      </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="article in articles">
+                    <td ng-bind="article.rowTitle"></td>
+                    <td>
+                        <a href="{{article.url}}" ng-bind="article.title | handleTitle" target="_blank"></a>
+                        <span ng-bind="article.cid | shortID" class="pull-right"></span>
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.cancelRelate(article)">取消关联</button>
+                        <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.findThis(article)">找到这篇</button>
+                    </td>
+                </tr>
+                <tr class="bg-padding">
+                    <td></td>
+                    <td>
+                         <input type="text" class="form-control form-control-sm" placeholder="输入文章ID号" ng-model="operaArea.articleID" ng-pattern="/^[\d\, ，]+\d*$/" ng-keyup="operaArea.eventHandler.knockEnterKey($event,operaArea.articleID)">
+                    </td>  
+                    <td>
+                        <button class="btn btn-primary btn-thin" ng-click="operaArea.eventHandler.addRelate(operaArea.articleID)">添加关联</button>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="required">
+                        商品名：
+                    </td>
+                    <td>
+                      <textarea  class="form-control form-control-sm" placeholder="取到的商品名（必填）" required ng-model="operaArea.dataFetch.title"></textarea>
+                      <input type="hidden" ng-model="operaArea.dataFetch.intro">
+                      <input type="hidden" ng-model="operaArea.dataFetch.extra">
+                      <input type="hidden" ng-model="operaArea.dataFetch.specs">
+                      <input type="hidden" ng-model="operaArea.dataFetch.type">
+                      <input type="hidden" ng-model="operaArea.dataFetch.tags">
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        价格：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（可以填写任意字符串）" ng-model="operaArea.dataFetch.price_str">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        价格(纯数字)：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（只能填写数字或小数）" ng-model="operaArea.dataFetch.price" ng-pattern="/^\d+\.?\d+$/">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="bg-padding">
+                    <td>
+                        品牌：
+                    </td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm" placeholder="请输入品牌" required ng-model="operaArea.dataFetch.brand">
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="bg-padding">
+                <!-- <tr class="bg-padding" ng-hide="operaArea.dataFetch.images == null || operaArea.dataFetch.images.length === 0"> -->
+                    <!-- 必填字段 -->
+                    <td class="required">
+                        商品图片：
+                    </td>
+                    <td class="colsapn" colspan="2">
+                        <div class="oa-article-img-container pull-left" ng-repeat="image in operaArea.dataFetch.images">
+                             <img ng-src="{{image.url}}" width="80" height="80" class="js-lightbox" data-source="{{image.url}}" data-group="group" ng-class="{notaliyun:operaArea.eventHandler.isNetImg(image.url)}">
+                             <div class="oa-article-img-oper">
+                                 <p class="left pull-left text-center" ng-click="operaArea.eventHandler.left(image)"><a>左</a></p>
+                                 <p class="center pull-left text-center" ng-click="operaArea.eventHandler.delete(image)"><a>删</a></p>
+                                 <p class="right pull-left text-center" ng-click="operaArea.eventHandler.right(image)"><a>右</a></p>
+                                 <p class="open text-center" ng-click="operaArea.eventHandler.openThisImage(image.url)"><a>打开</a></p>
+                             </div>
+
+                        </div>
+                    </td>
+                    <!-- <td ng-show="operaArea.dataFetch.uploadAllFlag"> -->
+                    <td ng-class="{disnone:operaArea.eventHandler.isAllNetImg(operaArea.dataFetch.images)}" style="padding:0">
+                        <button ng-click="operaArea.eventHandler.uploadAll(operaArea.dataFetch.images)">
+                        <!-- <span class="glyphicon glyphicon-cloud-upload"></span> -->
+                        上传所有图片
+                        </button>
+                    </td>
+                </tr>
+                
+                <tr class="bg-padding">
+                    <td>本地图上传：</td>
+                    <td colspan="2" style="padding-top: 40px;">
+                      <form action="http://120.27.45.36/uplocal_multi.php" target="upload" method="post" enctype="multipart/form-data">
+                            <input id="fileup" type="file" accept="image/*" name="foobar[]" multiple class="pull-left"/>
+                            <button type="submit" value="上传" class="pull-left" ng-click="operaArea.eventHandler.upload($event)"><span class="glyphicon glyphicon-cloud-upload"></span>上传</button>
+                      </form>
+                      <iframe name="upload" style="display:none"></iframe>
+                    </td>
+                </tr>
+
+                <tr class="bg-padding" style="border-top:1px red solid;border-bottom:1px red solid">
+                    <td class="required">购买链接：
+                    </td>
+                    <td colspan="2">
+
+                    <div class="input-group">
+
+                      <input type="text" class="form-control input-sm" placeholder="请输入文章ID" ng-keyup="operaArea.eventHandler.knockEnterKey($event,operaArea.cid,true)" ng-model="operaArea.cid" ng-pattern="/^\d+$/">
+
+                      <span class="input-group-addon" ng-click="operaArea.eventHandler.getAllBuyLink(operaArea.cid)">一键获取已有购买链接</span>
+
+                  </div>
+
+
+                    <button class="btn btn-info btn-thin" ng-click="operaArea.eventHandler.newBuylink()" style="margin-top:20px;">新建购买链接</button>
+
+                    <span style="display: block;" ng-hide="operaArea.dataFetch.sales == null || operaArea.dataFetch.sales.length === 0" class="saleslen">共{{operaArea.dataFetch.sales.length}}条购买链接</span>
+
+                        <div class="oa-article-buylinks">
+                           <div class="oa-article-buylink" ng-repeat="sale in operaArea.dataFetch.sales">
+                               <table id="buylink-table" cellspacing="0" cellpadding="0" border="1">
+                                   <tr>
+                                       <td>商城</td>
+                                       <td><input id="source" type="text" class="form-control form-control-sm no-margin no-margin" ng-model="sale.mart">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>链接</td>
+                                       <td>
+                                            <table style="width: 100%;">
+                                              <tr>
+                                                <td>移动返利链接</td>
+                                                <td>
+                                                  <textarea id="link" type="text" class="form-control form-control-sm no-margin" ng-model="sale.link_m_cps"></textarea>
+                                                 </td>
+                                              </tr>
+                                              <tr>
+                                                <td>PC返利链接</td>
+                                                <td>
+                                                  <textarea id="link" type="text" class="form-control form-control-sm no-margin" ng-model="sale.link_pc_cps"></textarea>
+                                                 </td>
+                                              </tr>
+                                            </table>
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>价格</td>
+                                       <td><input id="price" type="text" class="form-control form-control-sm no-margin" ng-model="sale.price" placeholder="价格（可以填写价格字符串）">
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td>说明</td>
+                                       <td><textarea type="text" class="form-control form-control-sm no-margin" ng-model="sale.intro"></textarea>
+                                       </td>
+                                   </tr>
+                                   <tr>
+                                       <td colspan="3">
+                                             <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.up(sale)">上移</button>
+                                             <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.delete2(sale)">删除</button>
+                                             <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.down(sale)">下移</button>
+                                       </td>
+                                   </tr>
+                               </table>
+                                 
+                           </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div><!-- 右侧操作区 -->
+
+  
+  <div class="generatesku-mask">
+           <div class="row">
+            <div class="new-buylink-area col-md-6">
+             <i class="close-cross" close></i>
+             <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">商品名</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="商品名" ng-model="generatesku.name">  
+                  </div>
+                  <div class="col-sm-2">
+                     <button type="submit" class="opera-replace btn btn-danger" ng-click="generatesku.replaceName($event,generatesku.name)">替换</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">价格</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="价格" ng-model="generatesku.price_str" placeholder="价格（可以填写价格字符串）">
+                  </div>
+                  <div class="col-sm-2">
+                     <button type="submit" class="opera-replace btn btn-danger" ng-click="generatesku.replacePriceStr($event,generatesku.price_str)">替换</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">价格(数字)</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" ng-model="generatesku.price" ng-pattern="/^\d+\.?\d*$/" placeholder="价格（只能填写数字或小数）">
+                  </div>
+                  <div class="col-sm-2">
+                     <button type="submit" class="opera-replace btn btn-danger" ng-click="generatesku.replacePrice($event,generatesku.price)">替换</button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">品牌</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="品牌" ng-model="generatesku.brand">
+                  </div>
+                  <div class="col-sm-2">
+                     <button type="submit" class="opera-replace btn btn-danger" ng-click="generatesku.replaceBrand($event,generatesku.brand)">替换</button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品图片</label>
+                    <div class="row col-sm-10">
+                      <ul>
+                        <li class="col-sm-4" class="text-align:center;" ng-repeat="img in generatesku.imgs">
+                         <img ng-src="{{img}}" alt="" height="83" widtg="83">
+                         <button type="submit" class="opera-use btn btn-default btn-xs" ng-click="generatesku.useImage($event,img)">使用</button>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-2">
+                    <button type="submit" class="btn btn-info" ng-click="generatesku.confirm()" style="width: 200px;">确认</button>
+                  </div>
+                  <div class="col-sm-offset-2 col-sm-2">
+                    <button type="submit" class="btn btn-warning" ng-click="generatesku.selectAll()" style="width: 200px;">选中所有</button>
+                  </div>
+                </div>
+                 <!-- <div class="col-sm-12 text-center">
+                   <span class="warning" ng-bind="generatesku.warning"></span>
+                </div> -->
+              </div>
+           </div>
+          </div>
+        </div>
+
+   <div class="new-buylink-mask">
+           <div class="row">
+            <div class="new-buylink-area col-md-6">
+             <i class="close-cross" close></i>
+             <div class="form-horizontal">
+                <div class="form-group">
+                  <label class="col-sm-2 control-label required">商城</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="商城" ng-model="mart">
+                    <small>淘宝，京东，shopbop，美国亚马逊，中国亚马逊等</small>
+                  </div>
+                </div>
+        
+                
+                <div class="form-group">
+                  <label class="col-sm-2 control-label required">移动返利链接</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" placeholder="移动返利链接" ng-model="link_m_cps"></textarea>
+                    <small>url由购买页中浏览器直接复制粘贴，url长度不操作255，格式如：http://item.m.jd.com/ware/view.action?wareId=1019913</small>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-2 control-label required">价格</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="价格（可以填写价格字符串）" ng-model="price">
+                    <small>格式前带上货币符号，人民币为￥：如￥899， 美元应该换算为人民币￥</small>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="col-sm-2 control-label required">说明</label>
+                  <div class="col-sm-10">
+                    <textarea  class="form-control" placeholder="说明" ng-model="intro"></textarea>
+                    <small>
+                        1. 淘宝——搜索结果页：
+                        淘宝卖家价格不一，大家可以自行鉴别购买
+                        <br>
+                        2 淘宝——代购：
+                        代购有风险，购买需谨慎
+                        <br>
+                        3. 美国亚马逊——可以直邮：
+                        可以直邮，直邮攻略见这里
+                        <br>
+                        4. 美国亚马逊——不能直邮：
+                        不能直邮，需要转运，转运攻略见这里
+                        <br>
+                        5.旅行——时效性
+                        旅行产品具有一定的时效性，下手要趁早哦~
+                        <br>
+                        6.日本亚马逊--转运攻略: 不能直邮，需要转运，日亚转运攻略见这里 
+                        攻略见这里 
+                        <br>
+                        为超链接效果，需要用固定格式：
+                        <br>
+                        <!-- <hr> -->
+                        不能直邮，需要转运，日亚转运攻略见
+                        &lt;a href=/view/app/?m=show&id=2127&ch=experience&gt;这里&lt;/a&gt;
+                        <br>
+                        <!-- <hr> -->
+                        可以直邮，直邮攻略见&lt;a href=/cms/diaodiao/articles/experience/459_459.html&gt;这里&lt;/a&gt;
+                        <br>
+                        <!-- <hr> -->
+                        不能直邮，需要转运，转运攻略见&lt;a href=/cms/diaodiao/articles/experience/116_116.html&gt;这里&lt;/a&gt;
+                    </small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label">PC返利链接</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" placeholder="PC返利链接" ng-model="link_pc_cps"></textarea>
+                    <small>如果pc和移动的购买链接不一致，需要单独补充pc的链接</small>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-2">
+                    <button type="submit" class="btn btn-warning" ng-click="newBuylink.confirm()">确认</button>
+                  </div>
+                  <div class="col-sm-8">
+                    <span ng-bind="warning" class="warning"></span> 
+                  </div>
+                </div>
+              </div>
+           </div>
+          </div>
+        </div>
+
+        <div class="loading-container">
+          <div class="loader--spinningDisc"></div>
+        </div>
+</div>
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- endbower -->
+<!-- endbuild -->
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/lightbox.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/filters/filters.js"></script>
+<script src="scripts/controllers/searchArticleCtrl.js"></script>
+<script src="scripts/controllers/searchSKUCtrl.js"></script>
+<script src="scripts/controllers/operaAreaCtrl.js"></script>
+<script src="scripts/controllers/wrapperCtrl.js"></script>
+<!-- endbuild -->
+</body>
+</html>

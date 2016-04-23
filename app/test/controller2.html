@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>controller之间数据共享</title>
+</head>
+<body ng-app="myApp">
+<div ng-controller="FirstCtrl">
+    <input type="text" ng-model="FirstName"><!-- Input entered here -->
+    <br>Input is : <strong>{{Data.FirstName}}</strong><!-- Successfully updates here -->
+</div>
+<hr>
+<div ng-controller="SecondCtrl">
+    Input should also be here: {{Data.FirstName}}<!-- How do I automatically updated it here? -->
+</div>
+
+<script src="../../bower_components/angular/angular.js"></script>
+<script type="text/javascript">
+    
+
+    // declare the app with no dependencies
+var myApp = angular.module('myApp', []);
+
+// myApp.factory('Data', function () {
+//     return { FirstName: '呵呵' };
+// });
+// myApp.controller('FirstCtrl', function ($scope, Data) {
+//     $scope.Data = Data;
+// });
+// myApp.controller('SecondCtrl', function ($scope, Data) {
+//     $scope.Data = Data;
+// });
+
+myApp.factory('Data', function () {
+
+    var data = {
+        FirstName: '呵呵'
+    };
+    return {
+        getFirstName: function () {
+            return data.FirstName;
+        },
+        setFirstName: function (firstName) {
+            data.FirstName = firstName;
+        }
+    };
+});
+
+myApp.controller('FirstCtrl', function ($scope, Data) {
+    $scope.firstName = '你好';
+    $scope.$watch('firstName', function (newValue, oldValue) {
+        console.log('changed');
+        if (newValue !== oldValue) Data.setFirstName(newValue);
+    });
+});
+
+myApp.controller('SecondCtrl', function ($scope, Data) {
+    $scope.$watch(function () { return Data.getFirstName(); }, function (newValue, oldValue) {
+        if (newValue !== oldValue) $scope.firstName = newValue;
+    });
+});
+
+</script>
+    
+</body>
+</html>

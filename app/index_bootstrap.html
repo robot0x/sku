@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>SKU管理系统</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="styles/main_bootstrap.css">
+</head>
+<body ng-app="skuApp">
+<!-- 页面主容器 -->
+  <div class="container-fluid">
+  <!-- 页面大布局，左边5，右边7 -->
+      <div class="row border">
+          <div class="col-md-5 padding-top">
+           <div class="row">
+            <form class="form-horizontal search-area" role="form">
+             <div class="form-group search-btn">
+             <div class="col-md-3">
+                <button class="btn btn-default">搜索文章</button>
+             </div>
+             <div class="col-md-9">
+                <button class="btn btn-default">搜索SKU</button>
+             </div>
+             </div>
+              <div class="form-group search-input" style="margin-bottom:5px;">
+                  <div class="input-group">
+                    <span class="input-group-addon">走你</span>
+                    <input type="text" class="form-control" placeholder="搜索文章标题 or ID" required>
+                  </div>
+              </div>
+              <div class="form-group annotation">
+                <div class="row">
+                  <div class="col-md-4" style="border-right:2px #efeff4 solid;">
+                    <a class="btn btn-link text-right">未标注（100）</a>
+                  </div>
+                  <div class="col-md-8">
+                    <a class="btn btn-link">已标注（1001）</a>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group atricle-and-sku">
+                <div class="row">
+                  <div class="col-md-3">
+                    <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="100" height="100">
+                  </div>
+                  <div class="col-md-9">
+                    <p>这是一个文章标题</p>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> 关联这篇
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <ul class="col-md-12 sku">
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn btn-success btn-width">新建购买链接</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group atricle-and-sku">
+                <div class="row">
+                  <div class="col-md-3">
+                    <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="100" height="100">
+                  </div>
+                  <div class="col-md-9">
+                    <p>这是一个文章标题</p>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> 关联这篇
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <ul class="col-md-12 sku">
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn btn-success btn-width">新建购买链接</button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group atricle-and-sku">
+                <div class="row">
+                  <div class="col-md-3">
+                    <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="100" height="100">
+                  </div>
+                  <div class="col-md-9">
+                    <p>这是一个文章标题</p>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox"> 关联这篇
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <ul class="col-md-12 sku">
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                    <li>
+                       <div class="row">
+                         <div class="col-md-4">
+                          中国亚马逊
+                         </div>
+                         <div class="col-md-8">
+                            ￥119
+                         </div>  
+                       </div>
+                       <div class="row">
+                         <div class="col-md-4">
+                          亚马逊第三方卖家
+                         </div>
+                         <div class="col-md-offset-2 col-md-6">
+                            <button class="btn btn-info btn-sm">生成SKU</button>
+                         </div>  
+                       </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <button class="btn btn-success btn-width">新建购买链接</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+           </div>
+        </div><!-- 搜索区 -->
+
+        <div class="col-md-7 padding-top">
+          <div class="row">
+            <form class="form-horizontal operate-area" role="form">
+              <div class="form-group save-and-clear">
+                <div class="col-md-9 text-right">
+                  <button class="btn btn-success">保存</button>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-warning">清除</button>
+                </div>
+              </div>
+
+
+              <div class="form-group oa-article-and-link">
+                
+                  <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            关联文章：
+                          </div>
+                          <div class="col-md-7">
+                            一个文章的标题
+                          </div>
+                          <div class="col-md-1">
+                            <button class="btn btn-default btn-sm btn-thin">取消关联</button>
+                          </div>
+                        </div>
+                        <div class="row oa-article">
+                          <div class="col-md-7 col-md-offset-4">
+                            一个文章的标题
+                          </div>
+                          <div class="col-md-1">
+                            <button class="btn btn-default btn-sm btn-thin">取消关联</button>
+                          </div>
+                        </div>
+
+                        <div class="row oa-article">
+                          <div class="col-md-7 col-md-offset-4">
+                            <input type="text" class="form-control input-thin" placeholder="输入文章ID号" required="">
+                          </div>
+                          <div class="col-md-1">
+                            <button class="btn btn-primary btn-sm btn-thin">添加关联</button>
+                          </div>
+                        </div>
+
+                        <div class="row oa-article">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            链接：
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" class="form-control input-thin" placeholder="填写一个链接（京东、中国亚马逊）" required>
+                          </div>
+                          <div class="col-md-1">
+                            <button class="btn btn-primary btn-sm btn-thin">
+                            生成SKU</button>
+                          </div>
+                        </div>
+
+                        <div class="row oa-article-bg">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            商品名：
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" class="form-control input-thin" placeholder="收到的商品名" required>
+                          </div>
+                        </div>
+
+                        <div class="row oa-article">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            价格：
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" class="form-control input-thin" placeholder="填写价格" required="">
+                          </div>
+                        </div>
+
+                        <div class="row oa-article-bg">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            分类：
+                          </div>
+                          <div class="col-md-7">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <label for="exampleInputEmail1">一级</label>
+                                <select class="form-control input-thin">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="exampleInputEmail1">二级</label>
+                                <select class="form-control input-thin">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+
+                        <div class="row oa-article-bg">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            品牌：
+                          </div>
+                          <div class="col-md-7">
+                            <div class="row">
+                              <div class="col-md-6">
+                                <label for="exampleInputEmail1">中文</label>
+                                <select class="form-control input-thin">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                                <small>
+                                  任选其一填写或全填
+                                </small>
+                              </div>
+                              <div class="col-md-6">
+                                <label for="exampleInputEmail1">英文</label>
+                                <select class="form-control input-thin">
+                                  <option>1</option>
+                                  <option>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                         <div class="row oa-article-bg">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            价格：
+                          </div>
+                          <div class="col-md-7">
+                            <input type="text" class="form-control input-thin" placeholder="填写价格" required="">
+                          </div>
+                        </div>
+
+                        <div class="row oa-article-bg">
+                          <div class="col-md-3 col-md-offset-1 text-right">
+                            商品图片：
+                          </div>
+                          <div class="col-md-2">
+                           <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" alt="" width="80" height="80">
+                           <button class="btn-custom-sm">左</button>
+                           <button class="btn-custom-sm">删</button>
+                           <button class="btn-custom-sm">右</button>
+
+                          </div>
+                          <div class="col-md-2">
+                           <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" alt="" width="80" height="80">
+                          </div>
+                          <div class="col-md-2">
+                           <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" alt="" width="80" height="80">
+                          </div>
+                          <div class="col-md-2">
+                           <img src="http://a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" alt="" width="80" height="80">
+                          </div>
+                        </div>
+
+                    </div>
+                  </div>
+
+              </div>
+            </form>
+          </div>
+        </div>
+    </div><!-- 页面大布局，左边5，右边7 -->
+  </div><!-- 页面主容器 -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!-- ng应用入口文件，相当于java中的main函数 -->
+<script src="scripts/app.js"></script>
+<!-- ng应用的控制器1 -->
+<script src="scripts/controllers/main.js"></script>
+<!-- ng应用的控制器2 -->
+<script src="scripts/controllers/about.js"></script>
+<!-- ng应用的控制器3 -->
+<script src="scripts/controllers/form.js"></script>
+<!-- ng应用的服务 -->
+<script src="scripts/services/services.js"></script>
+<!-- ng应用的指令 -->
+<script src="scripts/directives/directives.js"></script>
+<!-- ng应用的filter -->
+<script src="scripts/filters/filters.js"></script>
+<!-- endbuild -->
+</body>
+</html>
