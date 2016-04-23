@@ -470,11 +470,19 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
                showLoading();
 
-
-
                var sid = dataFetch.sid; // SKU id
                var articles = $scope.articles; // 关联文章列表 
-               var isOnline = dataFetch.isOnline == null ? false : dataFetch.isOnline; // 是否上线
+               var isOnline =  false; // 是否上线
+               
+               var isOnlineDOM = document.getElementById('isOnline');
+               
+               if(isOnlineDOM.checked){
+                 isOnline = true;
+               }
+
+               console.log("dataFetch.isOnline：",dataFetch.isOnline);
+
+
                var isOnline_ori = dataFetch.isOnline; // 是否上线
               
                var brand = dataFetch.brand; // 品牌
@@ -482,9 +490,13 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                // 是否是更新已有数据
                var isUpdate = sid == null ? false : true;
 
-               var status = isOnline ? 1 : 0;
+               var status = 0;
 
+               console.log(isOnline);
 
+               if(isOnline){
+                 status = 1;
+               }
               
 
                // console.log(isUpdate);
