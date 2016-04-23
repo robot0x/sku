@@ -45,7 +45,6 @@ ul,li{
 }
 .list-item{
   background-color:#F5F5F5;
-  position:relative;
 }
 .tag{
   display: none;
@@ -318,4 +317,22 @@ input.ng-dirty.ng-invalid {
 .saleslen{
   display: block;
   margin-top: 20px;
+}
+.gocms{
+  position:absolute;
+  left: 120px;
+  top:30%;
+  color: #fff;
+  width: 60px;  
+  background-color: #e60012;
+  font-size: 14px;
+  border-radius:4px;  
+  text-decoration: none;
+}
+.gocms:hover,.gocms:focus{
+      color: #fff;
+    text-decoration: none;
+}
+.rel{
+  position:relative;
 }

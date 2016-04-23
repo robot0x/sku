@@ -11,6 +11,7 @@ skuAppFilters.filter('imgUrlFilter',function(){
 
 skuAppFilters.filter('shortID',function(){
     return function(item){
+        // console.log(item & 0xffff);
         return item & 0xffff;
     }
 });
@@ -34,5 +35,11 @@ skuAppFilters.filter('handleTitle',function(){
 skuAppFilters.filter('sidToUrl',function(){
     return function(sid){
         return "http://z.diaox2.com/view/app/?m=sku&id="+sid;
+    }
+});
+
+skuAppFilters.filter('idToCMSUrl',function(){
+    return function(cid){
+        return "http://42.96.166.118/node/"+ cid;
     }
 });
