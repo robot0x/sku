@@ -56,7 +56,8 @@ ul,li{
   width: 60px;
   text-align: center;
   right:0;
-  top:30%;
+  // top:30%;
+  top:80px;
   background-color:#00CCCC;
   color:#fff;
   transform: translateY(-50%);
@@ -321,7 +322,7 @@ input.ng-dirty.ng-invalid {
 .gocms{
   position:absolute;
   left: 120px;
-  top:30%;
+  top:80px;
   color: #fff;
   width: 60px;  
   background-color: #e60012;
@@ -330,7 +331,7 @@ input.ng-dirty.ng-invalid {
   text-decoration: none;
 }
 .gocms:hover,.gocms:focus{
-      color: #fff;
+    color: #fff;
     text-decoration: none;
 }
 .rel{

@@ -226,7 +226,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
               if(data.name){
                 $scope.operaArea.dataFetch.title = data.name;
               }
-              if(data.images && data.images.length){
+              if(images && images.length){
                 $scope.operaArea.dataFetch.images = images;
               }
               if(data.brand){
@@ -255,6 +255,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             //     // 防止冲掉”一键获取已有购买链接“生成的sales
             //     sales:sales
             // }
+            
           }else{
              $scope.operaArea.dataFetch = {
                 price:data.price,
@@ -473,9 +474,9 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                var sid = dataFetch.sid; // SKU id
                var articles = $scope.articles; // 关联文章列表 
                var isOnline =  false; // 是否上线
-               
+
                var isOnlineDOM = document.getElementById('isOnline');
-               
+
                if(isOnlineDOM.checked){
                  isOnline = true;
                }
@@ -483,7 +484,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                console.log("dataFetch.isOnline：",dataFetch.isOnline);
 
 
-               var isOnline_ori = dataFetch.isOnline; // 是否上线
+               // var isOnline_ori = dataFetch.isOnline; // 是否上线
               
                var brand = dataFetch.brand; // 品牌
 
