@@ -255,7 +255,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             //     // 防止冲掉”一键获取已有购买链接“生成的sales
             //     sales:sales
             // }
-            
+
           }else{
              $scope.operaArea.dataFetch = {
                 price:data.price,

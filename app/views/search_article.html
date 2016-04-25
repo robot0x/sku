@@ -13,8 +13,9 @@
         <ul class="article-list" lazy-load>
             <li class="article" ng-repeat="article in cachedArticles">
                 <div ng-class="{'list-item': article.cid === article.threeD}" class="rel">
+                    <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}">
                     <!-- <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}" data-short-id="{{ article.cid | shortID }}"> -->
-                    <div class="article-title-and-pic clearfix">
+                    <!-- <div class="article-title-and-pic clearfix"> -->
                         <img ng-src="{{article.thumb_image_url | imgUrlFilter}}" width="100" height="100" class="pull-left">
                         <h3 class="pull-left">
                             <a href="{{article.url}}" target="_blank" ng-bind="article.title | handleTitle"></a>
