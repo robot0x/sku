@@ -215,12 +215,14 @@
                                                 <td>
                                                   <textarea id="link" type="text" class="form-control form-control-sm no-margin" ng-model="sale.link_m_cps"></textarea>
                                                  </td>
+                                                 <td ng-hide="sale.link_m_cps == null || sale.link_m_cps == ''"><input type="button" value="生成" ng-click="operaArea.eventHandler.m_cps(sale.link_m_cps)"></td>
                                               </tr>
                                               <tr>
                                                 <td>PC返利链接</td>
                                                 <td>
                                                   <textarea id="link" type="text" class="form-control form-control-sm no-margin" ng-model="sale.link_pc_cps"></textarea>
                                                  </td>
+                                                 <td  ng-hide="sale.link_pc_cps == null || sale.link_pc_cps == ''"><input type="button" value="生成" ng-click="operaArea.eventHandler.pc_cps(sale.link_pc_cps)"></td>
                                               </tr>
                                             </table>
                                        </td>

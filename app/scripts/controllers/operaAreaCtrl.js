@@ -379,8 +379,36 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
       }
       return true;
     }
+    function parse(link,callback){
+      $http({
+          url:"http://s4.a.dx2rd.com/blsvr/parse",
+          method:"POST",
+          timeout:20000,
+          headers:{"Content-Type":"application/json"},
+          data:JSON.stringify({
+            url:link
+          })
+       }).then(function(result){
+          console.log(result);
+          if(callback){
+            callback(result);
+          }
+       })
+    }
     $scope.operaArea = {
         eventHandler:{
+            m_cps:function(m_cps_link){
+              alert(m_cps_link);
+              parse(m_cps_link,function(result){
+                console.log(result);
+              })
+            },
+            pc_cps:function(pc_cps_link){
+              alert(pc_cps_link)
+              parse(pc_cps_link,function(result){
+                console.log(result);
+              })
+            },
             getAllBuyLink:function(cid){
                 cid = toLongCid(cid);
                 showLoading();
