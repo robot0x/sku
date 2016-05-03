@@ -90,7 +90,7 @@ ul,li{
 }
 .revarticles{
   position:absolute;
-  top:104px;
+  top:142px;
   display: none;
 }
 .operate-area .search-btn{
@@ -336,4 +336,10 @@ input.ng-dirty.ng-invalid {
 }
 .rel{
   position:relative;
+}
+.modifiedBy-container{
+  margin-bottom: 10px;
+}
+#modifiedBy{
+  width: 300px;
 }

@@ -158,9 +158,9 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
                 this.search();
             }
         },
-        view:function(sku){
+        view:function(sid){
             // 发射viewSKU事件。在operaAreaCtrl.js中接收
-            $rootScope.$emit('viewSKU',sku);
+            $rootScope.$emit('viewSKU',sid);
             console.log(sku);
         }
     }

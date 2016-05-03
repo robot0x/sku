@@ -30,6 +30,12 @@
     </div><!-- 左侧搜索区 -->
 
     <div class="operate-area pull-left" ng-controller="operaAreaCtrl">
+
+        <div class="modifiedBy-container">
+          <span>修改人：</span><input type="text" placeholder="英文姓名或拼音，最少2位，最多8位。如LYN" id="modifiedBy">
+        </div>
+
+
         <div class="search-btn pull-left">
             <table class="opera-area-header">
               <tr>
@@ -56,9 +62,6 @@
                 刷新CDN
                 </button>
           </form>
-
-            
-
             <!-- <button class="btn btn-warning" ng-click="operaArea.eventHandler.clear()">清除</button> -->
         </div>
         <p class="revarticles">关联文章：</p>
@@ -100,7 +103,7 @@
                         商品名：
                     </td>
                     <td>
-                      <textarea  class="form-control form-control-sm" placeholder="取到的商品名（必填）" required ng-model="operaArea.dataFetch.title"></textarea>
+                      <textarea  class="form-control form-control-sm" placeholder="取到的商品名（必填）" required ng-model="operaArea.dataFetch.title" id="title"></textarea>
                       <input type="hidden" ng-model="operaArea.dataFetch.intro">
                       <input type="hidden" ng-model="operaArea.dataFetch.extra">
                       <input type="hidden" ng-model="operaArea.dataFetch.specs">
@@ -114,17 +117,17 @@
                         价格：
                     </td>
                     <td>
-                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（可以填写任意字符串）" ng-model="operaArea.dataFetch.price_str">
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（可以填写任意字符串）" ng-model="operaArea.dataFetch.price_str" id="price_str">
                     </td>
                     <td></td>
                 </tr>
 
                 <tr>
                     <td>
-                        价格(纯数字)：
+                        价格(数字)：
                     </td>
                     <td>
-                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（只能填写数字或小数）" ng-model="operaArea.dataFetch.price" ng-pattern="/^\d+\.?\d+$/">
+                        <input type="text" class="form-control form-control-sm" placeholder="填写价格（只能填写数字或小数）" ng-model="operaArea.dataFetch.price" id="price">
                     </td>
                     <td></td>
                 </tr>
@@ -159,7 +162,7 @@
                     </td>
                     <!-- <td ng-show="operaArea.dataFetch.uploadAllFlag"> -->
                     <td ng-class="{disnone:operaArea.eventHandler.isAllNetImg(operaArea.dataFetch.images)}" style="padding:0">
-                        <button ng-click="operaArea.eventHandler.uploadAll(operaArea.dataFetch.images)">
+                        <button ng-click="operaArea.eventHandler.uploadAll(operaArea.dataFetch.images)" id="uploadAll">
                         <!-- <span class="glyphicon glyphicon-cloud-upload"></span> -->
                         上传所有图片
                         </button>
@@ -245,6 +248,16 @@
                         </div>
                     </td>
                 </tr>
+
+               <!--  <tr class="bg-padding">
+                    <td>
+                        修改人：
+                    </td>
+                    <td colspan="2">
+                        <input type="text" class="form-control form-control-sm" placeholder="英文姓名或拼音，最少2位，最多8位。如LYN" required id="modifiedBy">
+                    </td>
+                </tr>
+                 -->
             </tbody>
         </table>
 

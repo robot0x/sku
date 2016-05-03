@@ -187,25 +187,37 @@ function($scope,
     }
     $rootScope.$on('updateSKU',function(event,sku){
         // console.log(sku);
+
+        // 操作区发送过来的文章长ID
         var revarticles = sku.revarticles;
         // console.log(revarticles);
         if(revarticles){
+            // 左侧已经存在的文章
             var articles = $scope.cachedArticles;
+
+            // console.log("$scope.cachedArticles：",$scope.cachedArticles.length);
+            
             revarticles.forEach(function(cid){
+
                 articles.forEach(function(article){
+                    // console.log(article.cid & 0xffffff);
                     // 找到被更新的文章
                     if(article.cid == cid){
                         // console.log('done');
                         // 取出被更新文章的skuList
+                        // TODO:解决专刊的bug
                         var skuList = article.skuList;
+                        console.log(skuList);
                         if(skuList){
                             // 找到被更新的sku，替换之
                             skuList.forEach(function(each,index){
                                 // 如果已经有了，就替换
                                 if(each.sid == sku.sid){
+                                    console.log('replace');
                                     skuList.splice(index,1,sku);
                                 }else{
                                     // 如果还没有，说明是新增的sku
+                                    console.log('push');
                                     skuList.push(sku);
                                 }
                             })
@@ -216,6 +228,11 @@ function($scope,
             })
         }
     })
+    $rootScope.$on('addNewSKU',function(event,data){
+        var revarticles = data.revarticles;
+        console.log('addNewSKU:',data);
+        console.log('addNewSKU:',revarticles);
+    });
     $rootScope.$on('findThis',function(event,article){
         var articles = $scope.cachedArticles;
         for(var i = 0 ,l = articles.length;i<l;i++){
@@ -515,7 +532,6 @@ function($scope,
             var day = leftZero(date.getDate() + go);
             var timeStr = year + month + day;
             var start = timeStr,end = timeStr;
-            console.log("timeStr:",timeStr);
             var title = "";
             if(go > 0){
                 title = "\"明天\"";
@@ -538,7 +554,6 @@ function($scope,
                         title:[item.title.replace(/<br\s*\/>/ig,"")],
                         skuList:[]
                     }
-                    console.log(item);
                     articles.push(article);
                     var sidList = alllist[article.cid];
                     if(sidList){
@@ -552,7 +567,7 @@ function($scope,
                                }).then(function(sku){
                                     // console.log(sku.data.data);
                                     article.skuList.push(sku.data.data[0]);
-                                    hideLoading(title+"的数据获取成功");
+                                    hideLoading(title+"的数据拉取成功");
                                }).catch(function(e){
                                     console.log(e);
                                     hideLoading('未能取到'+title+"的数据，请重试");
@@ -583,9 +598,9 @@ function($scope,
                 this.search();
             }
         },
-        view:function(sku,article){
+        view:function(sid){
             // 发射viewSKU事件。在operaAreaCtrl.js中接收
-            $rootScope.$emit('viewSKU',sku);
+            $rootScope.$emit('viewSKU',sid);
         }
     }
 

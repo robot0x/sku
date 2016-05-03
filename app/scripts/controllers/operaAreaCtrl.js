@@ -81,16 +81,12 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
            headers:headers
         }).then(function(result){
 
-            console.log(result);
-            console.log(JSON.stringify(result.data.res.specified_meta_data.meta_infos))
+            // console.log(result);
 
             var meta_infos = result.data.res.specified_meta_data.meta_infos;
 
-            console.log(meta_infos);
-
             // 如果使用v4/meta拿不到数据的话，就使用 m=meta 再次拿一次
             if( !meta_infos || meta_infos.length === 0){
-
 
               $http({
                   url:"http://z.diaox2.com/view/app/?m=meta",
@@ -108,7 +104,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                           articles.push({
                             cid:item.serverid,
                             thumb_image_url: item.thumb,
-                            url:"http://c.diaox2.com"+item.oriURL,
+                            // bug fix
+                            url:"http://c.diaox2.com"+item.oriUrl,
                             title:[item.title],
                             thumb_image_url:item.cover
                          })
@@ -164,47 +161,114 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
       $rootScope.revarticles = articles;
     }
 
-    // 触发viewSKU事件。发自searchArticleCtrl.js | searchSKUCtrl.js
-     $rootScope.$on('viewSKU',function(event,sku){
-        $scope.operaArea.dataFetch = {
-            price:sku.price,
-            price_str:sku.price_str,
-            title:sku.title,
-            images:sku.images,
-            sid:sku.sid,
-            template:sku.template,
-            sales:sku.sales,
-            brand:sku.brand,
-            intro:sku.intro,
-            extra:sku.extra,
-            specs:sku.specs,
-            type:sku.type,
-            tags:sku.tags,
-            status:sku.status
-        }
 
-        console.log(sku.sales);
+     $scope.$watch('operaArea.dataFetch',function(){
+        // console.log("changed");
+        // console.log($scope.operaArea.dataFetch);
 
-        var netImg = filterNetImg(sku.images);
-
-        $scope.operaArea.cid = null;
-
-        if(netImg.length > 0){
-          $scope.operaArea.dataFetch.uploadAllFlag = true;
+        if($scope.operaArea.dataFetch == null){
+          // console.log('false')
+          $rootScope.isChanged = false;
         }else{
-          $scope.operaArea.dataFetch.uploadAllFlag = false;
+          // console.log('true')
+          $rootScope.isChanged = true;
         }
 
-        console.log("查看的SKU：",sku);
-       // 根据sku的关联文章id拿到文章meta
-       getArticles(sku.revarticles,function(meta_infos){
-          // 显示在右侧操作区
-          showArticles(meta_infos);
-          // 给关联文章添加3D效果。在searchArticleCtrl.js中接收
-          $rootScope.$emit('addThreeD',$scope.articles);
-          // $rootScope.$emit('addThreeD',result.data.res.specified_meta_data.meta_infos);
+     },true)
+
+    // 触发viewSKU事件。发自searchArticleCtrl.js | searchSKUCtrl.js
+     $rootScope.$on('viewSKU',function(event,sid){
+
+       // var isChanged = $rootScope.isChanged;
+       // if(isChanged != null && isChanged){
+       //    console.log(isChanged);
+       //    if(!confirm('内容已经修改但并未保存，是否强制跳转？')){
+       //      return;
+       //    }
+       // }else{
+       //   $rootScope.isChanged = false;
+       // }
+       $http({
+          url:"http://120.27.45.36:3000/v1/getfullsku/"+sid,
+          method:"GET",
+          timeout:20000,
+          headers:{"Content-Type":"application/json"}
+       }).then(function(result){
+
+          // console.log(result);
+          var upperData = result.data;
+          var data;
+          var sku;
+          if(upperData.state === "SUCCESS"){
+            data = upperData.data;
+            if(data && data.length){
+              sku = data[0];
+            }else{
+              tip('没有SKU，请重试');
+              return;
+            }
+            console.log();
+            if(sku){
+              $scope.operaArea.dataFetch = sku;
+            }
+
+          }else{
+            var message = upperData.message;
+            var info = 'SKU获取失败，请重试。'
+            if(message){
+              info += "信息：" + message;
+            }
+            tip(info);
+            return;
+          }
+
+          // $scope.operaArea.dataFetch = {
+          //     price:sku.price,
+          //     price_str:sku.price_str,
+          //     title:sku.title,
+          //     images:sku.images,
+          //     sid:sku.sid,
+          //     template:sku.template,
+          //     sales:sku.sales,
+          //     brand:sku.brand,
+          //     intro:sku.intro,
+          //     extra:sku.extra,
+          //     specs:sku.specs,
+          //     type:sku.type,
+          //     tags:sku.tags,
+          //     status:sku.status
+          // }
+          // console.log(sku.sales);
+          console.log("查看的SKU：",sku);
+
+          var netImg = filterNetImg(sku.images);
+
+          $scope.operaArea.cid = null;
+
+          if(netImg.length > 0){
+            $scope.operaArea.dataFetch.uploadAllFlag = true;
+          }else{
+            $scope.operaArea.dataFetch.uploadAllFlag = false;
+          }
+
+         // 根据sku的关联文章id拿到文章meta
+         getArticles(sku.revarticles,function(meta_infos){
+            // 显示在右侧操作区
+            showArticles(meta_infos);
+            // 给关联文章添加3D效果。在searchArticleCtrl.js中接收
+            $rootScope.$emit('addThreeD',$scope.articles);
+            // $rootScope.$emit('addThreeD',result.data.res.specified_meta_data.meta_infos);
+         })
+
+       }).catch(function(e){
+          console.error(e);
        })
      })
+
+
+
+
+
      $scope.$on('toOperaAreaDate',function(event,data){
           // console.log(data);
           var images = data.imgs;
@@ -232,30 +296,12 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
               if(data.brand){
                 $scope.operaArea.dataFetch.brand = data.brand;
               }
-            
               $scope.operaArea.dataFetch.extra = data.extra;
               $scope.operaArea.dataFetch.specs = data.specs;
               $scope.operaArea.dataFetch.type = data.type;
               $scope.operaArea.dataFetch.tags = data.tags;
               $scope.operaArea.dataFetch.status = data.status;
               $scope.operaArea.dataFetch.sales = $scope.operaArea.dataFetch.sales;
-              
-            //   $scope.operaArea.dataFetch = {
-            //     price:data.price,
-            //     price_str:data.price_str,
-            //     title:data.name,
-            //     images:images,
-            //     brand:data.brand,
-            //     intro:data.intro,
-            //     extra:data.extra,
-            //     specs:data.specs,
-            //     type:data.type,
-            //     tags:data.tags,
-            //     status:data.status,
-            //     // 防止冲掉”一键获取已有购买链接“生成的sales
-            //     sales:sales
-            // }
-
           }else{
              $scope.operaArea.dataFetch = {
                 price:data.price,
@@ -275,18 +321,10 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
           }
      })
      $scope.$on('newBuylink',function(event,data){
-      // Object {mall: "2", link: "3", price: "4", price_str: "4", desc: "5"}
-      // console.log(data);
-      // var dataFetch = $scope.operaArea.dataFetch;
-
       if(!$scope.operaArea.dataFetch){
         $scope.operaArea.dataFetch = {};
       }
-      
-      console.log($scope.operaArea.dataFetch);
-
       var sales = $scope.operaArea.dataFetch.sales;
-      
       if(sales && sales.length){
         sales.push({
            link_pc_cps:data.link_pc_cps || null,
@@ -318,17 +356,16 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
      */
      function filterNetImg(images){
         var netImg = [];
-        var rnetImg = /^\s*(https?:\/\/)?content\.image\.alimmdn\.com\/sku\//ig
+                      // http://content.image.alimmdn.com/sku/1461574365352938_jpg.jpeg
+        // fix bug 去掉 g ，详见 http://my.oschina.net/ffwcn/blog/276949?fromerr=tCyOJ0zn
+        // var rnetImg = /^\s*(https?:\/\/)?content\.image\.alimmdn\.com\/sku\//ig
+        var rnetImg = /^\s*(https?:\/\/)?content\.image\.alimmdn\.com\/sku\//i
         images = images || $scope.operaArea.dataFetch.images;
-
         images.forEach(function(item){
-             // console.log(item);
-             // console.log(!rnetImg.test(item.url));
-             if(!rnetImg.test(item.url)){
-               netImg.push(item.url);
-               // console.log('push net img');
-             }
-          })
+           if(!rnetImg.test(item.url)){
+             netImg.push(item.url);
+           }
+        })
         return netImg;
      }
 
@@ -382,12 +419,13 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                        var dataFetch = $scope.operaArea.dataFetch;
 
                        if(dataFetch){
-                         var sales = dataFetch.sales;
-                         if(sales){
-                           $scope.operaArea.dataFetch.sales = $scope.operaArea.dataFetch.sales.concat(buylinks);
-                         }else{
-                           $scope.operaArea.dataFetch.sales = buylinks;
-                         }
+                         // var sales = dataFetch.sales;
+                         // if(sales){
+                         //   $scope.operaArea.dataFetch.sales = $scope.operaArea.dataFetch.sales.concat(buylinks);
+                         // }else{
+                         //   $scope.operaArea.dataFetch.sales = buylinks;
+                         // }
+                        $scope.operaArea.dataFetch.sales = buylinks; 
                        }else{
                           $scope.operaArea.dataFetch = {
                              sales:buylinks
@@ -424,6 +462,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
             },
             save:function(){
+
                var dataFetch = $scope.operaArea.dataFetch;
                if(dataFetch){
                     // 必填项
@@ -439,6 +478,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
                    if(!title){
                     tip('商品名必须填写');
+                    document.getElementById('title').focus();
                     return;
                    }
 
@@ -464,10 +504,54 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                    return;
                  }
 
-                if(!/^\d+\.?\d*$/g.test(price)){
-                  tip('价格2只能填写数字，请重新输入');
-                  return;
+                if(price_str){
+                  // 可以填写全角或半角￥符
+                  if(price_str.indexOf('￥')=== -1 && price_str.indexOf('¥')=== -1){
+                     tip('请在价格前填写人民币符号￥');
+                     var price_strDOM = document.getElementById('price_str');
+                     price_strDOM.focus();
+                     if(price_strDOM.setSelectionRange){
+                       price_strDOM.setSelectionRange(0, 0);
+                     }
+                     return;
+                  }
                 }
+                if(price){
+                  // ng-pattern 慎用！！如果不符合的话，就不会更新model
+                  if(!/^\d+\.?\d*$/.test(price)){
+                    tip('价格(数字)只能填写数字或小数，请重新输入');
+                    document.getElementById('price').focus();
+                    return;
+                  }
+                }
+
+               sales.forEach(function(item){  delete item["$$hashKey"] })
+
+               images.forEach(function(item){ delete item["$$hashKey"] })
+
+               var netImg = filterNetImg(images);
+
+               if(netImg.length){
+                 if(!confirm("商品图片还没有上传，真的要保存么？")){
+                   document.getElementById('uploadAll').focus();
+                   return;
+                 }
+               }
+
+               var modifiedByInput = document.getElementById('modifiedBy');
+               var modifiedBy = document.getElementById('modifiedBy').value;
+               var rmodifiedBy = /^[a-zA-z0-9]{2,9}$/g;
+               if(!modifiedBy || !rmodifiedBy.test(modifiedBy)){
+                 tip('请填写修改人，格式为英文名或拼音缩写，不能超过8位，否则无法保存。')
+                 modifiedByInput.focus();
+                 return;
+               }else{
+                  // 存入本地缓存
+                  window.localStorage.setItem('modifiedBy',modifiedBy);
+                  modifiedByInput.disabled = true;
+               }
+
+
 
                showLoading();
 
@@ -481,9 +565,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                  isOnline = true;
                }
 
-               console.log("dataFetch.isOnline：",dataFetch.isOnline);
-
-
                // var isOnline_ori = dataFetch.isOnline; // 是否上线
               
                var brand = dataFetch.brand; // 品牌
@@ -492,8 +573,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                var isUpdate = sid == null ? false : true;
 
                var status = 0;
-
-               console.log(isOnline);
 
                if(isOnline){
                  status = 1;
@@ -516,9 +595,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                  return item.cid;
                });
 
-               sales.forEach(function(item){  delete item["$$hashKey"] })
+               
 
-               images.forEach(function(item){ delete item["$$hashKey"] })
 
                var data = {
                  sid:sid,
@@ -535,9 +613,9 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                  sales:sales,
                  revarticles:revarticles,
                  extra:extra,
-                 person:"LYN"
+                 person:modifiedBy
                }
-               console.log(revarticles);
+               // console.log(revarticles);
                // console.log(price_str);
                // console.log(price);
                if(isUpdate){
@@ -555,10 +633,11 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                         console.log(data);
                         // alert(1);
                         $scope.$emit('updateSKU',data);
-                        console.log("添加关联");//添加关联
+                        // console.log("添加关联");//添加关联
                       }else{
                         console.log("取消关联");
                       }
+
                       hideLoading("保存成功");
                   }).catch(function(e){
                     console.error(e);
@@ -580,12 +659,27 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                       // var data = result.data.data;
                       // data.link = link;
                       // $scope.$emit('generateSKU',data);
-                      var data = result.data.data;
-                      var insertId = data.insertId;
+                      var upperData = result.data;
+                      var sucDate = upperData.data;
+                      var insertId = sucDate.insertId;
                                             
                       
-                      if(result.data.state === "SUCCESS" && insertId && +insertId > 0){
+                      if(upperData.state === "SUCCESS" && insertId && +insertId > 0){
                         $scope.operaArea.dataFetch.sid = insertId;
+                      }
+
+                      // $scope.$emit('generateSKU');
+
+
+                      /*
+                        每次新建SKU之后，
+                        如果有关联文章的话，需要通知关联文章，添加相应的sku
+                        如果没有关联文章，直接提示即可
+                      */
+
+                      if(data.revarticles.length){
+                        // 有关联文章。需要同时listview页，更新视图
+                         $rootScope.$emit('addNewSKU',data);
                       }
 
                       hideLoading("新建SKU成功");
@@ -595,6 +689,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                   })
 
                }
+
+
                // console.log(sid);
             },
             refreshCDN:function(event){
@@ -603,7 +699,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                     var sid = dataFetch.sid;
                     if( sid ){
                       // $scope.operaArea.dataFetch.toRefreshCDN = "http://c.diaox2.com/view/app/?m=sku&sid="+sid;
-                      document.getElementById('cdn').value = "http://c.diaox2.com/view/app/?m=sku&sid="+sid;
+                      document.getElementById('cdn').value = "http://c.diaox2.com/view/app/?m=sku&id="+sid;
                     }else{
                        event.preventDefault();
                        tip('没有选择要刷新的SKU')

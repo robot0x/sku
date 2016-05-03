@@ -135,7 +135,23 @@ function toLongCid(cid){
      return cid;
     }
 }
+
+
+
  $(function(){
     new LightBox();
     new ToTop(document.getElementById("totop"),".bottombar");
+
+    // 访问本地存储，取出 modifiedBy 字段
+
+    var localStorage = window.localStorage;
+    var modifiedBy = localStorage.getItem('modifiedBy');
+    if(modifiedBy){
+      var modifiedByInput = document.getElementById('modifiedBy');
+      modifiedByInput.value = modifiedBy;
+      modifiedByInput.disabled = true;
+    }
+
+
+
  });

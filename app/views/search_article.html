@@ -13,8 +13,8 @@
         <ul class="article-list" lazy-load>
             <li class="article" ng-repeat="article in cachedArticles">
                 <div ng-class="{'list-item': article.cid === article.threeD}" class="rel">
-                    <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}">
-                    <!-- <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}" data-short-id="{{ article.cid | shortID }}"> -->
+                    <!-- <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}"> -->
+                    <div class="article-title-and-pic clearfix" data-long-id="{{article.cid}}" data-short-id="{{ article.cid | shortID }}">
                     <!-- <div class="article-title-and-pic clearfix"> -->
                         <img ng-src="{{article.thumb_image_url | imgUrlFilter}}" width="100" height="100" class="pull-left">
                         <h3 class="pull-left">
@@ -22,15 +22,16 @@
                             <span class="pull-right" ng-bind="{{article.cid | shortID}}"></span>
                         </h3>
                     </div>
-                    <p class="annotationed-tips" ng-hide="article.skuList == null || article.skuList.length === 0">已关联的SKU：</p>
+                    <p class="annotationed-tips" ng-hide="article.skuList == null || article.skuList.length === 0">已关联的SKU（{{article.skuList.length}}）：</p>
                     <!-- 文章卡片区 -->
                     <ul class="annotationed-sku-list">
+                        <!-- <li ng-repeat="sku in article.skuList track by $index"> -->
                         <li ng-repeat="sku in article.skuList">
                             <p class="sku-item-title">
                                 <!-- <a href="{{article.thumb_image_url | imgUrlFilter}}" ng-bind="sku.title"></a> -->
                                 <a href="{{sku.sid | sidToUrl}}" ng-bind="sku.title" target="_blank"></a>
                             </p>
-                            <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku,article)">查看</button>
+                            <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku.sid)">查看</button>
                         </li>
                     </ul>
                     <div class="tag">已关联</div>

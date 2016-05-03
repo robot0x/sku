@@ -14,7 +14,7 @@
           <a href="{{sku.sid | sidToUrl}}" ng-bind="sku.title" target="_blank"></a>
         </p>
         <span ng-bind="sku.sid"></span>
-        <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku)">查看</button>
+        <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku.sid)">查看</button>
       </li>
     </ul>
   </div>
