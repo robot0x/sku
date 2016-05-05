@@ -381,7 +381,19 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
     }
     function parse(link,callback){
       $http({
-          url:"http://s4.a.dx2rd.com/blsvr/parse",
+          /*
+            阿里云这个域名需要备案，如果在web上直接请求，会跳转到阿里云提示备案页
+            不使用域名，使用ip地址，可以解决这个问题。。
+            在server端可以调用这个带域名的接口
+            需要server端跟进
+            现已解决这个问题
+            server端包了一层，我请求http://120.27.45.36:3001/v1/url这个地址
+            然后在server端，请求http://s4.a.dx2rd.com/blsvr/parse这个接口，把
+            取到的数据用http://120.27.45.36:3001/v1/url返回过来
+          */
+          // url:"http://s4.a.dx2rd.com/blsvr/parse", 
+          // url:"http://121.42.141.74/blsvr/parse",
+          url:"http://120.27.45.36:3001/v1/url",
           method:"POST",
           timeout:20000,
           headers:{"Content-Type":"application/json"},
@@ -389,7 +401,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             url:link
           })
        }).then(function(result){
-          console.log(result);
           if(callback){
             callback(result);
           }
@@ -398,15 +409,37 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
     $scope.operaArea = {
         eventHandler:{
             m_cps:function(m_cps_link){
-              alert(m_cps_link);
+                showLoading();
               parse(m_cps_link,function(result){
+
                 console.log(result);
+
+                var data = result.data;
+
+                if(data.state && data.state !== "SUCCESS"){
+                  hideLoading("url规范化失败。信息："+data.message);
+                }else{
+                  // 发送 url规范化事件 在wrapperCtrl.js中接收
+                  $scope.$emit('normalizationURL',data);
+                  hideLoading();
+                }
               })
             },
             pc_cps:function(pc_cps_link){
-              alert(pc_cps_link)
+              showLoading();
               parse(pc_cps_link,function(result){
+
                 console.log(result);
+
+                var data = result.data;
+
+                if(data.state && data.state !== "SUCCESS"){
+                  hideLoading("url规范化失败。信息："+data.message);
+                }else{
+                  // 发送 url规范化事件 在wrapperCtrl.js中接收
+                  $scope.$emit('normalizationURL',data);
+                  hideLoading();
+                }
               })
             },
             getAllBuyLink:function(cid){

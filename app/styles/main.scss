@@ -204,7 +204,7 @@ input.ng-dirty.ng-invalid {
 .opera-area-header tr td:first-child{
   padding-right:10px;
 }
-.new-buylink-mask,.generatesku-mask{
+.new-buylink-mask,.generatesku-mask,.url-normalization-mask{
     position: fixed;
     left: 0;
     right: 0;
@@ -214,7 +214,7 @@ input.ng-dirty.ng-invalid {
     z-index: 2;
    display: none;
 }
-.new-buylink-area{
+.new-buylink-area,.url-normalization-area{
     z-index:999;
     background-color:#dadada;
     position: fixed;
@@ -229,6 +229,9 @@ input.ng-dirty.ng-invalid {
   padding-top:20px;
   height: 100%;
   overflow-y: auto;
+}
+.url-normalization-area{
+  height: auto;
 }
 .warning{
   color:#d9534f;

@@ -9,7 +9,7 @@ skuApp.directive('close', function() {
         // alert('generatesku');
         $(elem).on('click',function(){
           // console.log(scope);
-          $('.generatesku-mask,.new-buylink-mask').css('display',"none");
+          $('.generatesku-mask,.new-buylink-mask,.url-normalization-mask').css('display',"none");
         })        
       }
     }
@@ -27,6 +27,90 @@ skuApp.directive('close', function() {
     $scope.resetOperaAreaData = function($event){
          $scope.$broadcast('resetOperaAreaData');
     }
+
+    // 数组去重
+    function dupRemove(arr){
+      var recode = {};
+      var ret = [];
+      if(arr && Array.isArray(arr) && arr.length > 1){
+        arr.forEach(function(v,i){
+          if(!recode[v]){
+            ret.push(v);
+            recode[v] = true;
+          }
+        })
+      }else{
+        return arr;
+      }
+      return ret;
+    }
+
+    function showNormalizationUrlMask(){
+          $('.url-normalization-mask').css('display','block');
+          // var btn = glyphiconOk.parent();
+          $('.opera-replace').removeClass('btn-primary').addClass('btn-danger');
+          $('.opera-use').removeClass('btn-success').addClass('btn-default');
+          $('.glyphicon-ok').remove();
+      }
+
+    $scope.$on('normalizationURL',function(event,data){
+      
+      console.log("data:",data);
+
+      var parsed = data.parsed;
+
+      console.log("parsed:",parsed);
+
+      var list = [];
+
+      // 原始url
+      var originUrl;
+
+      // 解析data对象，填充list
+      parsed.forEach(function(each){
+        for(var a in each){
+          var v = each[a];
+          if(!originUrl){
+            originUrl = a;
+          }
+          for(var a2 in v){
+            var v2 = v[a2];
+            if(Array.isArray(v2)){
+              list = list.concat(v2);
+            }else{
+              list.push(a);
+              break;
+            }
+          }
+        }
+      })
+
+
+      console.log(list);
+      console.log(originUrl);
+
+      // 去重
+      list = dupRemove(list);
+
+      // 去掉原始url
+      list.splice(list.indexOf(originUrl),1)
+
+      console.log(list);
+
+      // 如果去重及去掉原始url之后，list长度为0，说明已经是规范化的链接了
+      if(list.length === 0){
+        tip('已经是规范化的链接了');
+      }else{
+
+        showNormalizationUrlMask();
+        $scope.normalizationurl = normalizationurlEvent;
+        $scope.normalizationurl.links = list;
+      }
+
+
+
+    })
+
     // http://item.jd.com/10009249720.html
     $scope.$on('generateSKU',function(event,sku){
 
@@ -61,6 +145,17 @@ skuApp.directive('close', function() {
           $('<span class="glyphicon glyphicon-ok"></span>').appendTo($dom);
           toOperaAreaDate[attr] = val;
         }
+    }
+
+    var normalizationurlEvent = {
+      replace:function(index){
+        var links = $scope.normalizationurl.links;
+        var link = links[index];
+        alert(index);
+        alert(link);
+        $scope.normalizationurl = {};
+        $('.url-normalization-mask').css('display',"none");
+      }
     }
 
     var generateskuEvent = {
