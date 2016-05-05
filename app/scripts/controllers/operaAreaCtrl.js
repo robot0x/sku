@@ -265,9 +265,42 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
        })
      })
 
+      $scope.$on('alreadynormalizationurl',function(event,data){
+        var sales = $scope.operaArea.dataFetch.sales,
+            l = sales.length,
+            i = 0,
+            originUrl = data.originUrl,
+            index,
+            attr,
+            value,
+            foundSale,
+            foundAttr;
+        /*
+          循环sales数组，根据原始链接（originUrl）找到相应的sale
+          和sale中value等于originUrl的key
+        */
+        loop:
+        for(;i<l;i++){
+          var sale = sales[i];
+          for( attr in sale ){
+            value = sale[attr];
+            if(value === originUrl){
+              // 找到第一个即可，直接跳出外层循环
+              index = i;
+              foundAttr = attr;
+              break loop;
+            }
+          }
+        }
 
-
-
+        if(index != void 0){
+          var foundSale = sales[index];
+          foundSale[foundAttr]  =  data.link;
+          sales.splice(index,1,foundSale);
+          tip('url规范化成功',1000);
+        }
+        
+      })
 
      $scope.$on('toOperaAreaDate',function(event,data){
           // console.log(data);

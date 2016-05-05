@@ -104,6 +104,7 @@ skuApp.directive('close', function() {
 
         showNormalizationUrlMask();
         $scope.normalizationurl = normalizationurlEvent;
+        $scope.normalizationurl.originUrl = originUrl;
         $scope.normalizationurl.links = list;
       }
 
@@ -151,10 +152,13 @@ skuApp.directive('close', function() {
       replace:function(index){
         var links = $scope.normalizationurl.links;
         var link = links[index];
-        alert(index);
-        alert(link);
+        var originUrl = $scope.normalizationurl.originUrl;
         $scope.normalizationurl = {};
         $('.url-normalization-mask').css('display',"none");
+        $scope.$broadcast('alreadynormalizationurl',{
+          originUrl:originUrl,
+          link:link
+        });
       }
     }
 
