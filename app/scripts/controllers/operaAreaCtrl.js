@@ -275,7 +275,9 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             attr,
             value,
             foundSale,
-            foundAttr;
+            foundAttr,
+            sale,
+            splitArr;
         /*
           循环sales数组，根据原始链接（originUrl）找到相应的sale
           和sale中value等于originUrl的key
@@ -288,11 +290,12 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
         loop:
         for(;i<l;i++){
-          var sale = sales[i];
+           sale = sales[i];
           for( attr in sale ){
             value = sale[attr];
+            splitArr = originUrl.split(value); 
+            if( value === originUrl ||  ( splitArr.length === 2 && splitArr[1] === '') ){
 
-            if(value === originUrl || originUrl.split(value).length === 2){
               // 找到第一个即可，直接跳出外层循环
               index = i;
               foundAttr = attr;
