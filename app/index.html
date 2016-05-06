@@ -339,16 +339,17 @@
 <div class="url-normalization-area col-md-6"> <i class="close-cross" close></i>
 <div class="form-horizontal">
 
-  <div class="form-group" ng-repeat="original_link in normalizationurl.linkObj.original_link">
+  <div class="form-group" ng-repeat="original_link in normalizationurl.linkObj.original_link track by $index">
     <label class="col-sm-2 control-label">原始链接：</label>
     <div class="col-sm-8">
-      <input type="text" class="form-control" placeholder="商品名" ng-model="original_link"></div>
+      <input type="text" class="form-control" placeholder="商品名" ng-model="original_link">
+      </div>
     <div class="col-sm-2">
       <button type="submit" class="opera-replace btn btn-danger" ng-click="normalizationurl.replaceOriginaLink($index)">替换</button>
     </div>
   </div>
 
-  <div class="form-group" ng-repeat="sku_link in normalizationurl.linkObj.sku_link">
+  <div class="form-group" ng-repeat="sku_link in normalizationurl.linkObj.sku_link track by $index">
     <label class="col-sm-2 control-label">SKU链接：</label>
     <div class="col-sm-8">
       <input type="text" class="form-control" placeholder="商品名" ng-model="sku_link"></div>
@@ -357,7 +358,7 @@
     </div>
   </div>
 
-  <div class="form-group" ng-repeat="cps_link in normalizationurl.linkObj.cps_link">
+  <div class="form-group" ng-repeat="cps_link in normalizationurl.linkObj.cps_link track by $index">
     <label class="col-sm-2 control-label">CPS链接：</label>
     <div class="col-sm-8">
       <input type="text" class="form-control" placeholder="商品名" ng-model="cps_link"></div>

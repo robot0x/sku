@@ -196,9 +196,9 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
 
   var normalizationurlEvent = {
     replaceOriginaLink: function(index) {
-      var links = $scope.normalizationurl.links;
+      var links = $scope.normalizationurl.linkObj.original_link;
       var link = links[index];
-      var originUrl = $scope.normalizationurl.originUrl;
+      var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
       $('.url-normalization-mask').css('display', "none");
       $scope.$broadcast('alreadynormalizationurl', {
@@ -207,9 +207,9 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       });
     },
     replaceSKULink: function(index) {
-      var links = $scope.normalizationurl.links;
+      var links = $scope.normalizationurl.linkObj.sku_link;
       var link = links[index];
-      var originUrl = $scope.normalizationurl.originUrl;
+      var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
       $('.url-normalization-mask').css('display', "none");
       $scope.$broadcast('alreadynormalizationurl', {
@@ -218,9 +218,9 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       });
     },
     replaceCPSLink: function(index) {
-      var links = $scope.normalizationurl.links;
+      var links = $scope.normalizationurl.linkObj.cps_link;
       var link = links[index];
-      var originUrl = $scope.normalizationurl.originUrl;
+      var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
       $('.url-normalization-mask').css('display', "none");
       $scope.$broadcast('alreadynormalizationurl', {
