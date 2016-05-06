@@ -7,7 +7,7 @@ var skuApp = angular.module('skuApp');
 // var skuApp = angular.module('skuApp',[]);
 skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q){
 // skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http){
-     $scope.articles = [];
+    $scope.articles = [];
     function local_multi(result){
       // alert(1);
       // console.log("result：",result);
@@ -19,7 +19,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
         var fileArray = result.data;
         if(fileArray.length){
           fileArray.forEach(function(file){
-            if(file.state === "SUCCESS"){ 
+            if(file.state === "SUCCESS"){
               successArray.push({
                 url:file.url
               })
@@ -442,7 +442,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
     $scope.operaArea = {
         eventHandler:{
             m_cps:function(m_cps_link){
-                showLoading();
+              showLoading();
               parse(m_cps_link,function(result){
 
                 console.log(result);

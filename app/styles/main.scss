@@ -233,6 +233,11 @@ input.ng-dirty.ng-invalid {
 .url-normalization-area{
   height: auto;
 }
+.url-normalization-area .close-cross{
+    width: 22px;
+    height: 22px;
+    background-size: 22px;
+}
 .warning{
   color:#d9534f;
 }
