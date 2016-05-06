@@ -266,6 +266,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
      })
 
       $scope.$on('alreadynormalizationurl',function(event,data){
+
         var sales = $scope.operaArea.dataFetch.sales,
             l = sales.length,
             i = 0,
@@ -279,17 +280,27 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
           循环sales数组，根据原始链接（originUrl）找到相应的sale
           和sale中value等于originUrl的key
         */
+        console.log(originUrl);
+        console.log(sales);
+
+
+
+
         loop:
         for(;i<l;i++){
           var sale = sales[i];
           for( attr in sale ){
             value = sale[attr];
-            if(value === originUrl){
+
+            if(value === originUrl || originUrl.split(value).length === 2){
               // 找到第一个即可，直接跳出外层循环
               index = i;
               foundAttr = attr;
               break loop;
             }
+
+            // if(value === originUrl){
+            // }
           }
         }
 
