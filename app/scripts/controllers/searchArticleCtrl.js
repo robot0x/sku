@@ -34,8 +34,6 @@ function($scope,
     var aProto = Array.prototype;
     var getalllistUrl = "http://120.27.45.36:3000/v1/getalllist";
 
-    
-
 
     function leftZero(num){
         num = +num;
@@ -326,6 +324,7 @@ function($scope,
                             var meta_infos = result.data.metas;
                             var articles = [];
                             var alllist = $scope.alllist;
+                            console.log("TS接口的：",result);
                             var url = "http://120.27.45.36:3000/v1/getfullsku/";  
                              // console.log(alllist);
                              meta_infos.forEach(function(item){
@@ -333,7 +332,7 @@ function($scope,
                                 var article = {
                                     cid:item.serverid,
                                     thumb_image_url: item.thumb,
-                                    url:"http://c.diaox2.com"+item.oriURL,
+                                    url:"http://c.diaox2.com"+item.url,
                                     title:[item.title],
                                     skuList:[]
                                 }
@@ -460,7 +459,7 @@ function($scope,
                                     var article = {
                                         cid:item.serverid,
                                         thumb_image_url: item.thumb,
-                                        url:"http://c.diaox2.com"+item.oriURL,
+                                        url:"http://c.diaox2.com"+item.url,
                                         title:[item.title],
                                         skuList:[]
                                     }
@@ -598,8 +597,10 @@ function($scope,
                 this.search();
             }
         },
-        view:function(sid){
+        view:function(sid,cid){
             // 发射viewSKU事件。在operaAreaCtrl.js中接收
+            // console.log(sid);
+            // console.log(cid);
             $rootScope.$emit('viewSKU',sid);
         }
     }

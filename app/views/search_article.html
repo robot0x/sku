@@ -31,7 +31,7 @@
                                 <!-- <a href="{{article.thumb_image_url | imgUrlFilter}}" ng-bind="sku.title"></a> -->
                                 <a href="{{sku.sid | sidToUrl}}" ng-bind="sku.title" target="_blank"></a>
                             </p>
-                            <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku.sid)">查看</button>
+                            <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku.sid,article.cid)">查看</button>
                         </li>
                     </ul>
                     <div class="tag">已关联</div>

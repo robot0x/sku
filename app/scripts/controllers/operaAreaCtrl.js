@@ -64,6 +64,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
         return;
       }
        var headers = {"Content-Type":"application/json"};
+       console.log(cids);
        $http({
             url:"http://api.diaox2.com/v4/meta",
             method:"POST",
@@ -81,12 +82,14 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
            headers:headers
         }).then(function(result){
 
-            // console.log(result);
 
             var meta_infos = result.data.res.specified_meta_data.meta_infos;
 
-            // 如果使用v4/meta拿不到数据的话，就使用 m=meta 再次拿一次
-            if( !meta_infos || meta_infos.length === 0){
+            // 如果使用v4/meta拿不到数据或者数据拿到的不全的话，就使用 m=meta 再次拿一次
+            // 李园宁提出来的BUG，其实我已经写了
+            // 但是判断不严，原先是 一个数据也拿不到才调用m=meta接口再拿一次
+            // 正常应该是，拿到的数据长度不等于cid的长度，就从新拿一次
+            if( !meta_infos || meta_infos.length !== cids.length){
 
               $http({
                   url:"http://z.diaox2.com/view/app/?m=meta",
@@ -250,7 +253,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
           }else{
             $scope.operaArea.dataFetch.uploadAllFlag = false;
           }
-
+        console.log(sku.revarticles.map(function(item){ return item & 0xffffff }));
+       
          // 根据sku的关联文章id拿到文章meta
          getArticles(sku.revarticles,function(meta_infos){
             // 显示在右侧操作区
