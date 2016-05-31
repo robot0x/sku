@@ -523,13 +523,27 @@ function($scope,
             }
 
         },
+        /**
+         * [day 次方法有问题]
+         * @param  {[int]} go [-1 ,0 ,1]
+         */
         day:function(go){
             showLoading();
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = leftZero(date.getMonth() + 1);
-            var day = leftZero(date.getDate() + go);
+            var today = new Date();
+
+            // 在这儿加一行代码
+            today.setDate(today.getDate()+go);
+
+            var year = today.getFullYear();
+            var month = leftZero(today.getMonth() + 1);
+            // 取消掉这行代码
+            // var day = leftZero(today.getDate() + go);
+            var day = leftZero(today.getDate());
+
             var timeStr = year + month + day;
+
+            console.log(timeStr);
+
             var start = timeStr,end = timeStr;
             var title = "";
             if(go > 0){
