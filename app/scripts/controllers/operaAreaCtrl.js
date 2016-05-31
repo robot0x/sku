@@ -663,7 +663,17 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                   modifiedByInput.disabled = true;
                }
 
+               var brand = (dataFetch.brand || "").trim(); // 品牌
 
+               // 换行
+               var brandReg = /\n\r/;
+
+               if(brand.length > 15){
+                  tip("品牌不能超过15个字哦~");
+                  return;
+               }else if(/\n|\r/.test(brand)){
+                  tip("品牌中不能包含换行且不能超过15个字哦~");
+               }
 
                showLoading();
 
@@ -679,7 +689,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
                // var isOnline_ori = dataFetch.isOnline; // 是否上线
               
-               var brand = dataFetch.brand; // 品牌
+               
+
 
                // 是否是更新已有数据
                var isUpdate = sid == null ? false : true;

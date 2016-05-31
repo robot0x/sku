@@ -541,7 +541,7 @@ function($scope,
             var day = leftZero(today.getDate());
 
             var timeStr = year + month + day;
-
+            
             console.log(timeStr);
 
             var start = timeStr,end = timeStr;
