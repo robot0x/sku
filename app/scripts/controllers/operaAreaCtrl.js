@@ -289,9 +289,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
         console.log(originUrl);
         console.log(sales);
 
-
-
-
         loop:
         for(;i<l;i++){
            sale = sales[i];
@@ -306,8 +303,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
               break loop;
             }
 
-            // if(value === originUrl){
-            // }
           }
         }
 
@@ -329,7 +324,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 return { url:img }
             });
           }
-          console.log(data);
 
           if($scope.operaArea.dataFetch){
               if(data.price){
@@ -352,7 +346,19 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
               $scope.operaArea.dataFetch.type = data.type;
               $scope.operaArea.dataFetch.tags = data.tags;
               $scope.operaArea.dataFetch.status = data.status;
-              $scope.operaArea.dataFetch.sales = $scope.operaArea.dataFetch.sales;
+              console.log(data.sales);
+              var sales =  $scope.operaArea.dataFetch.sales;
+              // 李园宁的新需求：把生成的SKU链接本身也当作一条购买链接
+              if(data.sales && data.sales.length){
+                if(sales && sales.length){
+                  $scope.operaArea.dataFetch.sales.push( data.sales[0] );
+                }else{
+                  $scope.operaArea.dataFetch.sales = data.sales;
+                }
+              }else{
+                $scope.operaArea.dataFetch.sales = $scope.operaArea.dataFetch.sales;
+              }
+
           }else{
              $scope.operaArea.dataFetch = {
                 price:data.price,
@@ -782,10 +788,10 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                       // var data = result.data.data;
                       // data.link = link;
                       // $scope.$emit('generateSKU',data);
+                      
                       var upperData = result.data;
                       var sucDate = upperData.data;
                       var insertId = sucDate.insertId;
-                                            
                       
                       if(upperData.state === "SUCCESS" && insertId && +insertId > 0){
                         $scope.operaArea.dataFetch.sid = insertId;
@@ -939,6 +945,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                      })
                   }).then(function(result){
                       var data = result.data.data;
+                      console.log(result.data)
+                      console.log(data)
                       if(data){
                          data.link = link;
                          $scope.$emit('generateSKU',data);
