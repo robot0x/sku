@@ -644,9 +644,10 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 }
 
                sales.forEach(function(item){  delete item["$$hashKey"] })
-
                images.forEach(function(item){ delete item["$$hashKey"] })
-
+               
+               console.log(sales);
+               // return;
                var netImg = filterNetImg(images);
 
                if(netImg.length){
@@ -674,11 +675,11 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                // 换行
                var brandReg = /\n\r/;
 
-               if(brand.length > 15){
-                  tip("品牌不能超过15个字哦~");
+               if(brand.length > 32){
+                  tip("品牌不能超过32个字哦~");
                   return;
                }else if(/\n|\r/.test(brand)){
-                  tip("品牌中不能包含换行且不能超过15个字哦~");
+                  tip("品牌中不能包含换行且不能超过32个字哦~");
                }
 
                showLoading();
@@ -783,7 +784,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                       timeout:20000,
                       headers:{"Content-Type":"application/json"},
                       data:JSON.stringify(data)
-
                   }).then(function(result){
                       // var data = result.data.data;
                       // data.link = link;
@@ -810,10 +810,9 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                         // 有关联文章。需要同时listview页，更新视图
                          $rootScope.$emit('addNewSKU',data);
                       }
-
                       hideLoading("新建SKU成功");
                   }).catch(function(e){
-                    console.error(e);
+                    console.log(e);
                     hideLoading("新建SKU失败，请重试");
                   })
 
@@ -945,15 +944,49 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                      })
                   }).then(function(result){
                       var data = result.data.data;
-                      console.log(result.data)
-                      console.log(data)
                       if(data){
                          data.link = link;
-                         $scope.$emit('generateSKU',data);
-                         console.log("抓取的SKU数据：",data);
+                         var brand = data.brand;
+                         console.log(brand);
+                         $http({
+                            url:"http://120.27.45.36:3000/v1/searchsku",
+                            method:"POST",
+                            timeout:20000,
+                            headers:{"Content-Type":"application/json"},
+                            data:JSON.stringify({area:"brand",value:brand})
+                        }).then(function(result){
+                          console.log(result);
+                          var firstData = result.data;
+                          if(firstData.state!=="SUCCESS"){
+                             data.brand_info = "根据品牌获取相应的SKU失败。"+firstData.message;
+                           }else{
+                              // var secData = firstData.data;
+                              data.brandRelSkuList = firstData.data;
+                           }
+                           $scope.$emit('generateSKU',data);
+                           console.log("抓取的SKU数据：",data);
+
                          hideLoading();
                          // 只有抓取成功才显示数据
                          self.showGenerateSKUMask();
+
+                          console.log(result);
+                        }).catch(function(e){
+                          console.log(e);
+                          data.brand_info = "根据品牌获取相应的SKU失败。"+e.data;
+                          $scope.$emit('generateSKU',data);
+                          console.log("抓取的SKU数据：",data);
+                         hideLoading();
+                         // 只有抓取成功才显示数据
+                         self.showGenerateSKUMask();
+                        })
+
+                         // $scope.$emit('generateSKU',data);
+                         // console.log("抓取的SKU数据：",data);
+
+                         // hideLoading();
+                         // // 只有抓取成功才显示数据
+                         // self.showGenerateSKUMask();
                       }else{
                          hideLoading('抓取失败，请重试');
                       }

@@ -91,7 +91,23 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
     // debugger;
     showNormalizationUrlMask();
     $scope.normalizationurl = normalizationurlEvent;
+    
+    // 额外处理cps对象转String
+    ret.cps_link = ret.cps_link.map(function(item){
+       if(typeof item === "string"){
+         return item;
+       }else if(item.cps_url){
+         return item.cps_url
+       }else{
+          return '';
+       }
+    })
+
+    console.log('ret---------------');
+    console.log(ret);
+
     $scope.normalizationurl.linkObj = ret;
+
     console.dir($scope.normalizationurl);
     console.dir($scope.normalizationurl.linkObj);
   })
@@ -257,9 +273,15 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
     // alert(sku.price);
     $scope.generatesku.price = sku.price;
     $scope.generatesku.imgs = sku.imgs;
+    $scope.generatesku.brand_info = sku.brand_info;
+    // console.log(sku.brandRelSkuList);
+    $scope.generatesku.brandRelSkuList = sku.brandRelSkuList;
     $scope.generatesku.sales = [{
       mart:getMartNameByLink(link),
       link_m_cps:link,
+      link_pc_cps:null,
+      link_pc_raw:null,
+      link_m_raw:null,
       price:sku.price
     }];
     // $scope.generatesku = sku;

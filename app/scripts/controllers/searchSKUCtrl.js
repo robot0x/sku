@@ -25,11 +25,10 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
     
     var loadCount = 30; // 懒加载的item个数
     var ind = 0; // 开始位置
-    var defaultLoadCount = 300;
+    var defaultLoadCount = 100;
     // 发送 CORS 请求必须的header
     var headers = {"Content-Type":"application/json"};
     
-
     $http({
         url:"http://120.27.45.36:3000/v1/getalllist",
         method:"GET",
@@ -63,7 +62,6 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
             $scope.cachedSkuList.sort(function(s1,s2){
               return s2.sid - s1.sid;
             })
-            console.log( $scope.cachedSkuList );
        }).catch(function(e){
             console.error(e);
        })
@@ -161,7 +159,7 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
         view:function(sid){
             // 发射viewSKU事件。在operaAreaCtrl.js中接收
             $rootScope.$emit('viewSKU',sid);
-            console.log(sku);
+            console.log(sid);
         }
     }
 
