@@ -1134,6 +1134,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                   只能resolve一次 
                  */
                  window.angular_defer = $q.defer();
+                 
                  angular_defer.promise
                  .then(function(value){
                     local_multi(value);

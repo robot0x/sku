@@ -43,17 +43,18 @@
             <td>
               <input type="text" class="form-control form-control-sm" placeholder="填写电商链接" ng-model="operaArea.dataFetch.link"></td>
             <td>
-              <button class="btn btn-primary" ng-click="operaArea.eventHandler.generateSKU(operaArea.dataFetch.link)">生成SKU</button>
+              <button class="btn btn-primary" ng-click="operaArea.eventHandler.generateSKU(operaArea.dataFetch.link)">生成SKU信息</button>
             </td>
-            <td>
+           <!--  <td>
               <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
-            </td>
+            </td> -->
           </tr>
         </table>
       </div>
       <div class="search-btn pull-right">
         <!-- <button class="btn btn-info" ng-click="operaArea.eventHandler.create()">新建</button>
       -->
+      <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
       <button class="btn btn-success" ng-click="operaArea.eventHandler.save()">保存</button>
 
       <form id="cdnForm" action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
@@ -296,9 +297,10 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="col-sm-2 control-label">品牌</label>
+      <label class="col-sm-2 control-label">品牌
+      <!-- 把small元素提到这儿来 -->
       <small ng-bind="generatesku.brand_info" style="margin-left:20px;color:red;"></small>
-
+      </label>
       <div class="col-sm-8">
         <input type="text" class="form-control" placeholder="品牌" ng-model="generatesku.brand"></div>
       <div class="col-sm-2">

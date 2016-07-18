@@ -28,7 +28,14 @@
   function showLoading(){
     $('.loading-container').show();
   }
-
+  
+  function hideLoading(title,ms){
+    var loadingContainer = $('.loading-container');
+    loadingContainer.hide();
+    if(title){
+      tip(title,ms);
+    }
+  }
 
 
   function tip(title,ms){
@@ -48,13 +55,7 @@
     }
   }
 
-  function hideLoading(title,ms){
-    var loadingContainer = $('.loading-container');
-    loadingContainer.hide();
-    if(title){
-      tip(title,ms);
-    }
-  }
+ 
 
   // 回到顶部组件
 var ToTop = function(obj,parentSelector) {
