@@ -29,7 +29,7 @@ ul,li{
 .search-area{
   width: 458px;
   padding:10px 20px;
-  border-right:2px $commonColor solid;
+  // border-right:2px $commonColor solid;
 }
 
 .search-btn .btn{
@@ -87,6 +87,7 @@ ul,li{
   right: 0;
   height: 100%;
   overflow-y: auto;
+  border-left: 2px #efeff4 solid;
 }
 .revarticles{
   position:absolute;
@@ -338,6 +339,22 @@ input.ng-dirty.ng-invalid {
   border-radius:4px;  
   text-decoration: none;
 }
+.refreshcdn{
+  position:absolute;
+  left: 220px;
+  top:80px;
+  color: #fff;
+  width: 80px;  
+  background-color: #e60012;
+  font-size: 14px;
+  border-radius:4px;  
+  text-decoration: none;
+  border:none;
+  outline: none;
+  padding:0;
+  margin:0;
+}
+
 .gocms:hover,.gocms:focus{
     color: #fff;
     text-decoration: none;

@@ -27,15 +27,34 @@
                     <ul class="annotationed-sku-list">
                         <!-- <li ng-repeat="sku in article.skuList track by $index"> -->
                         <li ng-repeat="sku in article.skuList">
+                            
                             <p class="sku-item-title">
                                 <!-- <a href="{{article.thumb_image_url | imgUrlFilter}}" ng-bind="sku.title"></a> -->
-                                <a href="{{sku.sid | sidToUrl}}" ng-bind="sku.title" target="_blank"></a>
+                                <a href="{{sku.sid | sidToUrl }}" ng-bind="sku.title" target="_blank"></a>
                             </p>
+
                             <button class="btn btn-info btn-thin pull-right" ng-click="eventHandler.view(sku.sid,article.cid)">查看</button>
+                            
+                           <!--  <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank" class="pull-right"> 
+                                <input type="hidden" name="refresh" value="{{article.cid | cidTorefrshCDNUrl : sku.sid}}">
+                                <button class="btn btn-danger btn-thin pull-right">
+                                  刷新CDN
+                                </button>
+                            </form> -->
+
                         </li>
                     </ul>
                     <div class="tag">已关联</div>
+
                     <a href="{{ article.cid | shortID |idToCMSUrl }}" class="gocms  text-center" target="_blank">去CMS</a> 
+
+                    <!-- <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+                        <input type="hidden" name="refresh" value="{{ article.cid | cidTorefrshCDNUrl2 }}">
+                        <button class="refreshcdn text-center">
+                          刷新CDN
+                        </button>
+                    </form> -->
+                     
                 </div>
             </li>
         </ul>

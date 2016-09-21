@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试scroll</title>
+<style>
+  #container{
+    width: 100px;
+    height: 400px;
+    background-color: red;
+    overflow: hidden;
+    padding:10px;
+    border:2px black solid;
+  }
+  #inner{
+    width: 80%;
+    height: 1000px;
+    background-color: green;
+  }
+</style>
+</head>
+<body style="height:50000px">
+    
+    <div id="container"><div id="inner"></div></div>
+
+</body>
+<script>
+    document.onmousewheel = function(e){
+        console.log('document鼠标滚轮滚动咯....', e.wheelDelta);
+    };
+    
+    document.body.addEventListener('DOMMouseScroll', function(e){
+        console.log('document.body DOMMouseScroll 鼠标滚轮滚动咯....', e.detail);
+    });
+
+    window.addEventListener('wheel', function(e){
+        console.log('window wheel 鼠标滚轮滚动咯....', e.wheelDelta, e.deltaY);
+    });
+
+    // console.log('ret:',ret);
+
+    document.onDOMContentLoaded = function(){
+        alert('domReady');
+    }
+
+    function wheel(dom, handler){
+        if(!-[1,]){ // IE8
+            dom.attachEvent('onmousewheel', handler);
+        }else{
+            dom.addEventListener('wheel', handler);
+        }
+    }
+
+function is( obj, type ) {
+    return typeof obj === type;
+}
+
+var isEventSupported = (function() {
+  var TAGNAMES = {
+    'select': 'input', 
+    'change': 'input',
+    'submit': 'form', 
+    'reset': 'form',
+    'error': 'img', 
+    'load': 'img', 
+    'abort': 'img'
+  };
+  // function isEventSupported( eventName, element ) {
+  return function( eventName, element ) {
+    // 创而不插
+    element = element || document.createElement(TAGNAMES[eventName] || 'div');
+    eventName = 'on' + eventName;
+    var isSupported = eventName in element, type;
+    if ( !isSupported ) {
+      if ( !element.setAttribute ) {
+        element = document.createElement('div');
+      }
+      if ( element.setAttribute && element.removeAttribute ) {
+        
+        element.setAttribute(eventName, '');
+
+        type = typeof element[eventName];
+
+        isSupported = type === 'function';
+
+        if ( type !== 'undefined' ) {
+          element[eventName] = undefined;
+        }
+        element.removeAttribute(eventName);
+      }
+    }
+
+    element = null;
+    return isSupported;
+  }
+  // return isEventSupported;
+})();
+
+console.log('mousewheel:',isEventSupported("mousewheel"));
+console.log('wheel:',isEventSupported("wheel"));
+console.log('DOMMouseScroll:',isEventSupported("DOMMouseScroll"));
+
+console.log('mousewheel:',isEventSupported("mousewheel", document));
+console.log('wheel:',isEventSupported("wheel", document));
+console.log('DOMMouseScroll:',isEventSupported("DOMMouseScroll", document));
+
+</script>
+</html>

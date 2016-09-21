@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>测试scroll</title>
+<style>
+  #container{
+    width: 100px;
+    height: 400px;
+    background-color: red;
+    overflow: hidden;
+    padding:10px;
+    border:2px black solid;
+  }
+  #inner{
+    width: 80%;
+    height: 1000px;
+    background-color: green;
+  }
+</style>
+</head>
+<body style="height:50000px">
+    
+    <div id="container">
+      <div id="inner"></div>
+    </div>
+
+</body>
+<script>
+    // document.onmousewheel = function(e){
+    //     console.log('document鼠标滚轮滚动咯....', e.wheelDelta);
+    //     console.log(document.body.scrollTop);
+    // };
+
+    document.onwheel = function(e){
+        console.log('document鼠标滚轮滚动咯....', e.deltaY |= 0);
+        console.log( document.body.scrollTop || document.documentElement.scrollTop );
+    };
+
+
+    // document.body.addEventListener('DOMMouseScroll', function(e){
+    //     console.log('document.body DOMMouseScroll 鼠标滚轮滚动咯....', e.detail);
+    // });
+
+    // window.addEventListener('wheel', function(e){
+    //     console.log('window wheel 鼠标滚轮滚动咯....', e.wheelDelta, e.deltaY);
+    // });
+
+    // console.log('ret:',ret);
+
+    // document.onDOMContentLoaded = function(){
+    //     alert('domReady');
+    // }
+
+</script>
+</html>

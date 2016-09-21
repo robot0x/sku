@@ -31,7 +31,7 @@
     </div>
     <!-- 左侧搜索区 -->
 
-    <div class="operate-area pull-left" ng-controller="operaAreaCtrl">
+    <div class="operate-area pull-left" ng-controller="operaAreaCtrl" limit-scroll>
 
       <div class="modifiedBy-container">
         <span>修改人：</span>
@@ -57,13 +57,14 @@
       <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
       <button class="btn btn-success" ng-click="operaArea.eventHandler.save()">保存</button>
 
-      <form id="cdnForm" action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+     <!--  <form id="cdnForm" action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
         <input type="hidden" name="refresh" ng-bind="operaArea.dataFetch.toRefreshCDN" id="cdn">
         <button class="btn btn-warning" ng-click="operaArea.eventHandler.refreshCDN($event)">
           <span class="glyphicon glyphicon-refresh"></span>
           刷新CDN
         </button>
-      </form>
+      </form> -->
+      
       <!-- <button class="btn btn-warning" ng-click="operaArea.eventHandler.clear()">清除</button>
     -->
   </div>
@@ -82,6 +83,12 @@
               <input type="checkbox" ng-model="operaArea.dataFetch.isOnline" ng-checked=" operaArea.dataFetch.status == 1 " id="isOnline">是否上线</label>
           </div>
         </td>
+        <td style="padding-left:0;">
+          <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+              <input type="hidden" name="refresh" value="{{ operaArea.dataFetch.sid | cidTorefrshCDNUrl2 }}">
+              <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
+          </form>
+        </td>
       </tr>
       <tr ng-repeat="article in articles">
         <td ng-bind="article.rowTitle"></td>
@@ -89,10 +96,20 @@
           <a href="{{article.url}}" ng-bind="article.title | handleTitle" target="_blank"></a>
           <span ng-bind="article.cid | shortID" class="pull-right"></span>
         </td>
-        <td>
+
+        <td style="padding-left:10px;">
           <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.cancelRelate(article)">取消关联</button>
           <button class="btn btn-default btn-thin" ng-click="operaArea.eventHandler.findThis(article)">找到这篇</button>
         </td>
+
+        <td style="padding-left:0;">
+          <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+              <input type="hidden" name="refresh" value="{{ article.cid | cidTorefrshCDNUrl : operaArea.dataFetch.sid}}">
+              <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
+          </form>
+        </td>
+        
+
       </tr>
       <tr class="bg-padding">
         <td></td>
@@ -101,6 +118,9 @@
         <td>
           <button class="btn btn-primary btn-thin" ng-click="operaArea.eventHandler.addRelate(operaArea.articleID)">添加关联</button>
         </td>
+
+         
+
       </tr>
       <tr>
         <td class="required">商品名：</td>
@@ -335,6 +355,16 @@
     </div>
 
     <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model='generatesku.isNewLinkByThis'> 是否以此链接新建购买链接
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
       <div class="col-sm-offset-2 col-sm-2">
         <button type="submit" class="btn btn-info" ng-click="generatesku.confirm()" style="width: 200px;">确认</button>
       </div>
@@ -503,6 +533,7 @@
 <script src="scripts/lightbox.js"></script>
 <script src="scripts/app.js"></script>
 <script src="scripts/filters/filters.js"></script>
+<script src="scripts/directives/limitScroll.js"></script>
 <script src="scripts/controllers/searchArticleCtrl.js"></script>
 <script src="scripts/controllers/searchSKUCtrl.js"></script>
 <script src="scripts/controllers/operaAreaCtrl.js"></script>

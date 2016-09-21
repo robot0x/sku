@@ -43,3 +43,15 @@ skuAppFilters.filter('idToCMSUrl',function(){
         return "http://42.96.166.118/node/"+ cid;
     }
 });
+
+skuAppFilters.filter('cidTorefrshCDNUrl',function(){
+    return function(cid,sid){
+        return "http://c.diaox2.com/view/app/sku/"+cid+"/"+sid+".html";
+    }
+});
+
+skuAppFilters.filter('cidTorefrshCDNUrl2',function(){
+    return function(cid){
+        return "http://c.diaox2.com/view/app/sku/"+cid+".html";
+    }
+});

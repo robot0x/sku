@@ -284,6 +284,7 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       link_m_raw:null,
       price:sku.price
     }];
+    $scope.generatesku.isNewLinkByThis = true;
     // $scope.generatesku = sku;
     $scope.generatesku.toOperaAreaDate = {};
   });
@@ -294,6 +295,10 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       var price = $scope.generatesku.price || 0;
       var brand = ($scope.generatesku.brand || "").trim();
       var sales = $scope.generatesku.sales || [];
+      if( !$scope.generatesku.isNewLinkByThis ){
+        // 清空
+        sales.length = 0;
+      }
       // console.log(price_str);
       // 取消验证
       // if(!name){

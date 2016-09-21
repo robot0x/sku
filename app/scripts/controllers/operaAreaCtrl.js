@@ -64,7 +64,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
         return;
       }
        var headers = {"Content-Type":"application/json"};
-       console.log(cids);
        $http({
             url:"http://api.diaox2.com/v4/meta",
             method:"POST",
@@ -163,12 +162,10 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
       // 记录操作区关联的文章列表，供searchArticleCtrl.js 使用
       $rootScope.revarticles = articles;
     }
-
-
+     // 监听dataFetch属性是否发生改变
      $scope.$watch('operaArea.dataFetch',function(){
         // console.log("changed");
         // console.log($scope.operaArea.dataFetch);
-
         if($scope.operaArea.dataFetch == null){
           // console.log('false')
           $rootScope.isChanged = false;
@@ -176,7 +173,6 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
           // console.log('true')
           $rootScope.isChanged = true;
         }
-
      },true)
 
     // 触发viewSKU事件。发自searchArticleCtrl.js | searchSKUCtrl.js
@@ -253,7 +249,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
           }else{
             $scope.operaArea.dataFetch.uploadAllFlag = false;
           }
-        console.log(sku.revarticles.map(function(item){ return item & 0xffffff }));
+        // console.log(sku.revarticles.map(function(item){ return item & 0xffffff }));
        
          // 根据sku的关联文章id拿到文章meta
          getArticles(sku.revarticles,function(meta_infos){
@@ -948,38 +944,52 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                          data.link = link;
                          var brand = data.brand;
                          console.log(brand);
-                         $http({
-                            url:"http://120.27.45.36:3000/v1/searchsku",
-                            method:"POST",
-                            timeout:20000,
-                            headers:{"Content-Type":"application/json"},
-                            data:JSON.stringify({area:"brand",value:brand})
-                        }).then(function(result){
-                          console.log(result);
-                          var firstData = result.data;
-                          if(firstData.state!=="SUCCESS"){
-                             data.brand_info = "根据品牌获取相应的SKU失败。"+firstData.message;
-                           }else{
-                              // var secData = firstData.data;
-                              data.brandRelSkuList = firstData.data;
-                           }
-                           $scope.$emit('generateSKU',data);
-                           console.log("抓取的SKU数据：",data);
+                         // 如果品牌是空的就不要拿了
+                         // 以这个链接为例
+                         // https://item.taobao.com/item.htm?id=535048688592
+                         if( brand && brand.trim() ){
+                              $http({
+                              url:"http://120.27.45.36:3000/v1/searchsku",
+                              method:"POST",
+                              timeout:20000,
+                              headers:{"Content-Type":"application/json"},
+                              data:JSON.stringify({area:"brand",value:brand})
+                          }).then(function(result){
+                            console.log(result);
+                            var firstData = result.data;
+                            if(firstData.state!=="SUCCESS"){
+                               data.brand_info = "根据品牌获取相应的SKU失败。"+firstData.message;
+                             }else{
+                                // var secData = firstData.data;
+                                data.brandRelSkuList = firstData.data;
+                             }
+                             $scope.$emit('generateSKU',data);
+                             console.log("抓取的SKU数据：",data);
 
-                         hideLoading();
-                         // 只有抓取成功才显示数据
-                         self.showGenerateSKUMask();
+                           hideLoading();
+                           // 只有抓取成功才显示数据
+                           self.showGenerateSKUMask();
 
-                          console.log(result);
-                        }).catch(function(e){
-                          console.log(e);
-                          data.brand_info = "根据品牌获取相应的SKU失败。"+e.data;
-                          $scope.$emit('generateSKU',data);
-                          console.log("抓取的SKU数据：",data);
-                         hideLoading();
-                         // 只有抓取成功才显示数据
-                         self.showGenerateSKUMask();
-                        })
+                          }).catch(function(e){
+                            console.log(e);
+                            data.brand_info = "根据品牌获取相应的SKU失败。"+e.data;
+                            $scope.$emit('generateSKU',data);
+                            console.log("抓取的SKU数据：",data);
+                           hideLoading();
+                           // 只有抓取成功才显示数据
+                           self.showGenerateSKUMask();
+                          })
+
+
+                         }else{
+                            var firstData = result.data;
+                            $scope.$emit('generateSKU',data);
+                            hideLoading();
+                            // 只有抓取成功才显示数据
+                            self.showGenerateSKUMask();
+
+                         }
+                         
 
                          // $scope.$emit('generateSKU',data);
                          // console.log("抓取的SKU数据：",data);
