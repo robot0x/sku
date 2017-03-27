@@ -64,7 +64,7 @@
           刷新CDN
         </button>
       </form> -->
-      
+
       <!-- <button class="btn btn-warning" ng-click="operaArea.eventHandler.clear()">清除</button>
     -->
   </div>
@@ -84,7 +84,8 @@
           </div>
         </td>
         <td style="padding-left:0;">
-          <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+          <!-- <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
+          <form action="//bj1.a.dx2rd.com/cdn/refresh" method="POST" target="_blank">
               <input type="hidden" name="refresh" value="{{ operaArea.dataFetch.sid | cidTorefrshCDNUrl2 }}">
               <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
           </form>
@@ -103,12 +104,13 @@
         </td>
 
         <td style="padding-left:0;">
-          <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+          <!-- <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
+          <form action="//bj1.a.dx2rd.com/cdn/refresh" method="POST" target="_blank">
               <input type="hidden" name="refresh" value="{{ article.cid | cidTorefrshCDNUrl : operaArea.dataFetch.sid}}">
               <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
           </form>
         </td>
-        
+
 
       </tr>
       <tr class="bg-padding">
@@ -119,7 +121,7 @@
           <button class="btn btn-primary btn-thin" ng-click="operaArea.eventHandler.addRelate(operaArea.articleID)">添加关联</button>
         </td>
 
-         
+
 
       </tr>
       <tr>
@@ -415,7 +417,7 @@
     </div>
   </div>
 
-  
+
 </div>
 </div>
 </div>
@@ -476,7 +478,7 @@
         5.旅行——时效性
                         旅行产品具有一定的时效性，下手要趁早哦~
         <br>
-        6.日本亚马逊--转运攻略: 不能直邮，需要转运，日亚转运攻略见这里 
+        6.日本亚马逊--转运攻略: 不能直邮，需要转运，日亚转运攻略见这里
                         攻略见这里
         <br>
         为超链接效果，需要用固定格式：

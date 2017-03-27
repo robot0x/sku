@@ -74,7 +74,7 @@ function($scope,
         })
 
         cids = cids.slice(0,50);
-        
+
         $scope.alllist = alllist;
         // $rootScope.alllist = alllist;
         $http({
@@ -103,7 +103,7 @@ function($scope,
             })
 
 
-            /* 
+            /*
                  TODO:改善性能。
                  1、请求一次getalllist，拿到所有数据，然后分批次拿文章meta，
                  分批次拿sku
@@ -194,7 +194,7 @@ function($scope,
             var articles = $scope.cachedArticles;
 
             // console.log("$scope.cachedArticles：",$scope.cachedArticles.length);
-            
+
             revarticles.forEach(function(cid){
 
                 articles.forEach(function(article){
@@ -261,7 +261,7 @@ function($scope,
         $scope.cachedArticles.forEach(function(article){
             delete article.threeD;
         })
-        
+
         meta_infos.forEach(function(item){
             $scope.cachedArticles.forEach(function(article){
                 if(item.cid === article.cid){
@@ -284,10 +284,10 @@ function($scope,
          catch:true,
          headers:headers,
          data:JSON.stringify({
-            start:start, 
+            start:start,
             end:end
          })
-         
+
         }).then(function(result){
             if(callback){
                 callback(result);
@@ -325,7 +325,7 @@ function($scope,
                             var articles = [];
                             var alllist = $scope.alllist;
                             console.log("TS接口的：",result);
-                            var url = "http://120.27.45.36:3000/v1/getfullsku/";  
+                            var url = "http://120.27.45.36:3000/v1/getfullsku/";
                              // console.log(alllist);
                              meta_infos.forEach(function(item){
                                 // console.log(item);
@@ -402,7 +402,7 @@ function($scope,
                         var meta_infos = result.data.res.specified_meta_data.meta_infos;
                         console.log("v4/meta搜索到的meta_infos为：",meta_infos);
                         if(meta_infos != null && meta_infos.length > 0 ){
-                            var url = "http://120.27.45.36:3000/v1/getfullsku/";  
+                            var url = "http://120.27.45.36:3000/v1/getfullsku/";
                             var item = meta_infos[0];
                             var alllist = $scope.alllist;
                             var skuArray = alllist[item.cid];
@@ -426,7 +426,7 @@ function($scope,
                                    })
                                 })
                             }
-                            
+
                             $scope.articles = meta_infos;
                             $scope.cachedArticles = $scope.articles.slice(0,loadCount);
                             // loadingContainer.hide();
@@ -451,7 +451,7 @@ function($scope,
                                 var meta_infos = result.data.metas;
                                 var articles = [];
                                 var alllist = $scope.alllist;
-                                var url = "http://120.27.45.36:3000/v1/getfullsku/";  
+                                var url = "http://120.27.45.36:3000/v1/getfullsku/";
                                  // console.log(alllist);
                                  console.log("m=meta搜索到的meta_infos为：",meta_infos);
                                  meta_infos.forEach(function(item){
@@ -509,7 +509,7 @@ function($scope,
                                 hideLoading("搜索失败，请重试");
                             })
                         }
-                        
+
                         }).catch(function(e){
                             console.error("v4/meta接口拿meta失败：",e);
                             // loadingContainer.hide();
@@ -524,7 +524,7 @@ function($scope,
 
         },
         /**
-         * [day 次方法有问题]
+         * [day  此方法有问题]
          * @param  {[int]} go [-1 ,0 ,1]
          */
         day:function(go){
@@ -532,7 +532,7 @@ function($scope,
             var today = new Date();
 
             // 在这儿加一行代码
-            today.setDate(today.getDate()+go);
+            today.setDate(today.getDate() + go);
 
             var year = today.getFullYear();
             var month = leftZero(today.getMonth() + 1);
@@ -541,7 +541,7 @@ function($scope,
             var day = leftZero(today.getDate());
 
             var timeStr = year + month + day;
-            
+
             console.log(timeStr);
 
             var start = timeStr,end = timeStr;
@@ -557,7 +557,7 @@ function($scope,
                 var meta_infos = result.data.metas;
                 var articles = [];
                 var alllist = $scope.alllist;
-                var url = "http://120.27.45.36:3000/v1/getfullsku/";  
+                var url = "http://120.27.45.36:3000/v1/getfullsku/";
                  meta_infos.forEach(function(item){
                     var article = {
                         cid:item.serverid,
@@ -597,13 +597,13 @@ function($scope,
             })
         },
         yesterday:function(){
-            this.day(-1);            
+            this.day(-1);
         },
         today:function(){
-            this.day(0); 
+            this.day(0);
         },
         tomorrow:function(){
-            this.day(1); 
+            this.day(1);
         },
         knockEnterKey:function($event){
             var keycode = $event.keyCode;
