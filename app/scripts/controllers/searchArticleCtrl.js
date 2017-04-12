@@ -32,7 +32,7 @@ function($scope,
 
     var headers = {"Content-Type":"application/json"};
     var aProto = Array.prototype;
-    var getalllistUrl = "http://120.27.45.36:3000/v1/getalllist";
+    var getalllistUrl = "//s5.a.dx2rd.com:3000/v1/getalllist";
 
 
     function leftZero(num){
@@ -78,7 +78,7 @@ function($scope,
         $scope.alllist = alllist;
         // $rootScope.alllist = alllist;
         $http({
-            url:"http://api.diaox2.com/v4/meta",
+            url:"//api.diaox2.com/v4/meta",
             method:"POST",
             timeout:20000,
             catch:true,
@@ -94,7 +94,7 @@ function($scope,
            headers:headers
         }).then(function(result){
             var meta_infos = result.data.res.specified_meta_data.meta_infos;
-            var url = "http://120.27.45.36:3000/v1/getfullsku/";
+            var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
             // var allSkuList = [];
             var sids = [];
             // console.log(meta_infos);
@@ -278,7 +278,7 @@ function($scope,
 
     function getMetasByTimeRange(start,end,callback){
         $http({
-         url:"http://z.diaox2.com/view/app/?m=TR",
+         url:"//z.diaox2.com/view/app/?m=TR",
          method:"POST",
          timeout:20000,
          catch:true,
@@ -314,7 +314,7 @@ function($scope,
                          // 把根据keyword查询到的数据，广播到子controller上
                         // $rootScope._lastKeyword_ = keyword;
                         $http({
-                         url:"http://z.diaox2.com/view/app/?m=TS",
+                         url:"//z.diaox2.com/view/app/?m=TS",
                          method:"POST",
                          timeout:20000,
                          catch:true,
@@ -325,14 +325,14 @@ function($scope,
                             var articles = [];
                             var alllist = $scope.alllist;
                             console.log("TS接口的：",result);
-                            var url = "http://120.27.45.36:3000/v1/getfullsku/";
+                            var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
                              // console.log(alllist);
                              meta_infos.forEach(function(item){
                                 // console.log(item);
                                 var article = {
                                     cid:item.serverid,
                                     thumb_image_url: item.thumb,
-                                    url:"http://c.diaox2.com"+item.url,
+                                    url:"//c.diaox2.com"+item.url,
                                     title:[item.title],
                                     skuList:[]
                                 }
@@ -384,7 +384,7 @@ function($scope,
                     var longCid = toLongCid(kw);
                     // $rootScope._lastKeyword_ = longCid;
                     $http({
-                        url:"http://api.diaox2.com/v4/meta",
+                        url:"//api.diaox2.com/v4/meta",
                         method:"POST",
                         timeout:20000,
                         catch:true,
@@ -402,7 +402,7 @@ function($scope,
                         var meta_infos = result.data.res.specified_meta_data.meta_infos;
                         console.log("v4/meta搜索到的meta_infos为：",meta_infos);
                         if(meta_infos != null && meta_infos.length > 0 ){
-                            var url = "http://120.27.45.36:3000/v1/getfullsku/";
+                            var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
                             var item = meta_infos[0];
                             var alllist = $scope.alllist;
                             var skuArray = alllist[item.cid];
@@ -437,9 +437,9 @@ function($scope,
                             }
                         }else{
                             // 如果meta_info是空的，说明搜索的是未发布的文章
-                            // 使用http://z.diaox2.com/view/app/?m=meta再次搜索一次
+                            // 使用//z.diaox2.com/view/app/?m=meta再次搜索一次
                             $http({
-                                url:"http://z.diaox2.com/view/app/?m=meta",
+                                url:"//z.diaox2.com/view/app/?m=meta",
                                 method:"POST",
                                 timeout:20000,
                                 catch:true,
@@ -451,7 +451,7 @@ function($scope,
                                 var meta_infos = result.data.metas;
                                 var articles = [];
                                 var alllist = $scope.alllist;
-                                var url = "http://120.27.45.36:3000/v1/getfullsku/";
+                                var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
                                  // console.log(alllist);
                                  console.log("m=meta搜索到的meta_infos为：",meta_infos);
                                  meta_infos.forEach(function(item){
@@ -459,7 +459,7 @@ function($scope,
                                     var article = {
                                         cid:item.serverid,
                                         thumb_image_url: item.thumb,
-                                        url:"http://c.diaox2.com"+item.url,
+                                        url:"//c.diaox2.com"+item.url,
                                         title:[item.title],
                                         skuList:[]
                                     }
@@ -557,12 +557,12 @@ function($scope,
                 var meta_infos = result.data.metas;
                 var articles = [];
                 var alllist = $scope.alllist;
-                var url = "http://120.27.45.36:3000/v1/getfullsku/";
+                var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
                  meta_infos.forEach(function(item){
                     var article = {
                         cid:item.serverid,
                         thumb_image_url: item.thumb,
-                        url:"http://c.diaox2.com"+item.oriUrl,
+                        url:"//c.diaox2.com"+item.oriUrl,
                         // 去掉title中的<br/>
                         title:[item.title.replace(/<br\s*\/>/ig,"")],
                         skuList:[]

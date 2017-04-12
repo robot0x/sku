@@ -30,7 +30,7 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
     var headers = {"Content-Type":"application/json"};
     
     $http({
-        url:"http://120.27.45.36:3000/v1/getalllist",
+        url:"//s5.a.dx2rd.com:3000/v1/getalllist",
         method:"GET",
         timeout:20000,
         catch:true,
@@ -48,7 +48,7 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
             // allSKUList.push(alllist[cid][0]); // 不管有多少，只push第一个，加快速度
         })
         $http({
-          url:"http://120.27.45.36:3000/v1/getfullsku",
+          url:"//s5.a.dx2rd.com:3000/v1/getfullsku",
           method:"POST",
           timeout:20000,
           catch:true,
@@ -88,7 +88,7 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
         search:function(){
             // var keyword = $scope.dataFetch.keyword;
             var keyword = $scope.query;
-            var url = "http://120.27.45.36:3000/v1/getfullsku/";
+            var url = "//s5.a.dx2rd.com:3000/v1/getfullsku/";
             if(keyword){
 
                 var kw = Number(keyword);
@@ -104,7 +104,7 @@ skuApp.controller('searchSKUCtrl',function($scope,$rootScope,$http){
                          // 把根据keyword查询到的数据，广播到子controller上
                         $rootScope._lastKeyword_ = keyword;
                         $http({
-                         url:"http://120.27.45.36:3000/v1/search/"+keyword,
+                         url:"//s5.a.dx2rd.com:3000/v1/search/"+keyword,
                          method:"GET",
                          timeout:20000,
                          catch:true,

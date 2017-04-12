@@ -1,10 +1,10 @@
 var http = require('http')
 var postData = JSON.stringify({
-    'url':'http://s.click.taobao.com/t?e=m%3D2%26s%3D6t3Zj%2FakZq8cQipKwQzePOeEDrYVVa64K7Vc7tFgwiHjf2vlNIV67jtHK5w1mkApJhSgLssdd1ahQEN7xn4%2BHIbEG36ONKbK%2B2T3haSPTyQsVV%2BLa9Ofh1sfG3rjrZYeOrAlBopqaFkeJoKC48nLtcYMXU3NNCg%2F&pvid=10_125.34.11.187_1033_1461815765671'
+    'url':'//s.click.taobao.com/t?e=m%3D2%26s%3D6t3Zj%2FakZq8cQipKwQzePOeEDrYVVa64K7Vc7tFgwiHjf2vlNIV67jtHK5w1mkApJhSgLssdd1ahQEN7xn4%2BHIbEG36ONKbK%2B2T3haSPTyQsVV%2BLa9Ofh1sfG3rjrZYeOrAlBopqaFkeJoKC48nLtcYMXU3NNCg%2F&pvid=10_125.34.11.187_1033_1461815765671'
 })
 console.log(postData)
 console.log(Buffer.byteLength(postData))
-var hostname = "http://s4.a.dx2rd.com";
+var hostname = "//s4.a.dx2rd.com";
 var options = {
     hostname:hostname,
     method:'POST',

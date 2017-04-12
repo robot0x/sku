@@ -97,11 +97,11 @@
     })(a);
     (function(c) {
         var f = (function() {
-            var n = "http://m.jd.com/download/downApp.html",
-                q = "http://union.m.jd.com/download/go.action?to=http%3A%2F%2Fitunes.apple.com%2Fcn%2Fapp%2Fid414245413&client=apple&unionId=12532&subunionId=m-top&key=e4dd45c0f480d8a08c4621b4fff5de74",
-                e = "http://3.cn/zKIUkC",
-                r = "http://a.app.qq.com/o/simple.jsp?pkgname=com.jingdong.app.mall&g_f=991850",
-                p = "http://3.cn/rP34ke";
+            var n = "//m.jd.com/download/downApp.html",
+                q = "//union.m.jd.com/download/go.action?to=http%3A%2F%2Fitunes.apple.com%2Fcn%2Fapp%2Fid414245413&client=apple&unionId=12532&subunionId=m-top&key=e4dd45c0f480d8a08c4621b4fff5de74",
+                e = "//3.cn/zKIUkC",
+                r = "//a.app.qq.com/o/simple.jsp?pkgname=com.jingdong.app.mall&g_f=991850",
+                p = "//3.cn/rP34ke";
             var m = "openApp.jdMobile://360buy?params=",
                 h = "intent://m.jd.com/#Intent;scheme=openApp.jdMobile;package=com.jingdong.app.mall;end";
 
@@ -264,7 +264,7 @@
                 return x
             };
             return function(B, A) {
-                l("http://h5.m.jd.com/active/track/mping.min.js", function() {});
+                l("//h5.m.jd.com/active/track/mping.min.js", function() {});
                 var x = c(B);
                 x = x[0] || x;
                 var z, y, u, w, v = s(window);

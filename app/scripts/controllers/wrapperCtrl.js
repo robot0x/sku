@@ -257,7 +257,7 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       });
     }
   }
-  // http://item.jd.com/10009249720.html
+  // //item.jd.com/10009249720.html
   $scope.$on('generateSKU', function(event, sku) {
 
     console.log('接收到了generateSKU事件。数据为：', sku);
@@ -351,7 +351,7 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       }
       $scope.generatesku.toOperaAreaDate.imgs = imgs;
     },
-    // http://item.jd.com/10009249720.html
+    // //item.jd.com/10009249720.html
     replaceName: function($event, name) {
       toggleBtn($($event.target), "name", name);
     },

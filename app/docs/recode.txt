@@ -1,8 +1,8 @@
 1、angular发送一个CORS请求
 $http({
-  // url: "http://203.195.194.216:80/v4/meta", // done !
-  // url: "http://203.195.194.216/v4/meta", // done !
-  url: "http://api.diaox2.com/v4/meta",
+  // url: "//203.195.194.216:80/v4/meta", // done !
+  // url: "//203.195.194.216/v4/meta", // done !
+  url: "//api.diaox2.com/v4/meta",
   timeout: 20000,
   method:'POST',
   headers:{

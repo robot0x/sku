@@ -65,7 +65,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
       }
        var headers = {"Content-Type":"application/json"};
        $http({
-            url:"http://api.diaox2.com/v4/meta",
+            url:"//api.diaox2.com/v4/meta",
             method:"POST",
             timeout:20000,
             catch:true,
@@ -91,7 +91,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             if( !meta_infos || meta_infos.length !== cids.length){
 
               $http({
-                  url:"http://z.diaox2.com/view/app/?m=meta",
+                  url:"//z.diaox2.com/view/app/?m=meta",
                   method:"POST",
                   timeout:20000,
                   catch:true,
@@ -107,7 +107,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                             cid:item.serverid,
                             thumb_image_url: item.thumb,
                             // bug fix
-                            url:"http://c.diaox2.com"+item.oriUrl,
+                            url:"//c.diaox2.com"+item.oriUrl,
                             title:[item.title],
                             thumb_image_url:item.cover
                          })
@@ -188,7 +188,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
        //   $rootScope.isChanged = false;
        // }
        $http({
-          url:"http://120.27.45.36:3000/v1/getfullsku/"+sid,
+          url:"//s5.a.dx2rd.com:3000/v1/getfullsku/"+sid,
           method:"GET",
           timeout:20000,
           headers:{"Content-Type":"application/json"}
@@ -409,8 +409,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
      */
      function filterNetImg(images){
         var netImg = [];
-                      // http://content.image.alimmdn.com/sku/1461574365352938_jpg.jpeg
-        // fix bug 去掉 g ，详见 http://my.oschina.net/ffwcn/blog/276949?fromerr=tCyOJ0zn
+                      // //content.image.alimmdn.com/sku/1461574365352938_jpg.jpeg
+        // fix bug 去掉 g ，详见 //my.oschina.net/ffwcn/blog/276949?fromerr=tCyOJ0zn
         // var rnetImg = /^\s*(https?:\/\/)?content\.image\.alimmdn\.com\/sku\//ig
         var rnetImg = /^\s*(https?:\/\/)?content\.image\.alimmdn\.com\/sku\//i
         images = images || $scope.operaArea.dataFetch.images;
@@ -440,13 +440,13 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             在server端可以调用这个带域名的接口
             需要server端跟进
             现已解决这个问题
-            server端包了一层，我请求http://120.27.45.36:3001/v1/url这个地址
-            然后在server端，请求http://s4.a.dx2rd.com/blsvr/parse这个接口，把
-            取到的数据用http://120.27.45.36:3001/v1/url返回过来
+            server端包了一层，我请求//s5.a.dx2rd.com:3001/v1/url这个地址
+            然后在server端，请求//s4.a.dx2rd.com/blsvr/parse这个接口，把
+            取到的数据用//s5.a.dx2rd.com:3001/v1/url返回过来
           */
-          // url:"http://s4.a.dx2rd.com/blsvr/parse", 
-          // url:"http://121.42.141.74/blsvr/parse",
-          url:"http://120.27.45.36:3001/v1/url",
+          // url:"//s4.a.dx2rd.com/blsvr/parse", 
+          // url:"//121.42.141.74/blsvr/parse",
+          url:"//s5.a.dx2rd.com:3001/v1/url",
           method:"POST",
           timeout:20000,
           headers:{"Content-Type":"application/json"},
@@ -499,7 +499,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 cid = toLongCid(cid);
                 showLoading();
                 $http({
-                    url:"http://120.27.45.36:3000/v1/getoldbuyinfo/"+cid,
+                    url:"//s5.a.dx2rd.com:3000/v1/getoldbuyinfo/"+cid,
                     method:"GET",
                     timeout:20000,
                     headers:{"Content-Type":"application/json"}
@@ -709,7 +709,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
                // console.log(sid,articles,isOnline,title,price,brand,images,sales);
                // TODO sku的保存与更新
-               var url = "http://120.27.45.36:3000/v1/updatesku";
+               var url = "//s5.a.dx2rd.com:3000/v1/updatesku";
                // update
                var intro = dataFetch.intro || "";
                var extra = dataFetch.extra || "";
@@ -772,7 +772,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
 
                }else{ // insert
 
-                url = "http://120.27.45.36:3000/v1/insertsku";
+                url = "//s5.a.dx2rd.com:3000/v1/insertsku";
 
                 $http({
                       url:url,
@@ -822,8 +822,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 if(dataFetch){
                     var sid = dataFetch.sid;
                     if( sid ){
-                      // $scope.operaArea.dataFetch.toRefreshCDN = "http://c.diaox2.com/view/app/?m=sku&sid="+sid;
-                      document.getElementById('cdn').value = "http://c.diaox2.com/view/app/?m=sku&id="+sid;
+                      // $scope.operaArea.dataFetch.toRefreshCDN = "//c.diaox2.com/view/app/?m=sku&sid="+sid;
+                      document.getElementById('cdn').value = "//c.diaox2.com/view/app/?m=sku&id="+sid;
                     }else{
                        event.preventDefault();
                        tip('没有选择要刷新的SKU')
@@ -900,7 +900,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 // var rurl = /^((https?|ftp):\/\/)?([a-z0-9]+[_\-]?[a-z0-9]+\.)*[a-z0-9]+\-?[a-z0-9]+\.?[a-z]{2,}(:\d+)?(\/.*)*\/?(#\w*)?$/ig;
                 if(link){
                     if(link.indexOf('http')=== -1){
-                      link = "http://" + link;
+                      link = "//" + link;
                     }
                     window.open(link);
                 }
@@ -912,7 +912,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                 $('.opera-use').removeClass('btn-success').addClass('btn-default');
                 $('.glyphicon-ok').remove();
             },
-            // http://item.jd.com/10009249720.html
+            // //item.jd.com/10009249720.html
             /*
                返回值：有name优先用name，否则用title
                tag不一定有值
@@ -931,7 +931,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                   showLoading();
                   
                   $http({
-                      url:"http://120.27.45.36:3001/v1/extract",
+                      url:"//s5.a.dx2rd.com:3001/v1/extract",
                       method:"POST",
                       timeout:20000,
                       headers:{"Content-Type":"application/json"},
@@ -949,7 +949,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                          // https://item.taobao.com/item.htm?id=535048688592
                          if( brand && brand.trim() ){
                               $http({
-                              url:"http://120.27.45.36:3000/v1/searchsku",
+                              url:"//s5.a.dx2rd.com:3000/v1/searchsku",
                               method:"POST",
                               timeout:20000,
                               headers:{"Content-Type":"application/json"},
@@ -1064,7 +1064,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
               showLoading();
               if(netImg.length){
                   $http({
-                    url:"http://120.27.45.36/upremote.php",
+                    url:"//s5.a.dx2rd.com/upremote.php",
                     method:"POST",
                     timeout:100000,
                     headers:{"Content-Type":"application/json"},

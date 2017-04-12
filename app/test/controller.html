@@ -89,7 +89,7 @@ myApp.controller('asyncCtrl',function($scope,$http,$timeout){
     //     console.log(e);
     // })
     // $http({
-    //   url: "http://api.diaox2.com/v4/meta",
+    //   url: "//api.diaox2.com/v4/meta",
     //   timeout: 20000,
     //   method:'POST',
     //   headers:{
@@ -106,7 +106,7 @@ myApp.controller('asyncCtrl',function($scope,$http,$timeout){
     //     console.log(e);
     // })
 
-     $http.jsonp("http://c.diaox2.com/cms/diaodiao/pcsite/goodthing_feed_list.json?callback=cb").success(function(data){
+     $http.jsonp("//c.diaox2.com/cms/diaodiao/pcsite/goodthing_feed_list.json?callback=cb").success(function(data){
             console.log(data);
      })
 

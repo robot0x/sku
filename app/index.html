@@ -57,7 +57,7 @@
       <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
       <button class="btn btn-success" ng-click="operaArea.eventHandler.save()">保存</button>
 
-     <!--  <form id="cdnForm" action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank">
+     <!--  <form id="cdnForm" action="//203.195.181.227/cdn/refresh" method="POST" target="_blank">
         <input type="hidden" name="refresh" ng-bind="operaArea.dataFetch.toRefreshCDN" id="cdn">
         <button class="btn btn-warning" ng-click="operaArea.eventHandler.refreshCDN($event)">
           <span class="glyphicon glyphicon-refresh"></span>
@@ -84,7 +84,7 @@
           </div>
         </td>
         <td style="padding-left:0;">
-          <!-- <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
+          <!-- <form action="//203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
           <form action="//bj1.a.dx2rd.com/cdn/refresh" method="POST" target="_blank">
               <input type="hidden" name="refresh" value="{{ operaArea.dataFetch.sid | cidTorefrshCDNUrl2 }}">
               <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
@@ -104,7 +104,7 @@
         </td>
 
         <td style="padding-left:0;">
-          <!-- <form action="http://203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
+          <!-- <form action="//203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
           <form action="//bj1.a.dx2rd.com/cdn/refresh" method="POST" target="_blank">
               <input type="hidden" name="refresh" value="{{ article.cid | cidTorefrshCDNUrl : operaArea.dataFetch.sid}}">
               <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
@@ -195,7 +195,7 @@
     <tr class="bg-padding">
       <td>本地图上传：</td>
       <td colspan="2" style="padding-top: 40px;">
-        <form action="http://120.27.45.36/uplocal_multi.php" target="upload" method="post" enctype="multipart/form-data">
+        <form action="//s5.a.dx2rd.com/uplocal_multi.php" target="upload" method="post" enctype="multipart/form-data">
           <input id="fileup" type="file" accept="image/*" name="foobar[]" multiple class="pull-left"/>
           <button type="submit" value="上传" class="pull-left" ng-click="operaArea.eventHandler.upload($event)">
             <span class="glyphicon glyphicon-cloud-upload"></span>
@@ -335,7 +335,7 @@
       <div class="col-sm-10">
         <ul>
           <li ng-repeat="sku in generatesku.brandRelSkuList">
-            <a href="http://z.diaox2.com/view/app/?m=sku&id={{sku.sid}}">
+            <a href="//z.diaox2.com/view/app/?m=sku&id={{sku.sid}}">
               <span ng-bind="sku.title"></span>
             </a>
           </li>
@@ -444,7 +444,7 @@
     <div class="col-sm-10">
       <textarea class="form-control" placeholder="移动返利链接" ng-model="link_m_cps"></textarea>
       <small>
-        url由购买页中浏览器直接复制粘贴，url长度不操作255，格式如：http://item.m.jd.com/ware/view.action?wareId=1019913
+        url由购买页中浏览器直接复制粘贴，url长度不操作255，格式如：//item.m.jd.com/ware/view.action?wareId=1019913
       </small>
     </div>
   </div>

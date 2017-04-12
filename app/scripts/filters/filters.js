@@ -2,8 +2,8 @@ var skuAppFilters = angular.module('skuAppFilters',[]);
 // img url 格式化
 skuAppFilters.filter('imgUrlFilter',function(){
     return function(item){
-        if(item.indexOf('http://') === -1){
-            return "http://a.diaox2.com/cms/sites/default/files/" + item;
+        if(item.indexOf('//') === -1){
+            return "//a.diaox2.com/cms/sites/default/files/" + item;
         }
         return item;
     }
@@ -34,24 +34,24 @@ skuAppFilters.filter('handleTitle',function(){
 });
 skuAppFilters.filter('sidToUrl',function(){
     return function(sid){
-        return "http://z.diaox2.com/view/app/?m=sku&id="+sid;
+        return "//z.diaox2.com/view/app/?m=sku&id="+sid;
     }
 });
 
 skuAppFilters.filter('idToCMSUrl',function(){
     return function(cid){
-        return "http://42.96.166.118/node/"+ cid;
+        return "//s2.a.dx2rd.com/node/"+ cid;
     }
 });
 
 skuAppFilters.filter('cidTorefrshCDNUrl',function(){
     return function(cid,sid){
-        return "http://c.diaox2.com/view/app/sku/"+cid+"/"+sid+".html";
+        return "//c.diaox2.com/view/app/sku/"+cid+"/"+sid+".html";
     }
 });
 
 skuAppFilters.filter('cidTorefrshCDNUrl2',function(){
     return function(cid){
-        return "http://c.diaox2.com/view/app/sku/"+cid+".html";
+        return "//c.diaox2.com/view/app/sku/"+cid+".html";
     }
 });
