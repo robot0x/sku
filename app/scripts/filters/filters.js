@@ -34,24 +34,24 @@ skuAppFilters.filter('handleTitle',function(){
 });
 skuAppFilters.filter('sidToUrl',function(){
     return function(sid){
-        return "//z.diaox2.com/view/app/?m=sku&id="+sid;
+        return "http://z.diaox2.com/view/app/?m=sku&id="+sid;
     }
 });
 
 skuAppFilters.filter('idToCMSUrl',function(){
     return function(cid){
-        return "//s2.a.dx2rd.com/node/"+ cid;
+        return "http://s2.a.dx2rd.com/node/"+ cid;
     }
 });
 
 skuAppFilters.filter('cidTorefrshCDNUrl',function(){
     return function(cid,sid){
-        return "//c.diaox2.com/view/app/sku/"+cid+"/"+sid+".html";
+        return "http://c.diaox2.com/view/app/sku/"+cid+"/"+sid+".html";
     }
 });
 
 skuAppFilters.filter('cidTorefrshCDNUrl2',function(){
     return function(cid){
-        return "//c.diaox2.com/view/app/sku/"+cid+".html";
+        return "http://c.diaox2.com/view/app/sku/"+cid+".html";
     }
 });

@@ -52,21 +52,8 @@
         </table>
       </div>
       <div class="search-btn pull-right">
-        <!-- <button class="btn btn-info" ng-click="operaArea.eventHandler.create()">新建</button>
-      -->
       <button class="btn btn-default" ng-click="operaArea.eventHandler.create()">手动新建</button>
       <button class="btn btn-success" ng-click="operaArea.eventHandler.save()">保存</button>
-
-     <!--  <form id="cdnForm" action="//203.195.181.227/cdn/refresh" method="POST" target="_blank">
-        <input type="hidden" name="refresh" ng-bind="operaArea.dataFetch.toRefreshCDN" id="cdn">
-        <button class="btn btn-warning" ng-click="operaArea.eventHandler.refreshCDN($event)">
-          <span class="glyphicon glyphicon-refresh"></span>
-          刷新CDN
-        </button>
-      </form> -->
-
-      <!-- <button class="btn btn-warning" ng-click="operaArea.eventHandler.clear()">清除</button>
-    -->
   </div>
   <p class="revarticles">关联文章：</p>
   <table class="grid-table">
@@ -84,7 +71,6 @@
           </div>
         </td>
         <td style="padding-left:0;">
-          <!-- <form action="//203.195.181.227/cdn/refresh" method="POST" target="_blank"> -->
           <form action="//bj1.a.dx2rd.com/cdn/refresh" method="POST" target="_blank">
               <input type="hidden" name="refresh" value="{{ operaArea.dataFetch.sid | cidTorefrshCDNUrl2 }}">
               <button class="btn btn-xs btn-danger text-center">刷新CDN</button>
