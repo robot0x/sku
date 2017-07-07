@@ -62,13 +62,15 @@ function($scope,
         catch:true,
         headers:headers
     }).then(function(result){
+        console.log('result:', result);
         // console.log(result.data.data);
         return result.data.data;
     }).then(function(alllist){
         // 开发选项，每次拿到100条数据
         // var cids = Object.keys(alllist).slice(0,50);
         var cids = Object.keys(alllist);
-
+        console.log('cids:', cids);
+        
         cids.sort(function(c1,c2){
             return c2 - c1;
         })
@@ -76,6 +78,7 @@ function($scope,
         cids = cids.slice(0,50);
 
         $scope.alllist = alllist;
+        console.log('alllist:', alllist);
         // $rootScope.alllist = alllist;
         $http({
             url:"//api.diaox2.com/v4/meta",
