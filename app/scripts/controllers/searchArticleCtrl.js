@@ -281,7 +281,8 @@ function($scope,
 
     function getMetasByTimeRange(start,end,callback){
         $http({
-         url:"//z.diaox2.com/view/app/?m=TR",
+        //  url:"//z.diaox2.com/view/app/?m=TR",
+         url:"//z.diaox2.com:3001/?m=TR",
          method:"POST",
          timeout:20000,
          catch:true,
@@ -317,7 +318,8 @@ function($scope,
                          // 把根据keyword查询到的数据，广播到子controller上
                         // $rootScope._lastKeyword_ = keyword;
                         $http({
-                         url:"//z.diaox2.com/view/app/?m=TS",
+                        //  url:"//z.diaox2.com/view/app/?m=TS",
+                         url:"//z.diaox2.com:3001/?m=TS",
                          method:"POST",
                          timeout:20000,
                          catch:true,
