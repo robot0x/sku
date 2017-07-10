@@ -444,7 +444,8 @@ function($scope,
                             // 如果meta_info是空的，说明搜索的是未发布的文章
                             // 使用//z.diaox2.com/view/app/?m=meta再次搜索一次
                             $http({
-                                url:"//z.diaox2.com/view/app/?m=meta",
+                                // url:"//z.diaox2.com/view/app/?m=meta",
+                                url:"//z.diaox2.com:3001/?m=meta",
                                 method:"POST",
                                 timeout:20000,
                                 catch:true,

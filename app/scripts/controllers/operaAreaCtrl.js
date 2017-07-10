@@ -91,7 +91,8 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
             if( !meta_infos || meta_infos.length !== cids.length){
 
               $http({
-                  url:"//z.diaox2.com/view/app/?m=meta",
+                  // url:"//z.diaox2.com/view/app/?m=meta",
+                  url:"//z.diaox2.com:3001/?m=meta",
                   method:"POST",
                   timeout:20000,
                   catch:true,
