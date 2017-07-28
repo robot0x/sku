@@ -607,7 +607,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                     * 2017-07-28 李园宁要求，不填写链接也可以保存
                     */
                    if(sales_ori!=null && sales_ori.length > 0){
-                      sales  = JSON.parse(JSON.stringify(sales_ori)); // 商品图片 必填
+                      sales = JSON.parse(JSON.stringify(sales_ori)); // 商品图片 必填
                       sales.forEach(function(sale){
                         sale.intro = sale.intro || " ";
                       })
@@ -693,12 +693,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                if(isOnlineDOM.checked){
                  isOnline = true;
                }
-
                // var isOnline_ori = dataFetch.isOnline; // 是否上线
-              
-               
-
-
                // 是否是更新已有数据
                var isUpdate = sid == null ? false : true;
 
