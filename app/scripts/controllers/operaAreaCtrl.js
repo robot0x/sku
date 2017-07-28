@@ -603,15 +603,18 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                       tip('必须有商品图片');
                       return;
                     }
-
+                   /**
+                    * 2017-07-28 李园宁要求，不填写链接也可以保存
+                    */
                    if(sales_ori!=null && sales_ori.length > 0){
                       sales  = JSON.parse(JSON.stringify(sales_ori)); // 商品图片 必填
                       sales.forEach(function(sale){
                         sale.intro = sale.intro || " ";
                       })
                    }else{
-                      tip('必须有购买链接');
-                      return;
+                     sales = []
+                      // tip('必须有购买链接');
+                      // return;
                    }
 
                  }else{
@@ -737,7 +740,7 @@ skuApp.controller("operaAreaCtrl",function($scope,$rootScope,$http,$location,$q)
                  images:images,
                  intro:intro,
                  specs:specs,
-                 sales:sales,
+                 sales:sales || [],
                  revarticles:revarticles,
                  extra:extra,
                  person:modifiedBy
