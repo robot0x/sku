@@ -1,32 +1,40 @@
-var skuApp = angular.module('skuApp');
+var skuApp = angular.module("skuApp");
 // alert(2);
 // 生成SKU指令
-skuApp.directive('close', function() {
+skuApp.directive("close", function() {
   return {
-    restrict: 'A',
+    restrict: "A",
     replace: true,
     link: function(scope, elem) {
       // alert('generatesku');
-      $(elem).on('click', function() {
+      $(elem).on("click", function() {
         // console.log(scope);
-        $('.generatesku-mask,.new-buylink-mask,.url-normalization-mask').css('display', "none");
-      })
+        $(".generatesku-mask,.new-buylink-mask,.url-normalization-mask").css(
+          "display",
+          "none"
+        );
+      });
     }
-  }
-})
+  };
+});
 
-skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeout) {
+skuApp.controller("wrapperCtrl", function(
+  $scope,
+  $rootScope,
+  $location,
+  $timeout
+) {
   $scope.isActive = function(route) {
-    var path = $location.path()
+    var path = $location.path();
     if (route === "/search_article" && path === "/") {
       return true;
     }
     return route === path;
-  }
+  };
 
   $scope.resetOperaAreaData = function($event) {
-    $scope.$broadcast('resetOperaAreaData');
-  }
+    $scope.$broadcast("resetOperaAreaData");
+  };
 
   // 数组去重
   function dupRemove(arr) {
@@ -38,7 +46,7 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
           ret.push(v);
           recode[v] = true;
         }
-      })
+      });
     } else {
       return arr;
     }
@@ -46,14 +54,13 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
   }
 
   function showNormalizationUrlMask() {
-    $('.url-normalization-mask').css('display', 'block');
+    $(".url-normalization-mask").css("display", "block");
     // var btn = glyphiconOk.parent();
-    $('.opera-replace').removeClass('btn-primary').addClass('btn-danger');
-    $('.opera-use').removeClass('btn-success').addClass('btn-default');
-    $('.glyphicon-ok').remove();
+    $(".opera-replace").removeClass("btn-primary").addClass("btn-danger");
+    $(".opera-use").removeClass("btn-success").addClass("btn-default");
+    $(".glyphicon-ok").remove();
   }
-  $scope.$on('normalizationURL', function(event, data) {
-
+  $scope.$on("normalizationURL", function(event, data) {
     console.log("data:", data);
 
     var parsed = data.parsed;
@@ -61,15 +68,13 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
     console.log("parsed:", parsed);
 
     var ret = {
-      sku_link:[],
-      cps_link:[],
-      original_link:[]
+      sku_link: [],
+      cps_link: [],
+      original_link: []
     };
-
 
     // 解析data对象，填充list
     parsed.forEach(function(each) {
-
       for (var a in each) {
         // debugger;
         // a 就是原始链接
@@ -83,34 +88,34 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
           var v2 = v[a2];
           var retA2 = ret[a2];
           if (Array.isArray(v2)) {
-              retA2.push.apply(retA2,v2);          
+            retA2.push.apply(retA2, v2);
           }
         }
       }
-    })
+    });
     // debugger;
     showNormalizationUrlMask();
     $scope.normalizationurl = normalizationurlEvent;
-    
-    // 额外处理cps对象转String
-    ret.cps_link = ret.cps_link.map(function(item){
-       if(typeof item === "string"){
-         return item;
-       }else if(item.cps_url){
-         return item.cps_url
-       }else{
-          return '';
-       }
-    })
 
-    console.log('ret---------------');
+    // 额外处理cps对象转String
+    ret.cps_link = ret.cps_link.map(function(item) {
+      if (typeof item === "string") {
+        return item;
+      } else if (item.cps_url) {
+        return item.cps_url;
+      } else {
+        return "";
+      }
+    });
+
+    console.log("ret---------------");
     console.log(ret);
 
     $scope.normalizationurl.linkObj = ret;
 
     console.dir($scope.normalizationurl);
     console.dir($scope.normalizationurl.linkObj);
-  })
+  });
 
   /*$scope.$on('normalizationURL',function(event,data){
     
@@ -173,21 +178,18 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
 
   })*/
 
- 
-
-
   function toggleBtn($dom, attr, val) {
     var dom = $dom[0];
     if (dom.tagName === "SPAN") {
       $dom = $(dom.parentNode);
     }
     var toOperaAreaDate = $scope.generatesku.toOperaAreaDate;
-    if ($dom.hasClass('btn-primary')) {
-      $dom.removeClass("btn-primary").addClass('btn-danger');
-      $dom.find('.glyphicon').remove();
+    if ($dom.hasClass("btn-primary")) {
+      $dom.removeClass("btn-primary").addClass("btn-danger");
+      $dom.find(".glyphicon").remove();
       delete toOperaAreaDate[attr];
     } else {
-      $dom.removeClass("btn-danger").addClass('btn-primary');
+      $dom.removeClass("btn-danger").addClass("btn-primary");
       $('<span class="glyphicon glyphicon-ok"></span>').appendTo($dom);
       toOperaAreaDate[attr] = val;
     }
@@ -202,21 +204,21 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
    * @param  {[String]} link [链接]
    * @return {[String]} martName [商城名字]
    */
-  function getMartNameByLink(link){
+  function getMartNameByLink(link) {
     var martName = "";
-    if(!link){
+    if (!link) {
       return martName;
     }
 
-    if(link.indexOf("jd.") !== -1){
+    if (link.indexOf("jd.") !== -1) {
       martName = "京东";
-    }else if(link.indexOf("tmall.") !== -1){
-       martName = "天猫";
-    }else if(link.indexOf("amazon.") !== -1){
+    } else if (link.indexOf("tmall.") !== -1) {
+      martName = "天猫";
+    } else if (link.indexOf("amazon.") !== -1) {
       martName = "亚马逊";
-    }else if(link.indexOf("kaola.") !== -1){
+    } else if (link.indexOf("kaola.") !== -1) {
       martName = "考拉";
-    }else if(link.indexOf("taobao.") !== -1){
+    } else if (link.indexOf("taobao.") !== -1) {
       martName = "淘宝";
     }
 
@@ -228,8 +230,8 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       var link = links[index];
       var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
-      $('.url-normalization-mask').css('display', "none");
-      $scope.$broadcast('alreadynormalizationurl', {
+      $(".url-normalization-mask").css("display", "none");
+      $scope.$broadcast("alreadynormalizationurl", {
         originUrl: originUrl,
         link: link
       });
@@ -239,8 +241,8 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       var link = links[index];
       var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
-      $('.url-normalization-mask').css('display', "none");
-      $scope.$broadcast('alreadynormalizationurl', {
+      $(".url-normalization-mask").css("display", "none");
+      $scope.$broadcast("alreadynormalizationurl", {
         originUrl: originUrl,
         link: link
       });
@@ -250,17 +252,16 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       var link = links[index];
       var originUrl = $scope.normalizationurl.linkObj.original_link[0];
       $scope.normalizationurl = {};
-      $('.url-normalization-mask').css('display', "none");
-      $scope.$broadcast('alreadynormalizationurl', {
+      $(".url-normalization-mask").css("display", "none");
+      $scope.$broadcast("alreadynormalizationurl", {
         originUrl: originUrl,
         link: link
       });
     }
-  }
+  };
   // //item.jd.com/10009249720.html
-  $scope.$on('generateSKU', function(event, sku) {
-
-    console.log('接收到了generateSKU事件。数据为：', sku);
+  $scope.$on("generateSKU", function(event, sku) {
+    console.log("接收到了generateSKU事件。数据为：", sku);
     var link = sku.link;
     $scope.generatesku = generateskuEvent;
     $scope.generatesku.link = link;
@@ -276,26 +277,28 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
     $scope.generatesku.brand_info = sku.brand_info;
     // console.log(sku.brandRelSkuList);
     $scope.generatesku.brandRelSkuList = sku.brandRelSkuList;
-    $scope.generatesku.sales = [{
-      mart:getMartNameByLink(link),
-      link_m_cps:link,
-      link_pc_cps:null,
-      link_pc_raw:null,
-      link_m_raw:null,
-      price:sku.price
-    }];
+    $scope.generatesku.sales = [
+      {
+        mart: getMartNameByLink(link),
+        link_m_cps: link,
+        link_pc_cps: null,
+        link_pc_raw: null,
+        link_m_raw: null,
+        price: sku.price
+      }
+    ];
     $scope.generatesku.isNewLinkByThis = true;
     // $scope.generatesku = sku;
     $scope.generatesku.toOperaAreaDate = {};
   });
   var generateskuEvent = {
-     confirm: function() {
+    confirm: function() {
       var name = ($scope.generatesku.name || "").trim();
       var price_str = ($scope.generatesku.price_str || "").trim();
       var price = $scope.generatesku.price || 0;
       var brand = ($scope.generatesku.brand || "").trim();
       var sales = $scope.generatesku.sales || [];
-      if( !$scope.generatesku.isNewLinkByThis ){
+      if (!$scope.generatesku.isNewLinkByThis) {
         // 清空
         sales.length = 0;
       }
@@ -321,13 +324,13 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       //   return;
       // }
 
-      $('.generatesku-mask').css('display', "none");
+      $(".generatesku-mask").css("display", "none");
       var toOperaAreaDate = $scope.generatesku.toOperaAreaDate;
       // 因为toOperaAreaDate是根据界面选择赋值的，所以，需要在发送toOperaAreaDate事件之前
       // 显示地把SKU本身形成的链接挂到toOperaAreaDate对象上。供operAreaCtrl.js中使用
       toOperaAreaDate.sales = sales;
       console.log("toOperaAreaDate:", toOperaAreaDate);
-      $scope.$broadcast('toOperaAreaDate', toOperaAreaDate);
+      $scope.$broadcast("toOperaAreaDate", toOperaAreaDate);
       $scope.generatesku = {};
     },
     useImage: function($event, img) {
@@ -340,12 +343,12 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       if (!imgs) {
         imgs = [];
       }
-      if ($dom.hasClass('btn-success')) {
-        $dom.removeClass("btn-success").addClass('btn-default');
-        $dom.find('.glyphicon').remove();
+      if ($dom.hasClass("btn-success")) {
+        $dom.removeClass("btn-success").addClass("btn-default");
+        $dom.find(".glyphicon").remove();
         imgs.splice(imgs.indexOf(img), 1);
       } else {
-        $dom.removeClass("btn-default").addClass('btn-success');
+        $dom.removeClass("btn-default").addClass("btn-success");
         $('<span class="glyphicon glyphicon-ok"></span>').appendTo($dom);
         imgs.push(img);
       }
@@ -364,13 +367,13 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
     replaceBrand: function($event, brand) {
       toggleBtn($($event.target), "brand", brand);
     },
-   
+
     selectAll: function() {
       $timeout(function() {
-        $('.opera-replace,.opera-use').trigger('click');
+        $(".opera-replace,.opera-use").trigger("click");
       }, 100);
     }
-  }
+  };
 
   $scope.generatesku = generateskuEvent;
 
@@ -403,7 +406,7 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
       // }
       // alert('confirm');
       // 在operaArea.js中
-      $scope.$broadcast('newBuylink', {
+      $scope.$broadcast("newBuylink", {
         mart: $scope.mart,
         link_pc_cps: $scope.link_pc_cps,
         link_m_cps: $scope.link_m_cps || null,
@@ -411,15 +414,11 @@ skuApp.controller("wrapperCtrl", function($scope, $rootScope, $location, $timeou
         link_m_raw: null,
         price: $scope.price,
         intro: $scope.intro
-      })
-      $('.new-buylink-mask').css('display', "none");
+      });
+      $(".new-buylink-mask").css("display", "none");
       // 最后，清空所有数据，保证下一次打开没有任何数据
-      $scope.mart =
-        $scope.link_pc_cps =
-        $scope.link_m_cps =
-        $scope.price =
-        $scope.intro =
-        $scope.warning = "";
+      $scope.mart = $scope.link_pc_cps = $scope.link_m_cps = $scope.price = $scope.intro = $scope.warning =
+        "";
     }
-  }
-})
+  };
+});

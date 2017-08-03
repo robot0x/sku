@@ -1,165 +1,166 @@
- <div class="operate-area pull-left">
-        <div class="search-btn pull-right">
-            <button class="btn btn-success">保存</button>
-            <button class="btn btn-warning">清除</button>
-        </div>
-        <table class="grid-table">
-            <tbody>
-                <!-- 关联文章 -->
-                <tr>
-                    <td>
-                        关联文章2：
-                    </td>
-                    <td>
-                        <a href="#">一个文章的标题一个文章的标题</a>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-thin">取消关联</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <a href="#">一个文章的标题一个文章的标题</a>
-                    </td>  
-                    <td>
-                        <button class="btn btn-default btn-thin">取消关联</button>
-                    </td> 
-                </tr>
+<div class="operate-area pull-left">
+  <div class="search-btn pull-right">
+    <button class="btn btn-success">保存</button>
+    <button class="btn btn-warning">清除</button>
+  </div>
+  <table class="grid-table">
+    <tbody>
+      <!-- 关联文章 -->
+      <tr>
+        <td>
+          关联文章2：
+        </td>
+        <td>
+          <a href="#">一个文章的标题一个文章的标题</a>
+        </td>
+        <td>
+          <button class="btn btn-default btn-thin">取消关联</button>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <a href="#">一个文章的标题一个文章的标题</a>
+        </td>
+        <td>
+          <button class="btn btn-default btn-thin">取消关联</button>
+        </td>
+      </tr>
 
-                <tr class="bg-padding">
-                    <td></td>
-                    <td>
-                         <input type="text" class="form-control form-control-sm" placeholder="搜索文章标题 or ID" required ng-model="dataFetch.articleID">
-                    </td>  
-                    <td>
-                        <button class="btn btn-primary btn-thin">添加关联</button>
-                    </td> 
-                </tr>
+      <tr class="bg-padding">
+        <td></td>
+        <td>
+          <input type="text" class="form-control form-control-sm" placeholder="搜索文章标题 or ID" required ng-model="dataFetch.articleID">
+        </td>
+        <td>
+          <button class="btn btn-primary btn-thin">添加关联</button>
+        </td>
+      </tr>
 
-                <tr>
-                    <td>
-                        链接：
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" placeholder="京东、亚马逊链接" required ng-model="dataFetch.link">
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-thin">生成SKU</button>
-                    </td>
-                </tr>
+      <tr>
+        <td>
+          链接：
+        </td>
+        <td>
+          <input type="text" class="form-control form-control-sm" placeholder="京东、亚马逊链接" required ng-model="dataFetch.link">
+        </td>
+        <td>
+          <button class="btn btn-default btn-thin">生成SKU</button>
+        </td>
+      </tr>
 
-                <tr>
-                    <td>
-                        商品名：
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" placeholder="取到的商品名" required ng-model="dataFetch.name">
-                    </td>
-                    <td></td>
-                </tr>
+      <tr>
+        <td>
+          商品名：
+        </td>
+        <td>
+          <input type="text" class="form-control form-control-sm" placeholder="取到的商品名" required ng-model="dataFetch.name">
+        </td>
+        <td></td>
+      </tr>
 
-                <tr>
-                    <td>
-                        价格：
-                    </td>
-                    <td>
-                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required ng-model="dataFetch.price">
-                    </td>
-                    <td></td>
-                </tr>
+      <tr>
+        <td>
+          价格：
+        </td>
+        <td>
+          <input type="text" class="form-control form-control-sm" placeholder="填写价格" required ng-model="dataFetch.price">
+        </td>
+        <td></td>
+      </tr>
 
-                <tr class="bg-padding">
-                    <td>
-                        分类：
-                    </td>
-                    <td>
-                        <label>一级</label>
-                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required ng-model="dataFetch.firstClass">
-                    </td>
-                    <td>
-                        <label>二级</label>
-                       <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="dataFetch.SecondClass">
-                    </td>
-                </tr>
+      <tr class="bg-padding">
+        <td>
+          分类：
+        </td>
+        <td>
+          <label>一级</label>
+          <input type="text" class="form-control form-control-sm" placeholder="填写价格" required ng-model="dataFetch.firstClass">
+        </td>
+        <td>
+          <label>二级</label>
+          <input type="text" class="form-control form-control-sm" placeholder="填写价格" required="dataFetch.SecondClass">
+        </td>
+      </tr>
 
-                <tr class="bg-padding">
-                    <td>
-                        品牌：
-                    </td>
-                    <td>
-                        <label>中文</label>
-                        <small>任选其一填写或全填</small>
-                        <input type="text" class="form-control form-control-sm" placeholder="填写价格" required required="dataFetch.cn">
-                    </td>
-                    <td>
-                        <label>英文</label>
-                       <input type="text" class="form-control form-control-sm" placeholder="填写价格" required required="dataFetch.en">
-                    </td>
-                </tr>
+      <tr class="bg-padding">
+        <td>
+          品牌：
+        </td>
+        <td>
+          <label>中文</label>
+          <small>任选其一填写或全填</small>
+          <input type="text" class="form-control form-control-sm" placeholder="填写价格" required required="dataFetch.cn">
+        </td>
+        <td>
+          <label>英文</label>
+          <input type="text" class="form-control form-control-sm" placeholder="填写价格" required required="dataFetch.en">
+        </td>
+      </tr>
 
-                <tr class="bg-padding">
-                    <td>
-                        商品图片：
-                    </td>
-                    <td class="colsapn" colspan="2">
-                        <div class="oa-article-img-container pull-left">
-                             <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
-                             <div class="oa-article-img-oper">
-                                 <p class="left"><a>左</a></p>
-                                 <p class="center"><a>删</a></p>
-                                 <p class="right"><a>右</a></p>
-                             </div>
-                        </div>
-                        <div class="oa-article-img-container pull-left">
-                             <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
-                             <div class="oa-article-img-oper">
-                                 <p class="left"><a>左</a></p>
-                                 <p class="center"><a>删</a></p>
-                                 <p class="right"><a>右</a></p>
-                             </div>
-                        </div>
-                        <div class="oa-article-img-container pull-left">
-                             <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
-                             <div class="oa-article-img-oper">
-                                 <p class="left"><a>左</a></p>
-                                 <p class="center"><a>删</a></p>
-                                 <p class="right"><a>右</a></p>
-                             </div>
-                        </div>
-                        <div class="oa-article-img-container pull-left">
-                             <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
-<div class="oa-article-img-oper">
-                                 <p class="left"><a>左</a></p>
-                                 <p class="center"><a>删</a></p>
-                                 <p class="right"><a>右</a></p>
-                             </div>
-                        </div>
-                    </td>
-                </tr>
-                
-                <tr class="bg-padding">
-                    <td style="padding-top: 20px;"></td>
-                    <td class="colsapn" colspan="2">
-                        <input type="file" class="pull-left">
-                        <button class="btn btn-default btn-thin">生成SKU</button>
-                    </td>
-                </tr>
+      <tr class="bg-padding">
+        <td>
+          商品图片：
+        </td>
+        <td class="colsapn" colspan="2">
+          <div class="oa-article-img-container pull-left">
+            <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+            <div class="oa-article-img-oper">
+              <p class="left"><a>左</a></p>
+              <p class="center"><a>删</a></p>
+              <p class="right"><a>右</a></p>
+            </div>
+          </div>
+          <div class="oa-article-img-container pull-left">
+            <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+            <div class="oa-article-img-oper">
+              <p class="left"><a>左</a></p>
+              <p class="center"><a>删</a></p>
+              <p class="right"><a>右</a></p>
+            </div>
+          </div>
+          <div class="oa-article-img-container pull-left">
+            <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+            <div class="oa-article-img-oper">
+              <p class="left"><a>左</a></p>
+              <p class="center"><a>删</a></p>
+              <p class="right"><a>右</a></p>
+            </div>
+          </div>
+          <div class="oa-article-img-container pull-left">
+            <img ng-src="//a.diaox2.com/cms/sites/default/files/20160312/zk/5508cover.jpg" width="80" height="80">
+            <div class="oa-article-img-oper">
+              <p class="left"><a>左</a></p>
+              <p class="center"><a>删</a></p>
+              <p class="right"><a>右</a></p>
+            </div>
+          </div>
+        </td>
+      </tr>
 
-                <tr class="bg-padding">
-                    <td>购买链接：</td>
-                    <td>
-                    <!-- TODO:跟园宁确认一下设计图，然后进行布局 -->
-                        <div class="oa-article-info-container">
-                        </div>
-                    </td>
-                    <td>
-                        <button class="btn btn-default btn-thin">上移</button>
-                        <button class="btn btn-default btn-thin">删除</button>
-                        <button class="btn btn-default btn-thin">下移</button>
-                    </td>
-                </tr>
+      <tr class="bg-padding">
+        <td style="padding-top: 20px;"></td>
+        <td class="colsapn" colspan="2">
+          <input type="file" class="pull-left">
+          <button class="btn btn-default btn-thin">生成SKU</button>
+        </td>
+      </tr>
 
-            </tbody>
-        </table>
-    </div><!-- 右侧搜索区 -->
+      <tr class="bg-padding">
+        <td>购买链接：</td>
+        <td>
+          <!-- TODO:跟园宁确认一下设计图，然后进行布局 -->
+          <div class="oa-article-info-container">
+          </div>
+        </td>
+        <td>
+          <button class="btn btn-default btn-thin">上移</button>
+          <button class="btn btn-default btn-thin">删除</button>
+          <button class="btn btn-default btn-thin">下移</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+<!-- 右侧搜索区 -->
