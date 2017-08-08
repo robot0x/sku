@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8">
   <title>SKU管理系统</title>
@@ -194,29 +195,58 @@
           <tr class="bg-padding" style="border-top:1px red solid;border-bottom:1px red solid">
             <td class="required">购买链接：</td>
             <td colspan="2">
-
               <div class="input-group">
-
                 <input type="text" class="form-control input-sm" placeholder="请输入文章ID" ng-keyup="operaArea.eventHandler.knockEnterKey($event,operaArea.cid,true)"
                   ng-model="operaArea.cid" ng-pattern="/^\d+$/">
-
                 <span class="input-group-addon" ng-click="operaArea.eventHandler.getAllBuyLink(operaArea.cid)">一键获取已有购买链接</span>
-
               </div>
-
               <button class="btn btn-info btn-thin" ng-click="operaArea.eventHandler.newBuylink()" style="margin-top:20px;">新建购买链接</button>
-
               <span style="display: block;" ng-hide="operaArea.dataFetch.sales == null || operaArea.dataFetch.sales.length === 0" class="saleslen">共{{operaArea.dataFetch.sales.length}}条购买链接</span>
-
               <div class="oa-article-buylinks">
                 <div class="oa-article-buylink" ng-repeat="sale in operaArea.dataFetch.sales">
                   <table id="buylink-table" cellspacing="0" cellpadding="0" border="1">
                     <tr>
                       <td>商城</td>
                       <td>
-                        <input id="source" type="text" class="form-control form-control-sm no-margin no-margin" ng-model="sale.mart"></td>
+                        <input id="source" type="text" class="form-control form-control-sm no-margin no-margin" ng-model="sale.mart">
+                      </td>
                     </tr>
                     <tr>
+                      <td>类型</td>
+                      <td>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" ng-model="sale.type" value="youdiao" style="margin-top:4px;">
+                            有调电商（需要填写gid）
+                          </label>
+                        </div>
+                        <div class="radio disabled">
+                          <label>
+                            <input type="radio" ng-model="sale.type" value="other" style="margin-top:4px;">
+                            第三方（淘宝京东亚马逊等）
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" ng-model="sale.type" value="shop_go" style="margin-top:4px;">
+                            精品购（有调淘宝店或有调微店链接）
+                          </label>
+                        </div>
+                      </td>
+                    </tr>
+                     <tr ng-if="sale.type === 'youdiao'">
+                      <td>gid</td>
+                      <td>
+                        <table style="width: 100%;">
+                          <tr>
+                            <td>
+                              <input id="link" type="text" class="form-control form-control-sm no-margin" ng-model="sale.gid" placeholder="填写商品id"></input>
+                            </td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr ng-if="sale.type !== 'youdiao'">
                       <td>链接</td>
                       <td>
                         <table style="width: 100%;">
@@ -346,8 +376,8 @@
               <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                   <label>
-            <input type="checkbox" ng-model='generatesku.isNewLinkByThis'> 是否以此链接新建购买链接
-          </label>
+                    <input type="checkbox" ng-model='generatesku.isNewLinkByThis'> 是否以此链接新建购买链接
+                  </label>
                 </div>
               </div>
             </div>
@@ -408,10 +438,6 @@
         </div>
       </div>
     </div>
-
-
-
-
     <div class="new-buylink-mask">
       <div class="row">
         <div class="new-buylink-area col-md-6">
@@ -424,14 +450,36 @@
                 <small>淘宝，京东，shopbop，美国亚马逊，中国亚马逊等</small>
               </div>
             </div>
-
             <div class="form-group">
+             <label class="col-sm-2 control-label required">类型</label>
+             <div  class="col-sm-10">
+                <div>
+                  <label class="radio-inline">
+                    <input type="radio" value="youdiao" ng-model="saleType"> 有调电商
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="other" ng-model="saleType"> 第三方
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="shop_go" ng-model="saleType"> 精品购
+                  </label>
+                </div>
+                <small>有调电商需要填写gid；第三方需要填写淘宝京东亚马逊等；精品购需要填写有调淘宝店或有调微店链接</small>
+             </div>
+            </div>
+            <div class="form-group" ng-show="saleType === 'youdiao'">
+              <label class="col-sm-2 control-label required">gid</label>
+              <div class="col-sm-10">
+                <textarea class="form-control" placeholder="请填写商品id" ng-model="gid"></textarea>
+              </div>
+            </div>
+            <div class="form-group"  ng-show="saleType !== 'youdiao'">
               <label class="col-sm-2 control-label required">移动返利链接</label>
               <div class="col-sm-10">
                 <textarea class="form-control" placeholder="移动返利链接" ng-model="link_m_cps"></textarea>
                 <small>
-        url由购买页中浏览器直接复制粘贴，url长度不操作255，格式如：//item.m.jd.com/ware/view.action?wareId=1019913
-      </small>
+                  url由购买页中浏览器直接复制粘贴，url长度不操作255，格式如：//item.m.jd.com/ware/view.action?wareId=1019913
+                </small>
               </div>
             </div>
 
@@ -528,5 +576,4 @@
   <script src="scripts/controllers/wrapperCtrl.js"></script>
   <!-- endbuild -->
 </body>
-
 </html>

@@ -189,15 +189,6 @@ skuApp.controller("operaAreaCtrl", function(
 
   // 触发viewSKU事件。发自searchArticleCtrl.js | searchSKUCtrl.js
   $rootScope.$on("viewSKU", function(event, sid) {
-    // var isChanged = $rootScope.isChanged;
-    // if(isChanged != null && isChanged){
-    //    console.log(isChanged);
-    //    if(!confirm('内容已经修改但并未保存，是否强制跳转？')){
-    //      return;
-    //    }
-    // }else{
-    //   $rootScope.isChanged = false;
-    // }
     $http({
       url: "//s5.a.dx2rd.com:3000/v1/getfullsku/" + sid,
       method: "GET",
@@ -205,7 +196,6 @@ skuApp.controller("operaAreaCtrl", function(
       headers: { "Content-Type": "application/json" }
     })
       .then(function(result) {
-        // console.log(result);
         var upperData = result.data;
         var data;
         var sku;
@@ -230,30 +220,9 @@ skuApp.controller("operaAreaCtrl", function(
           tip(info);
           return;
         }
-
-        // $scope.operaArea.dataFetch = {
-        //     price:sku.price,
-        //     price_str:sku.price_str,
-        //     title:sku.title,
-        //     images:sku.images,
-        //     sid:sku.sid,
-        //     template:sku.template,
-        //     sales:sku.sales,
-        //     brand:sku.brand,
-        //     intro:sku.intro,
-        //     extra:sku.extra,
-        //     specs:sku.specs,
-        //     type:sku.type,
-        //     tags:sku.tags,
-        //     status:sku.status
-        // }
-        // console.log(sku.sales);
         console.log("查看的SKU：", sku);
-
         var netImg = filterNetImg(sku.images);
-
         $scope.operaArea.cid = null;
-
         if (netImg.length > 0) {
           $scope.operaArea.dataFetch.uploadAllFlag = true;
         } else {
@@ -384,8 +353,7 @@ skuApp.controller("operaAreaCtrl", function(
       $scope.operaArea.dataFetch = {};
     }
     var sales = $scope.operaArea.dataFetch.sales;
-    if (sales && sales.length) {
-      sales.push({
+    var sale = {
         link_pc_cps: data.link_pc_cps || null,
         link_m_cps: data.link_m_cps,
         link_pc_raw: data.link_pc_raw,
@@ -393,21 +361,16 @@ skuApp.controller("operaAreaCtrl", function(
         mart: data.mart,
         price: data.price,
         price_str: data.price_str,
-        intro: data.intro
-      });
+        intro: data.intro,
+        type: data.type
+    }
+    if (sale.type === 'youdiao') {
+      sale.gid = data.gid
+    }
+    if (sales && sales.length) {
+      sales.push(sale);
     } else {
-      sales = [
-        {
-          link_pc_cps: data.link_pc_cps || null,
-          link_m_cps: data.link_m_cps,
-          link_pc_raw: data.link_pc_raw,
-          link_m_raw: data.link_m_raw,
-          mart: data.mart,
-          price: data.price,
-          price_str: data.price_str,
-          intro: data.intro
-        }
-      ];
+      sales = [sale];
     }
     $scope.operaArea.dataFetch.sales = sales;
   });
@@ -702,7 +665,6 @@ skuApp.controller("operaAreaCtrl", function(
         }
 
         // console.log(isUpdate);
-
         // console.log(sid,articles,isOnline,title,price,brand,images,sales);
         // TODO sku的保存与更新
         var url = "//s5.a.dx2rd.com:3000/v1/updatesku";

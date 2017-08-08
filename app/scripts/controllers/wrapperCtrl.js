@@ -385,36 +385,44 @@ skuApp.controller("wrapperCtrl", function(
       var link_m_cps = ($scope.link_m_cps || "").trim();
       var price = ($scope.price || "").trim();
       var intro = ($scope.intro || "").trim();
-
+      var gid = $scope.gid;
+      var saleType = $scope.saleType;
       if (!mart) {
         $scope.warning = "商城不能为空";
         return;
       }
-      if (!link_pc_cps && !link_m_cps) {
+      if (!saleType) {
+        $scope.warning = "购买链接类型不能为空";
+        return;
+      }
+      if (saleType === 'youdiao') {
+        if (!/\d+/.test(gid)) {
+          $scope.warning = "gid只能为数字";
+          return;
+        }
+      } else if (!link_pc_cps && !link_m_cps) {
         $scope.warning = "链接不能为空，请至少填写1个链接";
         return;
       }
-
       if (!price) {
         $scope.warning = "价格不能为空";
         return;
       }
-
-      // if (!intro) {
-      //   $scope.warning = "说明不能为空";
-      //   return;
-      // }
-      // alert('confirm');
-      // 在operaArea.js中
-      $scope.$broadcast("newBuylink", {
+      var data = {
         mart: $scope.mart,
         link_pc_cps: $scope.link_pc_cps,
         link_m_cps: $scope.link_m_cps || null,
         link_pc_raw: null,
         link_m_raw: null,
         price: $scope.price,
-        intro: $scope.intro
-      });
+        intro: $scope.intro,
+        type: $scope.saleType
+      }
+      if (saleType === 'youdiao') {
+        data.gid = $scope.gid
+      }
+      // 在operaArea.js中
+      $scope.$broadcast("newBuylink", data);
       $(".new-buylink-mask").css("display", "none");
       // 最后，清空所有数据，保证下一次打开没有任何数据
       $scope.mart = $scope.link_pc_cps = $scope.link_m_cps = $scope.price = $scope.intro = $scope.warning =
